@@ -58,7 +58,7 @@ local burner_quarry = table.deepcopy(data.raw["mining-drill"]["burner-mining-dri
 burner_quarry.name = modprefix.."burner-quarry"
 burner_quarry.minable = {mining_time = 1, result = modprefix.."burner-quarry"}
 burner_quarry.resource_searching_radius = 10
-burner_quarry.module_specification = {module_slots = 0}
+burner_quarry.module_slots = 0 -- 2.0 field (was the ignored 1.x module_specification)
 burner_quarry.mining_speed = 0.5
 burner_quarry.base_productivity = 1.0
 data:extend({burner_quarry})

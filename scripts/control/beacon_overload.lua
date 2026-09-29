@@ -110,8 +110,12 @@ function model.update_overload(entity, ignored)
         model.add_overload_icon(entity)
         ei_victory.count_value("machines_overloaded", 1)
     elseif not overloaded and was_overloaded then
-        -- only re-activate machines that WE deactivated, other scripts may control `active` too
-        entity.active = true
+        -- only re-activate machines that WE deactivated, other scripts may control `active` too;
+        -- a machine still disabled by a storm EMP is re-activated by storm_emp.lua when it expires
+        local emp = storage.ei.storm_emp
+        if not (emp and emp[entity.unit_number]) then
+            entity.active = true
+        end
         model.remove_overload_icon(entity)
     end
 end

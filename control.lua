@@ -55,6 +55,7 @@ em_trains = require("scripts/control/em-trains/charger")
 em_trains_gui = require("scripts/control/em-trains/gui")
 
 orbital_combinator = require("scripts/control/orbital_combinator")
+ei_storm_emp = require("scripts/control/storm_emp")
 
 -- startup settings (constant for the whole session and identical on every peer)
 ei_ticksPerFullUpdate = settings.startup["ei_ticks_per_full_update"].value
@@ -164,6 +165,9 @@ script.on_nth_tick(60, function()
     -- EM train buffs are re-read regularly (research can also be granted by scripts/commands)
     em_trains.check_buffs()
 
+    -- Gaia storm EMP: re-activate machines whose EMP expired
+    ei_storm_emp.update()
+
     -- Gaia reforge state machine (only active after /esi-gaia-reborn)
     if storage.ei.gaia_reforged == 0 then
         ei_echo_codex.reforge_gaia_surface()
@@ -213,6 +217,11 @@ script.on_configuration_changed(function(event)
         ei_matter_stabilizer.migrate()
         ei_fueler.migrate()
         em_trains.migrate()
+        -- 3.1.0: combinator computing ports, alien tree tiers 4/5, gate hub rule
+        orbital_combinator.migrate()
+        ei_alien_system.migrate()
+        ei_gate.check_global_init()
+        ei_gate.migrate()
 
         -- rebuild registries that older versions could leave with duplicates/stale entries
         em_trains.reinitialize_chargers()
@@ -290,7 +299,10 @@ script.on_event(defines.events.on_entity_cloned, function(event)
     end
 
     local name = destination.name
-    if name == "ei_fueler" then
+    if name == "ei-orbital-combinator-computing-port" then
+        -- ports belong to their combinator: the cloned combinator creates / reuses its own port
+        destination.destroy()
+    elseif name == "ei_fueler" then
         ei_fueler.on_entity_cloned(source, destination)
     elseif name == "ei-black-hole" then
         ei_black_hole.register_black_hole(destination, source.valid and ei_black_hole.get(source.unit_number) or nil)
@@ -339,6 +351,7 @@ local function on_destroyed_entity(event)
     ei_fueler.on_destroyed_entity(entity, transfer)
     em_trains.on_destroyed_entity(entity)
     orbital_combinator.rem(entity)
+    ei_storm_emp.on_destroyed_entity(entity)
     ei_gaia.on_destroyed_entity(entity)
 end
 
@@ -395,6 +408,7 @@ script.on_event(defines.events.on_research_finished, function(event)
     ei_tech_scaling.on_research_finished()
     ei_informatron_messager.on_research_finished(event)
     em_trains.on_research_finished(event)
+    ei_alien_system.on_research_finished(event)
 end)
 
 script.on_event(defines.events.on_chunk_generated, function(event)
@@ -404,6 +418,8 @@ end)
 script.on_event(defines.events.on_script_trigger_effect, function(event)
     if event.effect_id == "ei-gate-remote" then
         ei_gate.used_remote(event)
+    elseif event.effect_id == "ei-storm-emp" then
+        ei_storm_emp.on_strike(event)
     end
 end)
 

@@ -1,4 +1,57 @@
 ---------------------------------------------------------------------------------------------------
+Version: 3.1.0
+Date: 29-09-26
+  Major Features:
+    - Alien tech tree reactivated (InformaTron page "Alien tech tree", 5 tiers). Repairing an alien
+      artifact grants "alien knowledge" points (100 per repair) that unlock technologies instead of
+      researching them in a lab. Tiers 1-3 restore the author's original nodes, tier 4 "Resonant
+      computation" and tier 5 "Threshold engineering" are new and also consume resonance data /
+      alien resonance packs from the inventory. Technologies researched in a lab count as unlocked.
+    - Resonance data: every repaired artifact spills 2-4 pieces. The new resonance synthesizer
+      (alien tier 1 or regular research) synthesizes it from morphium and computing power.
+    - Alien resonance pack: second alien science tier, crafted in the resonance synthesizer and only
+      on Gaia (recipe surface conditions).
+    - Data center: crafts any science pack of the big lab (vanilla, Space Age, other mods and the
+      alien packs) from computing power only, 10x slower than regular production. Recipes are
+      generated automatically in data-final-fixes. Graphics: Hurricane046 cybernetics facility.
+    - Conduit: lightning attractor that turns 80 % of every captured strike into electricity
+      (40 MJ buffer, 5 MW output). Unlocked with Gaia. Graphics: Hurricane046 conduit.
+    - Void rift generator (alien tier 5): carves a 5x5 out-of-map rift south of itself for void
+      engines and restores the original terrain and resources when removed.
+    - Gaia storm EMP: lightning strikes on Gaia that miss every lightning attractor disable machines,
+      inserters and combinators around the impact for 5 seconds (map setting "Gaia storm EMP").
+    - Gate hub rule: every gate jump goes through Gaia. A gate outside of Gaia can only lead to Gaia,
+      a gate on Gaia to every other surface. Invalid exits of old saves are reset.
+    - Platform requests scanner (orbital combinator) consumes 1 computing power per minute through
+      a hidden data port while an orbiting platform has requests; without it the signals freeze
+      and a warning icon is shown.
+    - Underground data cable (alien tier 4).
+    - Five new hand-made Gaia ruin presets (shrine, grove, outpost, sanctuary, monument).
+  Balancing:
+    - All balance values of the new systems live in lib/balance.lua (data-driven config).
+    - Void engine: 20 module slots as originally intended (see bugfixes).
+  Bugfixes:
+    - Alien tech tree: the tree was empty, the InformaTron page "alien" did not exist, the currency
+      was never granted, tier unlocking was hardcoded to 3 tiers and never called, button sprites
+      pointed to non-existing sprites and the node state always used the "player" force.
+    - Artifact spawner: 5 presets could never spawn (rarity "temp" / "very-rare" typos, duplicate
+      table keys "accu-site_5" and "beacon-site_small-2" overwrote each other).
+    - InformaTron: gate and repair pages were unreachable (dependency on the never-set
+      storage.ei.knowledge), empty "surface patches" headings removed, the "tech" section and the
+      space destinations page restored (text updated for Space Age), "Informatron wiki updated"
+      messages were never sent and used a non-existing sprite.
+    - Alien confirm dialog used missing locale keys (renamed knowledge-confirm-* keys).
+    - Missing locale: technology names of modules 4-6, solar panels 2/3 and crystal accumulator,
+      gate remote item name, black hole start button caption.
+    - Void engine and burner quarry used the Factorio 1.x "module_specification" field that 2.0
+      ignores (void engine had no module slots).
+  Changes:
+    - "No triggers" setting no longer converts script-only (alien tree) technologies into lab
+      technologies.
+    - Beacon overload and storm EMP never re-enable a machine the other system still disables.
+  Locale:
+    - New complete Russian translation (locale/ru), English texts for all new content.
+---------------------------------------------------------------------------------------------------
 Version: 3.0.0
 Date: 25-09-26
   Major Features:

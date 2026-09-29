@@ -279,6 +279,46 @@ data:extend({
       height = 64,
       scale = 2,
   },
-
-
+  -- 3.1.0: alien tech tree nodes (scripts/control/alien_system.lua -> model.get_button_sprite)
+  {
+      name = "ei_knowledge-resonance-synthesizer",
+      type = "sprite",
+      filename = ei_graphics_tech_path.."computer-core.png",
+      width = 256,
+      height = 256,
+      scale = 0.5,
+  },
+  {
+      name = "ei_knowledge-resonant-computation",
+      type = "sprite",
+      filename = ei_graphics_tech_path.."alien-computer-age-tech.png",
+      width = 256,
+      height = 256,
+      scale = 0.5,
+  },
+  {
+      name = "ei_knowledge-threshold-engineering",
+      type = "sprite",
+      filename = ei_void_engine_path.."void-engine.png",
+      width = 256,
+      height = 256,
+      scale = 0.5,
+  },
+  -- 3.1.0: InformaTron pages of the Gaia hub systems
+  {
+      name = "ei_conduit",
+      type = "sprite",
+      filename = ei_path.."graphics/conduit/conduit-icon-big.png",
+      width = 640,
+      height = 640,
+      scale = 0.2,
+  },
+  {
+      name = "ei_data_center",
+      type = "sprite",
+      filename = ei_path.."graphics/cybernetics-facility/cybernetics-facility-icon-big.png",
+      width = 640,
+      height = 640,
+      scale = 0.2,
+  },
 })

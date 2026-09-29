@@ -71,6 +71,10 @@ function ei_global.check_init()
 
     ei.alien = ei.alien or {}
 
+    -- 3.1.0: Gaia hub systems
+    ei.storm_emp = ei.storm_emp or {}                         -- storm_emp.lua
+    ei.void_rift_generators = ei.void_rift_generators or {}   -- gaia.lua
+
     -- master/slave registries (copper/iron beacons) and fluid handling entities
     ei.copper_beacon = ei.copper_beacon or {}
     ei.copper_beacon.master = ei.copper_beacon.master or {}

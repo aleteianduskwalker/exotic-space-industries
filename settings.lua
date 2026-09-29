@@ -301,5 +301,13 @@ data:extend({
     type = "bool-setting",
     setting_type = "startup",
     default_value = true,
-}
+},
+-- 3.1.0: Gaia storm EMP (scripts/control/storm_emp.lua); can be toggled during the game
+{
+    name = "ei-gaia-storm-emp",
+    type = "bool-setting",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "g1",
+},
 })

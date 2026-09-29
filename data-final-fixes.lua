@@ -22,6 +22,8 @@ require("scripts/data-final-updates/items")
 
 require("scripts/data-final-updates/compatibility")
 require("scripts/data-final-updates/labs")
+-- data center: one recipe per science pack of the big lab (needs the final lab inputs of labs.lua)
+require("scripts/data-final-updates/data_center_recipes")
 
 --====================================================================================================
 --FUELS
@@ -151,6 +153,34 @@ data.raw["lightning-attractor"]["fulgoran-ruin-attractor"].range_elongation = 25
 for _, lightning in pairs(data.raw["lightning"]) do
     lightning.attracted_volume_modifier = 0.0
     lightning.damage = lightning.damage * 2.0
+end
+
+-- Storm EMP (design doc §7): every strike raises the script event "ei-storm-emp".
+-- scripts/control/storm_emp.lua decides at runtime whether it counts (Gaia only, not near an
+-- attractor) and temporarily disables machines around the impact.
+local STORM_EMP_TRIGGER = {
+    type = "direct",
+    action_delivery = {
+        type = "instant",
+        target_effects = {{type = "script", effect_id = "ei-storm-emp"}},
+    },
+}
+
+---Appends the EMP trigger to a lightning strike_effect (Trigger: a single item or an array).
+---@param strike_effect table|nil
+local function add_storm_emp(strike_effect)
+    if strike_effect == nil then
+        return {STORM_EMP_TRIGGER}
+    end
+    if strike_effect.type then -- single trigger item -> array of trigger items
+        return {strike_effect, STORM_EMP_TRIGGER}
+    end
+    table.insert(strike_effect, STORM_EMP_TRIGGER)
+    return strike_effect
+end
+
+for _, lightning in pairs(data.raw["lightning"]) do
+    lightning.strike_effect = add_storm_emp(lightning.strike_effect)
 end
 
 --====================================================================================================

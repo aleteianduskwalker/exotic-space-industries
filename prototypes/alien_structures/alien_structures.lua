@@ -23,3 +23,14 @@ require("farstation")
 require("alien-structures")
 -- add other
 require("gaia-planet")
+-- 3.1.0: Alien chain / Gaia hub (design doc "ESI: Alien chain and Gaia hub")
+-- resonance data item (repair drop + synthesizer product)
+require("resonance-data")
+-- resonance synthesizer (clone of the small simulator) + tier 1 technology
+require("resonance-synthesizer")
+-- alien resonance pack + alien tier 4 technology "resonant computation"
+require("resonance-pack")
+-- void rift generator + alien tier 5 technology "threshold engineering"
+require("void-rift-generator")
+-- conduit: lightning attractor that harvests the Gaia storms (unlocked with ei-gaia)
+require("conduit")

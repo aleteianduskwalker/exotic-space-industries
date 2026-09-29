@@ -242,3 +242,71 @@ data:extend
 
 
 
+
+--====================================================================================================
+-- COMPUTING POWER PORT (design doc §6)
+--====================================================================================================
+-- A constant combinator can not have a fluid box, so every orbital combinator gets a hidden
+-- companion storage tank on the same tile (created/removed by scripts/control/orbital_combinator.lua
+-- through the master/slave registry of scripts/control/register_util.lua).
+--   * 1x1, no collision, not selectable, invisible (all sprites replaced by an empty image)
+--   * one fluid box with 4 connections (N/E/S/W); data_network.lua turns it into a data fluid box
+--     (filter ei-computing-power, connection category "ei-data" -> only data cables connect)
+-- Based on a deep copy of the vanilla storage tank, so every required field stays valid.
+--====================================================================================================
+
+local ei_balance = require("lib/balance")
+
+local EMPTY_IMAGE = ei_graphics_other_path.."64_empty.png"
+
+---Recursively points every sprite of a graphics table to a 1x1 area of the empty image.
+---@param graphics table
+local function make_invisible(graphics)
+  if type(graphics) ~= "table" then return end
+  if graphics.filename or graphics.filenames then
+    graphics.filename = EMPTY_IMAGE
+    graphics.filenames = nil
+    graphics.width, graphics.height, graphics.size = 1, 1, nil
+    graphics.x, graphics.y = 0, 0
+    graphics.scale, graphics.shift = nil, nil
+    graphics.lines_per_file = nil
+  end
+  for _, value in pairs(graphics) do
+    make_invisible(value)
+  end
+end
+
+local port = table.deepcopy(data.raw["storage-tank"]["storage-tank"])
+port.name = "ei-orbital-combinator-computing-port"
+port.icon = ei_graphics_3_path.."graphics/orbital-combinator/icon.png"
+port.icon_size = 64
+port.icons = nil
+port.flags = {"placeable-neutral", "not-on-map", "not-blueprintable", "not-deconstructable",
+  "not-upgradable", "not-flammable", "hide-alt-info", "not-rotatable", "no-copy-paste"}
+port.hidden = true
+port.minable = nil
+port.selectable_in_game = false
+port.collision_box = {{-0.35, -0.35}, {0.35, 0.35}}
+port.selection_box = {{-0.5, -0.5}, {0.5, 0.5}}
+port.collision_mask = {layers = {}}
+port.corpse = nil
+port.dying_explosion = nil
+port.fast_replaceable_group = nil
+port.next_upgrade = nil
+port.circuit_connector = nil
+port.circuit_wire_max_distance = 0
+port.water_reflection = nil
+port.window_bounding_box = {{-0.1, -0.1}, {0.1, 0.1}}
+port.fluid_box = {
+  volume = ei_balance.orbital_combinator.port_volume,
+  pipe_connections = {
+    {direction = defines.direction.north, position = {0, 0}},
+    {direction = defines.direction.east, position = {0, 0}},
+    {direction = defines.direction.south, position = {0, 0}},
+    {direction = defines.direction.west, position = {0, 0}},
+  },
+  hide_connection_info = true,
+}
+make_invisible(port.pictures)
+
+data:extend({port})

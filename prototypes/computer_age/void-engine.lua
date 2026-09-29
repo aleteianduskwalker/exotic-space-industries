@@ -146,9 +146,9 @@ data:extend({
         result_inventory_size = 1,
         source_inventory_size = 1,
         allowed_effects = {"speed", "consumption", "pollution"},
-        module_specification = {
-            module_slots = 20
-        },
+        -- 3.1.0 fix: Factorio 2.0 ignores the 1.x "module_specification" table, so the engine had
+        -- 0 module slots although allowed_effects were defined; module_slots is the 2.0 field
+        module_slots = 20,
         radius_visualisation_specification = {
             sprite = {
                 filename = ei_graphics_other_path.."radius.png",

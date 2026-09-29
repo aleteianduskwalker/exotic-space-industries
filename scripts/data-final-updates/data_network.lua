@@ -20,12 +20,16 @@ local DATA_FLUID_BOXES = {
         ["ei-computer-core"] = {1},
         ["ei-small-simulator"] = {1},
         ["ei-quantum-computer"] = {1, 2},
+        ["ei-resonance-synthesizer"] = {1}, -- 3.1.0: fluid box 2 (morphium) stays a regular pipe
+        ["ei-data-center"] = {1},           -- 3.1.0
     },
 }
 
--- data cables (all fluid boxes of these entities)
+-- data cables and other single fluid box entities that carry computing power (`fluid_box`)
 local DATA_CABLES = {
     ["pipe"] = {"ei-data-pipe"},
+    ["pipe-to-ground"] = {"ei-data-pipe-to-ground"},               -- 3.1.0: underground data cable
+    ["storage-tank"] = {"ei-orbital-combinator-computing-port"},   -- 3.1.0: hidden combinator port
 }
 
 ---Turns a fluid box into a data fluid box.

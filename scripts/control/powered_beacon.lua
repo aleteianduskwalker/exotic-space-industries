@@ -92,12 +92,21 @@ function model.update_fluid_storages()
     return true
 end
 
+-- data network entities that are not named "ei-data*" but are meant to hold computing power
+local DATA_NETWORK_ENTITIES = {
+    ["ei-orbital-combinator-computing-port"] = true, -- 3.1.0: would explode otherwise
+}
+
 ---Returns true if the entity should be registered for special fluid handling.
----Data cables are excluded: they have their own filter and connection category.
+---Data cables ("ei-data*", incl. the underground data cable) and data ports are excluded: they
+---have their own filter and connection category (scripts/data-final-updates/data_network.lua).
 ---@param entity LuaEntity
 function model.counts_for_fluid_handling(entity)
     local entity_type = entity.type
     if entity_type ~= "pipe" and entity_type ~= "storage-tank" and entity_type ~= "pipe-to-ground" then
+        return false
+    end
+    if DATA_NETWORK_ENTITIES[entity.name] then
         return false
     end
     return string.sub(entity.name, 1, 7) ~= "ei-data"
