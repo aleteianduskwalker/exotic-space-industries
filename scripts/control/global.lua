@@ -49,6 +49,9 @@ end
 function ei_global.init()
     storage.ei = {}
     ei_global.check_init()
+    -- 3.2.0 one-time migrations have nothing to grandfather in a new game
+    storage.ei.gate_calibration_migrated = true
+    storage.ei.alien_console_migrated = true
 end
 
 ---Fills in every missing storage field. Safe to call any number of times.
@@ -82,6 +85,9 @@ function ei_global.check_init()
     ei.drones.next_id = ei.drones.next_id or 1
     ei.drones.pending = ei.drones.pending or {}
     ei.drones.gui = ei.drones.gui or {}
+
+    -- 3.2.0: alien terminals (alien_console.lua) and gate calibrations (gate.lua, created on demand)
+    ei.alien_consoles = ei.alien_consoles or {}
 
     -- 3.2.0: radio stations (radio_station.lua)
     ei.radio = ei.radio or {}

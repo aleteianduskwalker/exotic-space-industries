@@ -58,6 +58,7 @@ orbital_combinator = require("scripts/control/orbital_combinator")
 ei_storm_emp = require("scripts/control/storm_emp")
 ei_radio_station = require("scripts/control/radio_station")
 ei_drone_port = require("scripts/control/drone_port")
+ei_alien_console = require("scripts/control/alien_console")
 
 -- startup settings (constant for the whole session and identical on every peer)
 ei_ticksPerFullUpdate = settings.startup["ei-ticks_per_full_update"].value
@@ -158,6 +159,9 @@ script.on_event(defines.events.on_tick, function(event)
     -- drones fly every tick, their task logic runs every few ticks
     ei_drone_port.update(event.tick)
 
+    -- alien terminals convert resonance packs / data into knowledge every few ticks
+    ei_alien_console.update(event.tick)
+
     -- radio stations transfer their channels every few ticks
     if event.tick % ei_radio_station.UPDATE_INTERVAL == 0 then
         ei_radio_station.update()
@@ -253,6 +257,7 @@ script.on_configuration_changed(function(event)
         -- 3.2.0: ei-conduit-gaia instead of ruin attractors (alien_system.migrate above also
         -- grandfathers the now script-only alien technologies)
         ei_gaia.migrate_conduits()
+        ei_alien_console.migrate()
         remove_legacy_guis()
 
         -- rebuild registries that older versions could leave with duplicates/stale entries
@@ -311,6 +316,10 @@ local function on_built_entity(entity, event)
     if entity.valid then
         ei_gaia.on_built_entity(entity)
     end
+    -- after the Gaia build restriction (terminals only work on Gaia)
+    if entity.valid then
+        ei_alien_console.on_built_entity(entity)
+    end
 end
 
 script.on_event({
@@ -344,6 +353,8 @@ script.on_event(defines.events.on_entity_cloned, function(event)
         ei_radio_station.on_entity_cloned(source, destination)
     elseif name == ei_drone_port.PORT or name == ei_drone_port.ENERGY then
         ei_drone_port.on_entity_cloned(destination)
+    elseif name == ei_alien_console.NAME then
+        ei_alien_console.register(destination)
     else
         if ei_powered_beacon.counts_for_fluid_handling(destination) then
             ei_register.register_fluid_entity(destination)
@@ -393,6 +404,7 @@ local function on_destroyed_entity(event)
     ei_gaia.on_destroyed_entity(entity)
     ei_radio_station.on_destroyed_entity(entity)
     ei_drone_port.on_destroyed_entity(entity)
+    ei_alien_console.on_destroyed_entity(entity)
 
     -- destroyed broken artifacts on Gaia grant alien knowledge (mining: see on_mined_entity below)
     if event.name == defines.events.on_entity_died then
@@ -545,6 +557,8 @@ script.on_event(defines.events.on_gui_opened, function(event)
         ei_radio_station.open_gui(player, event.entity)
     elseif name == ei_drone_port.PORT then
         ei_drone_port.open_gui(player, event.entity)
+    elseif name == ei_alien_console.NAME then
+        ei_alien_console.open_gui(player, event.entity)
     end
 end)
 
@@ -567,6 +581,8 @@ script.on_event(defines.events.on_gui_closed, function(event)
         ei_radio_station.close_gui(player)
     elseif name == ei_drone_port.PORT then
         ei_drone_port.close_gui(player)
+    elseif name == ei_alien_console.NAME then
+        ei_alien_console.close_gui(player)
     end
 end)
 
@@ -578,6 +594,7 @@ local CLICK_HANDLERS = {
     ["ei-gate-console"] = function(event) ei_gate.on_gui_click(event) end,
     ["ei-alien-gui"] = function(event) ei_alien_system.on_gui_click(event) end,
     ["ei-drone-port-console"] = function(event) ei_drone_port.on_gui_click(event) end,
+    ["ei-alien-console-gui"] = function(event) ei_alien_console.on_gui_click(event) end,
     ["ei-fueler-console"] = function(event) ei_fueler.on_gui_click(event) end,
     ["mod_gui"] = function(event) em_trains_gui.on_gui_click(event) end,
     ["em_trains_mod-gui"] = function(event) em_trains_gui.on_gui_click(event) end,

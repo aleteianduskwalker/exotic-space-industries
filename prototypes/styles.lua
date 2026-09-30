@@ -119,6 +119,33 @@ style["ei-relative-gui-slider"] = {
     draw_notches = true
 }
 
+-- 3.2.0: tier frames of the alien tech tree (InformaTron), background destinations/space.png
+-- (tiers 1-3) and destinations/deep-space.png (tiers 4-5), stretched over the whole frame
+style["ei-space-frame"] = {
+    type = "frame_style",
+    parent = "inside_deep_frame",
+    graphical_set = table.deepcopy(style.inside_deep_frame.graphical_set),
+    horizontally_stretchable = "on",
+    padding = 8,
+    vertical_flow_style = {
+        type = "vertical_flow_style",
+        horizontal_align = "center",
+    },
+}
+style["ei-space-frame"].graphical_set.base.center = {
+    filename = ei_graphics_destination_path .. "space.png",
+    size = 256,
+    flags = {"gui"},
+    priority = "low",
+}
+
+style["ei-deep-space-frame"] = {
+    type = "frame_style",
+    parent = "ei-space-frame",
+    graphical_set = table.deepcopy(style["ei-space-frame"].graphical_set),
+}
+style["ei-deep-space-frame"].graphical_set.base.center.filename = ei_graphics_destination_path .. "deep-space.png"
+
 style["ei-camera-frame"] = {
     type = "frame_style",
     parent = "deep_frame_in_shallow_frame",

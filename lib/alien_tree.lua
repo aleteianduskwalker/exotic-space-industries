@@ -24,6 +24,8 @@
 --   keep_prerequisites  true: the meta technology keeps its own prerequisites instead of the
 --                       anchor technology (needed when the anchor itself depends on it)
 --   technologies        optional extra prerequisite (lab) technologies of the meta technology
+--   anywhere            true: can be bought without an alien terminal nearby (3.2.0: every other
+--                       node needs one, see scripts/control/alien_console.lua)
 --====================================================================================================
 
 local ei_balance = require("lib/balance")
@@ -37,7 +39,7 @@ alien_tree.anchor_technology = "ei-resonance-synthesizer"
 ---@param name string node name
 ---@param meta string technology name
 ---@param cost number|table alien knowledge points or a tier cost table {points, items}
----@param options table|nil {height, prerequisites, keep_prerequisites, technologies}
+---@param options table|nil {height, prerequisites, keep_prerequisites, technologies, anywhere}
 local function node(name, meta, cost, options)
     options = options or {}
     local points, items = cost, nil
@@ -54,6 +56,7 @@ local function node(name, meta, cost, options)
         prerequisites = options.prerequisites,
         keep_prerequisites = options.keep_prerequisites,
         technologies = options.technologies,
+        anywhere = options.anywhere,
     }
 end
 
@@ -69,6 +72,9 @@ alien_tree.tiers = {
         {node("crystal-accumulator-repair", "ei-crystal-accumulator-repair", 100)},
         -- 3.2.0: the conduit replaces the resonance synthesizer node (that one is a lab technology)
         {node("conduit", "ei-conduit", 100)},
+        -- 3.2.0: the alien terminal is the access point of the tree, so its own node is the only one
+        -- that can be bought anywhere (no deadlock without a repaired terminal ruin)
+        {node("alien-console", "ei-alien-console", 100, {anywhere = true})},
     },
     -- tier 2: bio branch
     {

@@ -94,6 +94,21 @@ ei_balance.artifact_salvage = {
         {"ei-alien-resin", 2, 5, 1},
         {"ei-resonance-data", 1, 1, 0.5},
     },
+    ["ei-alien-console_off"] = {
+        {"ei-resonance-data", 2, 4, 1},
+        {"ei-electronic-parts", 2, 4, 1},
+        {"ei-high-energy-crystal", 1, 1, 0.5},
+    },
+}
+
+-- 3.2.0: ALIEN TERMINAL (ei-alien-console, prototypes/alien_structures/alien-console.lua)
+-- Access point of the alien tech tree: nodes can only be bought near a terminal of the own force.
+ei_balance.alien_console = {
+    range = 16,                -- max distance (tiles) between the player's character and a terminal
+    gaia_only = true,          -- terminals work (and can be built) only on Gaia
+    slots = 10,                -- inventory slots (resonance packs / data for the auto conversion)
+    conversion_interval = 60,  -- ticks between two conversions of the inventory into knowledge
+    repair_bonus = 200,        -- one-time knowledge bonus of a repaired terminal (plus the repair reward)
 }
 
 -- Tier 4/5 costs (N = 10, design doc §4 + brief log §2.2). Every node of a tier shares its cost.

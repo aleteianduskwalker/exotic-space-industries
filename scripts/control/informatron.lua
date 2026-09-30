@@ -187,6 +187,23 @@ function model.gate(player_index, element)
     image_container.style.horizontal_align = "center"
     image_container.style.horizontally_stretchable = true
     image_container.add{type = "sprite", sprite = "ei-gate"}
+
+    -- 3.2.0: calibration with planet samples (other/<rock>-rock.png illustrations)
+    element.add{type = "label", caption = {"exotic-industries-informatron.gate-calibration"}, style = "heading_1_label"}
+    element.add{type = "label", caption = {"exotic-industries-informatron.gate-calibration-text"}}
+
+    local samples = element.add{type = "flow", direction = "horizontal"}
+    samples.style.horizontal_align = "center"
+    samples.style.horizontally_stretchable = true
+    samples.style.horizontal_spacing = 16
+    for _, sample in pairs({
+        {"mars", "vulcanus"}, {"uran", "gleba"}, {"sulf", "fulgora"}, {"exotic", "aquilo"}, {"moon", "gaia"},
+    }) do
+        local item = "ei-planet-sample-" .. sample[2]
+        if prototypes.item[item] then
+            samples.add{type = "sprite", sprite = "ei-planet-sample-" .. sample[1], tooltip = prototypes.item[item].localised_name}
+        end
+    end
 end
 
 -- 3.1.0: own page (no longer repeats the artifacts introduction), mentions resonance data

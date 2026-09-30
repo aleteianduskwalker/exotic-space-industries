@@ -23,7 +23,10 @@ local model = {}
 model.destroy_gaia = {}
 
 -- buildings that will get destroyed (returned as item) when placed outside of Gaia
-model.destroy_non_gaia = {}
+model.destroy_non_gaia = {
+    -- 3.2.0: the alien terminal only works on Gaia (lib/balance.lua -> alien_console.gaia_only)
+    ["ei-alien-console"] = ei_balance.alien_console.gaia_only or nil,
+}
 
 -- regular entity -> Gaia variant (swapped on Gaia surfaces)
 model.swap_gaia = {

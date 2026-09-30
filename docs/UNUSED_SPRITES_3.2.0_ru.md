@@ -2,7 +2,7 @@
 
 Метод: data-стадия мода (все зависимости base / space-age, настройки по умолчанию) прогнана в эмуляторе; из `data.raw` (включая `gui-style`) собраны все пути `__exotic-space-industries*__/...`. Control-стадия файлов напрямую не использует (только имена спрайтов-прототипов, которые уже в `data.raw`). Файл из списка считается неиспользуемым, если его путь не встречается в загруженных прототипах.
 
-Итого: в списке 2026 файлов, используется 1374, **не используется 647** (+5 используются только вместе с Krastorio2).
+Итого: в списке 2026 файлов, используется 1392, **не используется 629** (+5 используются только вместе с Krastorio2).
 
 Исправлено в 3.2.0 по итогам первой версии отчёта: тепловые трубы снова используют все варианты спрайтов, у продвинутого и превосходного бура свои остатки (tier_1 больше не перезаписывается), удалена неиспользуемая таблица `ei_pipe_basic`, исправлен путь с двойным слэшем `entities//64x64_empty.png`, удалён мёртвый `stone_well_pump.lua`; валуны `gaia-boulder-1…15` задействованы как валуны Гайи; графика дрона и порта дронов задействована новой системой дронов.
 
@@ -349,40 +349,23 @@
 - tree-05-k-leaves.png
 - tree-05-l-leaves.png
 
-## 2. Космические направления и спутники (система удалена после перехода на Space Age) (41)
+## 2. Космические направления и спутники (система удалена после перехода на Space Age; фоны, газ и породы переиспользованы в 3.2.0) (27)
 
-
-**exotic-space-industries-graphics-1/graphics/destinations/**
-
-- deep-space.png
-- gas.png
-- gas_animation.png
-- space.png
 
 **exotic-space-industries-graphics-1/graphics/items/**
 
 - advanced-mining-satellite.png
 - black-hole-data.png
-- exotic-rock.png
 - exploration-satellite.png
 - gas-giant-data.png
-- mars-rock.png
 - mining-satellite.png
 - moon-fish.png
-- moon-rock.png
-- sulf-rock.png
 - sun-data.png
-- uran-rock.png
 - watch-satellite.png
 
 **exotic-space-industries-graphics-1/graphics/other/**
 
-- exotic-rock.png
-- mars-rock.png
-- moon-rock.png
 - rocket-silo.png
-- sulf-rock.png
-- uran-rock.png
 
 **exotic-space-industries-graphics-1/graphics/techs/**
 
@@ -405,12 +388,8 @@
 - uran-mining.png
 - watch-satellite.png
 
-## 3. Инопланетная консоль и старая система знаний (удалены) (17)
+## 3. Старая система знаний (удалена; инопланетная консоль снова используется как терминал) (13)
 
-
-**exotic-space-industries-graphics-1/graphics/items/**
-
-- alien-console.png
 
 **exotic-space-industries-graphics-1/graphics/other/**
 
@@ -423,15 +402,6 @@
 - redprint.png
 - schematic.png
 - yellow_alien.png
-
-**exotic-space-industries-graphics-1/graphics/techs/**
-
-- alien-console.png
-
-**exotic-space-industries-graphics-2/graphics/entities/**
-
-- alien-console.png
-- alien-console_animation.png
 
 **exotic-space-industries-graphics-2/graphics/items/**
 

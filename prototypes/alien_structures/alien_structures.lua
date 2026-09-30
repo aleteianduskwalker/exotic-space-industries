@@ -39,3 +39,7 @@ require("void-rift-generator")
 require("conduit")
 -- drone port + script drones (3.2.0, alien tier 2)
 require("drone-port")
+-- planet samples = gate calibration keys (3.2.0), after the gate and the Gaia planet
+require("planet-samples")
+-- alien terminal: access point of the alien tech tree + broken terminal ruin (3.2.0, alien tier 1)
+require("alien-console")

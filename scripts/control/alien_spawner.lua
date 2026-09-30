@@ -200,15 +200,18 @@ local function spawn_entities(preset, surface, pos)
     surface.create_entity({name = "ei-artifact-flag", position = pos, force = force})
 end
 
----Picks a random preset name of the given rarity (respecting mod requirements and
----"only once per game" legendary presets). Returns nil if none is available.
-function model.select_preset(rarity)
+---Picks a random preset name of the given rarity (respecting mod requirements, Gaia-only presets
+---and "only once per game" legendary presets). Returns nil if none is available.
+---@param rarity string
+---@param surface LuaSurface|nil spawn surface (presets with gaia_only = true need a Gaia surface)
+function model.select_preset(rarity, surface)
     storage.ei.legendary_spawns = storage.ei.legendary_spawns or {}
 
     local candidates = {}
     for preset_name, preset in pairs(presets.entity_presets) do
         if preset.rarity == rarity
             and (not preset.mod or script.active_mods[preset.mod])
+            and (not preset.gaia_only or (surface and ei_gaia.is_gaia_surface(surface)))
             and not (rarity == "legendary" and storage.ei.legendary_spawns[preset_name]) then
             table.insert(candidates, preset_name)
         end
@@ -243,13 +246,13 @@ function model.que_preset(pos, surface, tick)
     local rarity = math.random(1, 100)
     local preset
     if rarity < 25 then
-        preset = model.select_preset("common")
+        preset = model.select_preset("common", surface)
     elseif rarity < 50 then
-        preset = model.select_preset("rare")
+        preset = model.select_preset("rare", surface)
     elseif rarity < 75 then
-        preset = model.select_preset("very rare")
+        preset = model.select_preset("very rare", surface)
     elseif distance >= LEGENDARY_SPAWN_DISTANCE then
-        preset = model.select_preset("legendary")
+        preset = model.select_preset("legendary", surface)
     end
 
     if not preset then

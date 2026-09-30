@@ -16,6 +16,8 @@
 -- Explicit item costs of a node (tier 4/5) are reserved first and never used as currency.
 --
 -- RULES
+--   * 3.2.0: nodes are bought near an alien terminal of the own force (scripts/control/alien_console.lua);
+--     only nodes with `anywhere` (the terminal node) can be bought everywhere
 --   * tier k+1 opens when every node of tier k is unlocked (any number of tiers)
 --   * a node may require other nodes of its row (node.prerequisites)
 --   * 3.2.0: every prerequisite technology of the node's technology must be researched
@@ -144,6 +146,18 @@ function model.migrate()
         local force = game.forces[force_name]
         if force then model.sync_researched(force) end
     end
+
+    -- 3.2.0: forces that already used the tree (bought anywhere before) get the alien terminal
+    if not storage.ei.alien_console_migrated then
+        storage.ei.alien_console_migrated = true
+        for force_name in pairs(storage.ei.alien) do
+            local force = game.forces[force_name]
+            local technology = force and force.technologies["ei-alien-console"]
+            if technology and not technology.researched then
+                technology.researched = true
+            end
+        end
+    end
 end
 
 ---Returns true if every node of the tree is unlocked for the force.
@@ -234,6 +248,7 @@ function model.get_button_tags(node)
         meta = node.meta,
         prerequisites = node.prerequisites,
         items = node.items,
+        anywhere = node.anywhere,
     }
 end
 
@@ -417,6 +432,7 @@ end
 
 function model.try_select_alien(player, tags)
     if model.get_unlocked_state(tags.name, player.force) ~= "grey" then return end
+    if not ei_alien_console.check_access(player, tags) then return end
     local plan = can_pay(player, tags)
     if not plan then return end
 
@@ -484,6 +500,7 @@ function model.select_alien(player, tags)
     local node = tags.tags
     -- re-validate: the state and the inventory may have changed while the dialog was open
     if model.get_unlocked_state(node.name, player.force) ~= "grey" then return end
+    if not ei_alien_console.check_access(player, node) then return end
     local plan = can_pay(player, node)
     if not plan then return end
 
@@ -522,6 +539,9 @@ end
 ---Builds the alien page: balance header + all tiers with their buttons.
 ---@param player_index integer
 ---@param element LuaGuiElement
+-- first tier drawn on the deep space background
+local DEEP_SPACE_TIER = 4
+
 function model.make_tiers(player_index, element)
     local player = game.get_player(player_index)
     local force = player.force
@@ -536,6 +556,10 @@ function model.make_tiers(player_index, element)
     element.add{type = "label", caption = {"exotic-industries-informatron.alien-balance", data.alien}, style = "heading_2_label"}
     element.add{type = "label", caption = {"exotic-industries-informatron.alien-balance-items",
         player.get_item_count(PACK), player.get_item_count(DATA)}}
+    -- 3.2.0: nodes are bought at an alien terminal
+    local near = ei_alien_console.find_near(player) ~= nil
+    element.add{type = "label", caption = {"exotic-industries-informatron.alien-console-" .. (near and "near" or "far"),
+        ei_balance.alien_console.range}}
 
     for tier, tier_data in ipairs(alien_tree.tiers) do
         local tier_flow = element.add{
@@ -551,7 +575,14 @@ function model.make_tiers(player_index, element)
             style = "subheader_caption_label",
         }
 
-        local row_flow = tier_flow.add{type = "flow", name = "row-flow", direction = "horizontal"}
+        -- 3.2.0: every tier sits in a space frame (deep space for tiers 4 and 5)
+        local space_frame = tier_flow.add{
+            type = "frame",
+            name = "space-frame",
+            direction = "vertical",
+            style = tier >= DEEP_SPACE_TIER and "ei-deep-space-frame" or "ei-space-frame",
+        }
+        local row_flow = space_frame.add{type = "flow", name = "row-flow", direction = "horizontal"}
 
         -- Tier: |row 1|row 2|row 3|, a row stacks its nodes by height
         for row, row_data in ipairs(tier_data) do
@@ -602,7 +633,7 @@ local function spill_resonance_data(entity)
 end
 
 ---Shows "+N alien knowledge" above a position for one force.
-local function show_points(surface, position, force, amount)
+function model.show_points(surface, position, force, amount)
     rendering.draw_text{
         text = {"exotic-industries.alien-knowledge-flying-text", amount},
         surface = surface,
@@ -623,13 +654,17 @@ function model.repair_artifact(event)
         if entity.valid and model.repair_tools[item].targets[entity.name] then
 
             -- spawn repaired entity and destroy old one
+            local tool = model.repair_tools[item]
             local surface = entity.surface
             local position = entity.position
-            local force = entity.force
+            -- alien knowledge goes to the repairing player's force (artifacts are neutral)
+            local reward_force = player and player.force or game.forces["player"]
+            -- 3.2.0: some repaired artifacts (alien terminal) belong to the repairing force
+            local force = tool.own_force and reward_force or entity.force
             entity.destroy()
 
             local new_entity = surface.create_entity{
-                name = model.repair_tools[item].result,
+                name = tool.result,
                 position = position,
                 force = force,
                 raise_built = false,
@@ -646,9 +681,11 @@ function model.repair_artifact(event)
                 -- repaired structures on Gaia turn into their Gaia variant
                 ei_gaia.swap_entity(new_entity)
             end
+            -- repaired terminal: registration + one-time knowledge bonus
+            if new_entity and new_entity.valid and new_entity.name == ei_alien_console.NAME then
+                ei_alien_console.on_repaired(new_entity, reward_force)
+            end
 
-            -- alien knowledge goes to the repairing player's force (artifacts are neutral)
-            local reward_force = player and player.force or game.forces["player"]
             if model.add_alien(reward_force, ei_balance.alien_points_per_repair) then
                 reward_force.print({"exotic-industries.alien-knowledge-gained", ei_balance.alien_points_per_repair})
             end
@@ -670,7 +707,7 @@ function model.on_artifact_salvaged(entity, force)
 
     local amount = ei_balance.alien_points_per_salvage
     if model.add_alien(force, amount) then
-        show_points(entity.surface, entity.position, force, amount)
+        model.show_points(entity.surface, entity.position, force, amount)
     end
 end
 

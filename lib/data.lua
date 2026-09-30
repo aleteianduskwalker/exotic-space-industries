@@ -746,6 +746,15 @@ ei_data.repair_tools = {
             ["ei-alien-beacon_off-3"] = true,
         },
         result = "ei-alien-beacon"
+    },
+    -- 3.2.0: broken alien terminal (POI "gaia-terminal_ruin"). The repaired terminal belongs to the
+    -- repairing force (own_force) and grants a one-time knowledge bonus (balance.alien_console).
+    ["ei-alien-console-repair"] = {
+        targets = {
+            ["ei-alien-console_off"] = true,
+        },
+        result = "ei-alien-console",
+        own_force = true,
     }
 }
 
