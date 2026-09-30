@@ -179,7 +179,7 @@ for _, pack_name in pairs(big_lab.inputs) do
             name = recipe_name,
             type = "recipe",
             localised_name = {"recipe-name.ei-data-center-pack", pack.localised_name or {"item-name."..pack_name}},
-            localised_description = {"recipe-description.ei-data-center-pack", computing_power},
+            localised_description = {"recipe-description.ei-data-center-pack"},
             category = "ei-data-center",
             energy_required = time_per_pack * balance.time_multiplier,
             ingredients = {
