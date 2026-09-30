@@ -75,6 +75,11 @@ function ei_global.check_init()
     ei.storm_emp = ei.storm_emp or {}                         -- storm_emp.lua
     ei.void_rift_generators = ei.void_rift_generators or {}   -- gaia.lua
 
+    -- 3.2.0: radio stations (radio_station.lua)
+    ei.radio = ei.radio or {}
+    ei.radio.stations = ei.radio.stations or {}
+    ei.radio.transmitters = ei.radio.transmitters or {}
+
     -- master/slave registries (copper/iron beacons) and fluid handling entities
     ei.copper_beacon = ei.copper_beacon or {}
     ei.copper_beacon.master = ei.copper_beacon.master or {}

@@ -116,7 +116,7 @@ end
 ---Short beam from the fueler to the target as visual feedback.
 local function cast_beam(fueler, target)
     fueler.surface.create_entity({
-        name = "ei_fuel-beam",
+        name = "ei-fuel-beam",
         position = fueler.position,
         source_offset = {0, -1},
         source = fueler,
@@ -187,7 +187,7 @@ local function update_fueler(data)
 
     local targets = fueler.surface.find_entities_filtered{
         position = fueler.position,
-        radius = settings.startup["ei_fueler_range"].value,
+        radius = settings.startup["ei-fueler_range"].value,
         type = {target_type, "ammo-turret", "artillery-turret", "artillery-wagon"},
     }
 
@@ -277,7 +277,7 @@ function model.rebuild()
     storage.ei.fueler = {}
 
     for _, surface in pairs(game.surfaces) do
-        for _, entity in pairs(surface.find_entities_filtered{name = "ei_fueler"}) do
+        for _, entity in pairs(surface.find_entities_filtered{name = "ei-fueler"}) do
             local legacy_key = surface.name .. "|" .. entity.position.x .. "|" .. entity.position.y
             model.register_fueler(entity, old[entity.unit_number] or old[legacy_key])
         end
@@ -307,14 +307,14 @@ end
 ------------------------------------------------------------------------------------------------------
 
 function model.on_built_entity(entity)
-    if util.is_valid(entity) and entity.name == "ei_fueler" then
+    if util.is_valid(entity) and entity.name == "ei-fueler" then
         model.register_fueler(entity)
     end
 end
 
 ---Cloned fuelers (e.g. Warp Drive Machine moving a ship) keep their settings.
 function model.on_entity_cloned(source, destination)
-    if destination.name ~= "ei_fueler" then
+    if destination.name ~= "ei-fueler" then
         return
     end
     check_global()
@@ -322,7 +322,7 @@ function model.on_entity_cloned(source, destination)
 end
 
 function model.on_destroyed_entity(entity, transfer)
-    if util.is_valid(entity) and entity.name == "ei_fueler" then
+    if util.is_valid(entity) and entity.name == "ei-fueler" then
         model.unregister_fueler(entity, transfer)
     end
 end
@@ -333,7 +333,7 @@ end
 ---Returns the registry entry of the fueler the player has opened (registers it lazily).
 local function opened_fueler(player)
     local entity = util.opened_entity(player)
-    if not entity or entity.name ~= "ei_fueler" then
+    if not entity or entity.name ~= "ei-fueler" then
         return nil
     end
     check_global()
@@ -348,10 +348,10 @@ function model.open_gui(player)
 
     local root = player.gui.relative.add{
         type = "frame",
-        name = "ei_fueler-console",
+        name = "ei-fueler-console",
         anchor = {
             gui = defines.relative_gui_type.container_gui,
-            name = "ei_fueler",
+            name = "ei-fueler",
             position = defines.relative_gui_position.right,
         },
         direction = "vertical",
@@ -360,13 +360,13 @@ function model.open_gui(player)
     do -- Titlebar
         local titlebar = root.add{type = "flow", direction = "horizontal"}
         titlebar.add{type = "label", caption = {"exotic-industries-fueler.fueler-gui-title"}, style = "frame_title"}
-        titlebar.add{type = "empty-widget", style = "ei_titlebar_draggable_spacer", ignored_by_interaction = true}
+        titlebar.add{type = "empty-widget", style = "ei-titlebar-draggable-spacer", ignored_by_interaction = true}
         titlebar.add{
             type = "sprite-button",
             sprite = "virtual-signal/informatron",
             style = "frame_action_button",
             tags = {
-                parent_gui = "ei_fueler-console",
+                parent_gui = "ei-fueler-console",
                 action = "goto-informatron",
                 interface = "exotic-industries-fueler-informatron",
                 page = "exotic-industries-fueler-informatron",
@@ -376,13 +376,13 @@ function model.open_gui(player)
 
     local main_container = root.add{type = "frame", name = "main-container", direction = "vertical", style = "inside_shallow_frame"}
 
-    main_container.add{type = "frame", style = "ei_subheader_frame"}.add{
+    main_container.add{type = "frame", style = "ei-subheader-frame"}.add{
         type = "label",
         caption = {"exotic-industries-fueler.fueler-gui-control-title"},
         style = "subheader_caption_label",
     }
 
-    local control_flow = main_container.add{type = "flow", name = "control-flow", direction = "vertical", style = "ei_inner_content_flow"}
+    local control_flow = main_container.add{type = "flow", name = "control-flow", direction = "vertical", style = "ei-inner-content-flow"}
 
     control_flow.add{
         type = "label",
@@ -396,11 +396,11 @@ function model.open_gui(player)
             type = "sprite-button",
             sprite = "entity/" .. target_name,
             tooltip = {"entity-name." .. target_name},
-            tags = {action = "set-target-type", parent_gui = "ei_fueler-console", target_type = target_name},
-            style = "ei_slot_button_radio",
+            tags = {action = "set-target-type", parent_gui = "ei-fueler-console", target_type = target_name},
+            style = "ei-slot-button-radio",
         }
     end
-    control_flow.add{type = "empty-widget", style = "ei_vertical_pusher"}
+    control_flow.add{type = "empty-widget", style = "ei-vertical-pusher"}
 
     control_flow.add{
         type = "label",
@@ -411,27 +411,27 @@ function model.open_gui(player)
     local equipment_frame = control_flow.add{type = "frame", name = "equipment-frame", style = "slot_button_deep_frame"}
     equipment_frame.add{
         type = "sprite-button",
-        sprite = "ei_vehicle",
+        sprite = "ei-vehicle",
         tooltip = {"exotic-industries-fueler.vehicle"},
-        tags = {action = "set-equipment-type", parent_gui = "ei_fueler-console", equipment_type = false},
-        style = "ei_slot_button_radio",
+        tags = {action = "set-equipment-type", parent_gui = "ei-fueler-console", equipment_type = false},
+        style = "ei-slot-button-radio",
     }
     equipment_frame.add{
         type = "sprite-button",
-        sprite = "ei_equipment",
+        sprite = "ei-equipment",
         tooltip = {"exotic-industries-fueler.equipment"},
-        tags = {action = "set-equipment-type", parent_gui = "ei_fueler-console", equipment_type = true},
-        style = "ei_slot_button_radio",
+        tags = {action = "set-equipment-type", parent_gui = "ei-fueler-console", equipment_type = true},
+        style = "ei-slot-button-radio",
     }
 
-    control_flow.add{type = "empty-widget", style = "ei_vertical_pusher"}
+    control_flow.add{type = "empty-widget", style = "ei-vertical-pusher"}
 
     model.update_gui(player)
 end
 
 ---Syncs the radio buttons with the settings of the opened fueler.
 function model.update_gui(player)
-    local root = player.gui.relative["ei_fueler-console"]
+    local root = player.gui.relative["ei-fueler-console"]
     local data = opened_fueler(player)
     if not root or not data then
         return
@@ -449,7 +449,7 @@ function model.update_gui(player)
 end
 
 function model.close_gui(player)
-    local root = player.gui.relative["ei_fueler-console"]
+    local root = player.gui.relative["ei-fueler-console"]
     if root then
         root.destroy()
     end

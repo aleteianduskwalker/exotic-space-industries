@@ -38,13 +38,13 @@ ei_lib.copy_science_packs("science-pack-productivity","promethium-science-pack")
 ei_lib.set_age_packs("ei-electricity-power","electricity-age")
 ei_lib.set_age_packs("electric-engine","electricity-age")
 ei_lib.set_age_packs("electric-mining-drill","electricity-age")
-ei_lib.set_age_packs("ei_fueler","electricity-age")
+ei_lib.set_age_packs("ei-fueler","electricity-age")
 ei_lib.set_age_packs("cliff-explosives","electricity-age")
 
 if ei_lib.config("no-triggers") then
   for _,tech in pairs(data.raw.technology) do
     local trigger = data.raw.technology[tech.name]["research_trigger"]
-    -- "scripted" triggers (alien tree tiers 4/5) are unlocked by the mod itself, not by gameplay
+    -- "scripted" triggers (alien tech tree technologies) are unlocked by the mod itself, not by gameplay
     if trigger and trigger.type ~= "scripted" then
       if tech.age then ei_lib.set_age_packs(tech.name,tech.age)
       else ei_lib.set_age_packs(tech.name,"computer-age") end

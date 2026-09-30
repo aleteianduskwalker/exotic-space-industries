@@ -33,12 +33,12 @@ end
 
 data.raw["item"]["ei-fluid-boiler"].localised_description = {
     "",
-    {"item-description.ei_fluid-boiler"},
+    {"item-description.ei-fluid-boiler"},
     icon_table
 }
 data.raw["item"]["ei-fluid-heater"].localised_description = {
     "",
-    {"item-description.ei_fluid-heater"},
+    {"item-description.ei-fluid-heater"},
     icon_table
 }
 

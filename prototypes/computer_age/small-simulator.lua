@@ -48,6 +48,9 @@ data:extend({
     {
         name = "ei-space-data",
         type = "item",
+        -- only an icon source for the space science pack (scripts/data-final-updates/items.lua);
+        -- every recipe using it is swapped to the space science pack, so the item stays hidden
+        hidden = true,
         icon = ei_graphics_item_path.."space-data.png",
         icon_size = 128,
         subgroup = "ei-refining-tech",

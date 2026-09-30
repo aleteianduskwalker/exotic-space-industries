@@ -32,5 +32,5 @@ require("resonance-synthesizer")
 require("resonance-pack")
 -- void rift generator + alien tier 5 technology "threshold engineering"
 require("void-rift-generator")
--- conduit: lightning attractor that harvests the Gaia storms (unlocked with ei-gaia)
+-- conduit: lightning attractor that harvests the Gaia storms (alien tree tier 1) + ei-conduit-gaia
 require("conduit")

@@ -1,33 +1,26 @@
 data:extend({
   {
-      name = "ei_plasma-cube-logo",
+      name = "ei-plasma-cube-logo",
       type = "sprite",
       filename = ei_graphics_path.."graphics/128_placeholder.png",
       size = 128,
   },
   {
-      name = "ei_age_progression",
-      type = "sprite",
-      filename = ei_graphics_other_path.."age_progression.png",
-      width = 384,
-      height = 256,
-  },
-  {
-      name = "ei_uranium_patch",
+      name = "ei-uranium_patch",
       type = "sprite",
       filename = ei_graphics_entity_path.."uranium-patch.png",
       width = 567,
       height = 565,
   },
   {
-      name = "ei_artifact",
+      name = "ei-artifact",
       type = "sprite",
       filename = ei_graphics_entity_path.."alien-beacon_off-2.png",
       width = 512,
       height = 512,
   },
   {
-      name = "ei_gate",
+      name = "ei-gate",
       type = "sprite",
       filename = ei_graphics_entity_2_path.."gate.png",
       width = 512*2,
@@ -35,21 +28,14 @@ data:extend({
       scale = 0.5,
   },
   {
-      name = "ei_drone",
-      type = "sprite",
-      filename = ei_graphics_entity_2_path.."drone-port.png",
-      width = 512,
-      height = 512,
-  },
-  {
-      name = "ei_train_progression",
+      name = "ei-train_progression",
       type = "sprite",
       filename = ei_graphics_other_path.."train_progression.png",
       width = 820,
       height = 410,
   },
   {
-      name = "ei_robots",
+      name = "ei-robots",
       type = "sprite",
       filename = ei_graphics_other_path.."robots.png",
       width = 1166,
@@ -57,7 +43,7 @@ data:extend({
       scale = 0.75,
   },
   {
-      name = "ei_beacons",
+      name = "ei-beacons",
       type = "sprite",
       filename = ei_graphics_other_path.."beacons.png",
       width = 981,
@@ -65,42 +51,35 @@ data:extend({
       scale = 0.75,
   },
   {
-      name = "ei_pipes",
+      name = "ei-pipes",
       type = "sprite",
       filename = ei_graphics_path.."graphics/data-pipes/pipe-straight-vertical-single.png",
       width = 160,
       height = 160,
   },
   {
-      name = "ei_space_destinations",
-      type = "sprite",
-      filename = ei_graphics_tech_path.."black-hole-exploration.png",
-      width = 256,
-      height = 256,
-  },
-  {
-      name = "ei_induction_matrix",
+      name = "ei-induction_matrix",
       type = "sprite",
       filename = ei_graphics_tech_path.."induction-matrix-core.png",
       width = 256,
       height = 256,
   },
   {
-      name = "ei_exotic_stabilizers",
+      name = "ei-exotic_stabilizers",
       type = "sprite",
       filename = ei_graphics_entity_path.."alien-stabilizer.png",
       width = 512,
       height = 512,
   },
   {
-      name = "ei_fission_reactors",
+      name = "ei-fission_reactors",
       type = "sprite",
       filename = ei_graphics_entity_path.."high-temperature-reactor.png",
       width = 512,
       height = 512,
   },
   {
-      name = "ei_fusion_power",
+      name = "ei-fusion_power",
       type = "sprite",
       filename = ei_graphics_other_path.."fusion.png",
       width = 1108,
@@ -108,51 +87,23 @@ data:extend({
       scale = 0.75,
   },
   {
-      name = "ei_black_hole",
+      name = "ei-black_hole",
       type = "sprite",
       filename = ei_graphics_tech_path.."black-hole.png",
       width = 256,
       height = 256,
   },
   {
-      name = "ei_compilatron",
+      name = "ei-compilatron",
       type = "sprite",
       filename = ei_graphics_other_path.."compilatron.png",
-      width = 64,
-      height = 64,
-  },
-  {
-      name = "ei_lab",
-      type = "sprite",
-      filename = ei_graphics_other_path.."lab.png",
-      width = 64,
-      height = 64,
-  },
-  {
-      name = "ei_rocket-silo",
-      type = "sprite",
-      filename = ei_graphics_other_path.."rocket-silo.png",
       width = 64,
       height = 64,
   },
 
   -- Knowledge system
   {
-      name = "ei_part",
-      type = "sprite",
-      filename = ei_graphics_other_path.."schematic.png",
-      width = 128,
-      height = 128,
-  },
-  {
-      name = "ei_schematic",
-      type = "sprite",
-      filename = ei_graphics_other_path.."blueprint.png",
-      width = 128,
-      height = 128,
-  },
-  {
-      name = "ei_knowledge-gate",
+      name = "ei-knowledge-gate",
       type = "sprite",
       filename = ei_graphics_tech_2_path.."gate.png",
       width = 256,
@@ -160,15 +111,7 @@ data:extend({
       scale = 0.5,
   },
   {
-      name = "ei_knowledge-crystal-accumulator",
-      type = "sprite",
-      filename = ei_graphics_tech_2_path.."crystal-accumulator.png",
-      width = 256,
-      height = 256,
-      scale = 0.5,
-  },
-  {
-      name = "ei_knowledge-crystal-accumulator-repair",
+      name = "ei-knowledge-crystal-accumulator-repair",
       type = "sprite",
       filename = ei_graphics_tech_2_path.."crystal-accumulator-repair.png",
       width = 256,
@@ -176,7 +119,7 @@ data:extend({
       scale = 0.5,
   },
   {
-      name = "ei_knowledge-farstation-repair",
+      name = "ei-knowledge-farstation-repair",
       type = "sprite",
       filename = ei_graphics_tech_2_path.."farstation-repair.png",
       width = 256,
@@ -184,7 +127,7 @@ data:extend({
       scale = 0.5,
   },
   {
-      name = "ei_knowledge-farstation",
+      name = "ei-knowledge-farstation",
       type = "sprite",
       filename = ei_graphics_tech_2_path.."farstation.png",
       width = 256,
@@ -192,7 +135,7 @@ data:extend({
       scale = 0.5,
   },
   {
-      name = "ei_knowledge-alien-beacon-repair",
+      name = "ei-knowledge-alien-beacon-repair",
       type = "sprite",
       filename = ei_graphics_tech_2_path.."alien-beacon-repair.png",
       width = 256,
@@ -200,7 +143,7 @@ data:extend({
       scale = 0.5,
   },
   {
-      name = "ei_knowledge-bio-chamber",
+      name = "ei-knowledge-bio-chamber",
       type = "sprite",
       filename = ei_graphics_tech_path.."bio-chamber.png",
       width = 256,
@@ -208,7 +151,7 @@ data:extend({
       scale = 0.5,
   },
   {
-      name = "ei_knowledge-bio_insulated-wire",
+      name = "ei-knowledge-bio_insulated-wire",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_insulated-wire.png",
       width = 64,
@@ -216,7 +159,7 @@ data:extend({
       scale = 2,
   },
   {
-      name = "ei_knowledge-bio_energy-crystal",
+      name = "ei-knowledge-bio_energy-crystal",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_energy-crystal.png",
       width = 64,
@@ -224,7 +167,7 @@ data:extend({
       scale = 2,
   },
   {
-      name = "ei_knowledge-bio_high-energy-crystal",
+      name = "ei-knowledge-bio_high-energy-crystal",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_high-energy-crystal.png",
       width = 64,
@@ -232,7 +175,7 @@ data:extend({
       scale = 2,
   },
   {
-      name = "ei_knowledge-bio_hydrofluoric-acid",
+      name = "ei-knowledge-bio_hydrofluoric-acid",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_hydrofluoric-acid.png",
       width = 64,
@@ -240,7 +183,7 @@ data:extend({
       scale = 2,
   },
   {
-      name = "ei_knowledge-bio_nitric-acid",
+      name = "ei-knowledge-bio_nitric-acid",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_nitric-acid.png",
       width = 64,
@@ -248,7 +191,7 @@ data:extend({
       scale = 2,
   },
   {
-      name = "ei_knowledge-bio_electronic-parts",
+      name = "ei-knowledge-bio_electronic-parts",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_electronic-parts.png",
       width = 64,
@@ -256,7 +199,7 @@ data:extend({
       scale = 2,
   },
   {
-      name = "ei_knowledge-bio_carbon-structure",
+      name = "ei-knowledge-bio_carbon-structure",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_carbon-structure.png",
       width = 64,
@@ -264,7 +207,7 @@ data:extend({
       scale = 2,
   },
   {
-      name = "ei_knowledge-bio_magnet",
+      name = "ei-knowledge-bio_magnet",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_magnet.png",
       width = 64,
@@ -272,7 +215,7 @@ data:extend({
       scale = 2,
   },
   {
-      name = "ei_knowledge-bio_rocket-fuel",
+      name = "ei-knowledge-bio_rocket-fuel",
       type = "sprite",
       filename = ei_graphics_other_path.."bio_rocket-fuel.png",
       width = 64,
@@ -281,15 +224,7 @@ data:extend({
   },
   -- 3.1.0: alien tech tree nodes (scripts/control/alien_system.lua -> model.get_button_sprite)
   {
-      name = "ei_knowledge-resonance-synthesizer",
-      type = "sprite",
-      filename = ei_graphics_tech_path.."computer-core.png",
-      width = 256,
-      height = 256,
-      scale = 0.5,
-  },
-  {
-      name = "ei_knowledge-resonant-computation",
+      name = "ei-knowledge-resonant-computation",
       type = "sprite",
       filename = ei_graphics_tech_path.."alien-computer-age-tech.png",
       width = 256,
@@ -297,7 +232,7 @@ data:extend({
       scale = 0.5,
   },
   {
-      name = "ei_knowledge-threshold-engineering",
+      name = "ei-knowledge-threshold-engineering",
       type = "sprite",
       filename = ei_void_engine_path.."void-engine.png",
       width = 256,
@@ -306,7 +241,7 @@ data:extend({
   },
   -- 3.1.0: InformaTron pages of the Gaia hub systems
   {
-      name = "ei_conduit",
+      name = "ei-conduit",
       type = "sprite",
       filename = ei_path.."graphics/conduit/conduit-icon-big.png",
       width = 640,
@@ -314,7 +249,7 @@ data:extend({
       scale = 0.2,
   },
   {
-      name = "ei_data_center",
+      name = "ei-data_center",
       type = "sprite",
       filename = ei_path.."graphics/cybernetics-facility/cybernetics-facility-icon-big.png",
       width = 640,

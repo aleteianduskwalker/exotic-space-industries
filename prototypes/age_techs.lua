@@ -1,4 +1,5 @@
--- store prototypes for age techs here to use them in control scripting
+-- Age technologies ("ei-<age>-age"). They are pure metadata/milestones of the tech tree:
+-- the old "research N % of the previous age" gate (hidden "-dummy" techs) was removed in 3.2.0.
 
 local ei_lib = require("lib/lib")
 local ei_data = require("lib/data")
@@ -140,114 +141,14 @@ data:extend({
         visible_when_disabled = true,
     },
 
-
-    -- dummy techs to have all of their age as prerequisites for storage of "age-marks"
-    {
-        name = "ei-steam-age-dummy",
-        type = "technology",
-        icon = ei_lib.empty_sprite(256),
-        icon_size = 256,
-        prerequisites = {},
-        effects = {},
-        unit = {
-            count = 100,
-            ingredients = science["dark-age"],
-            time = 100
-        },
-        hidden = true,
-    },
-    {
-        name = "ei-electricity-age-dummy",
-        type = "technology",
-        icon = ei_lib.empty_sprite(256),
-        icon_size = 256,
-        prerequisites = {},
-        effects = {},
-        unit = {
-            count = 100,
-            ingredients = science["dark-age"],
-            time = 100
-        },
-        hidden = true,
-    },
-    {
-        name = "ei-computer-age-dummy",
-        type = "technology",
-        icon = ei_lib.empty_sprite(256),
-        icon_size = 256,
-        prerequisites = {},
-        effects = {},
-        unit = {
-            count = 100,
-            ingredients = science["dark-age"],
-            time = 100
-        },
-        hidden = true,
-    },
-    {
-        name = "ei-quantum-age-dummy",
-        type = "technology",
-        icon = ei_lib.empty_sprite(256),
-        icon_size = 256,
-        prerequisites = {},
-        effects = {},
-        unit = {
-            count = 100,
-            ingredients = science["dark-age"],
-            time = 100
-        },
-        hidden = true,
-    },
-    {
-        name = "ei-exotic-age-dummy",
-        type = "technology",
-        icon = ei_lib.empty_sprite(256),
-        icon_size = 256,
-        prerequisites = {},
-        effects = {},
-        unit = {
-            count = 100,
-            ingredients = science["dark-age"],
-            time = 100
-        },
-        hidden = true,
-    },
 })
 
--- if in dev mode unhidde dummy techs
+-- dev mode: make sure every age technology is available
 if ei_mod.dev_mode == true then
-
-    for _, tech in pairs(data.raw.technology) do
-        if string.find(tech.name, "-dummy") then
-            tech.hidden = false
-        end
-
-        if tech.name == "ei-dark-age" then
-            tech.enabled = true
-        end
-        if tech.name == "ei-steam-age" then
-            tech.enabled = true
-        end
-        if tech.name == "ei-electricity-age" then
-            tech.enabled = true
-        end
-        if tech.name == "ei-computer-age" then
-            tech.enabled = true
-        end
-        if tech.name == "ei-quantum-age" then
-            tech.enabled = true
-        end
-        if tech.name == "ei-exotic-age" then
+    for _, age in pairs({"dark", "steam", "electricity", "computer", "quantum", "exotic"}) do
+        local tech = data.raw.technology["ei-" .. age .. "-age"]
+        if tech then
             tech.enabled = true
         end
     end
-   
-    if not ei_mod.show_dummy then
-        for _, tech in pairs(data.raw.technology) do
-            if string.find(tech.name, "-dummy") then
-                tech.hidden = true
-            end
-        end
-    end
-
 end

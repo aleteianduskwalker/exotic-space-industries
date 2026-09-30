@@ -120,6 +120,19 @@ if gaia_accumulator then
     end
 end
 
+-- broken alien artifacts: salvage loot, lightning immunity (3.2.0)
+require("scripts/data-final-updates/alien_artifacts")
+
+-- filled barrels of ESI fluids get a generic description naming their fluid (3.2.0)
+for name, item in pairs(data.raw.item) do
+    if string.sub(name, 1, 3) == "ei-" and string.sub(name, -7) == "-barrel" and not item.localised_description then
+        local fluid_name = string.sub(name, 1, -8)
+        if data.raw.fluid[fluid_name] then
+            item.localised_description = {"item-description.ei-filled-barrel", {"fluid-name." .. fluid_name}}
+        end
+    end
+end
+
 --====================================================================================================
 --TECHNOLOGIES
 --====================================================================================================
@@ -152,7 +165,12 @@ data.raw["lightning-attractor"]["fulgoran-ruin-attractor"].range_elongation = 25
 
 for _, lightning in pairs(data.raw["lightning"]) do
     lightning.attracted_volume_modifier = 0.0
-    lightning.damage = lightning.damage * 2.0
+    -- damage is a number in Factorio 2.0 (a {amount, type} table in later versions)
+    if type(lightning.damage) == "table" then
+        lightning.damage.amount = (lightning.damage.amount or 100) * 2.0
+    else
+        lightning.damage = (lightning.damage or 100) * 2.0
+    end
 end
 
 -- Storm EMP (design doc §7): every strike raises the script event "ei-storm-emp".
@@ -282,3 +300,6 @@ require("scripts/data-final-updates/productivity_loops")
 
 -- technologies must not require science packs they unlock themselves
 require("scripts/data-final-updates/tech_pack_cycles")
+
+-- alien tree technologies: script-only, visible, dependent on the resonance synthesizer (3.2.0)
+require("scripts/data-final-updates/alien_tree_techs")

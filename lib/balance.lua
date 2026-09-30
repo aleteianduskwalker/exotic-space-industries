@@ -38,12 +38,15 @@ ei_balance.gaia_surface_conditions = {
 -- repairing an alien artifact spills this many ei-resonance-data around the repaired structure
 ei_balance.resonance_data_repair_drop = {min = 2, max = 4}
 
--- ei-resonance-synthesizer: automated, renewable resonance data (unlocked in alien tier 1)
+-- ei-resonance-synthesizer: renewable resonance data (lab technology ei-resonance-synthesizer).
+-- 3.2.0: the recipe multiplies existing data (1 -> 2) instead of creating it from nothing, so the
+-- first pieces always come from repaired / salvaged artifacts.
 ei_balance.resonance_data_recipe = {
     morphium = 100,          -- ei-morphium (fluid)
     computing_power = 50,    -- ei-computing-power (fluid, data cable)
-    result = 3,              -- ei-resonance-data per craft
-    time = 30,               -- seconds per craft (=> 6 per minute per synthesizer)
+    resonance_data = 1,      -- consumed ei-resonance-data per craft
+    result = 2,              -- produced ei-resonance-data per craft (net +1)
+    time = 30,               -- seconds per craft
 }
 
 -- ei-alien-resonance-pack: second alien science tier (unlocked by alien tier 4)
@@ -58,12 +61,42 @@ ei_balance.resonance_pack_recipe = {
 --====================================================================================================
 -- ALIEN TECH TREE (design doc §4)
 --====================================================================================================
--- Currency: "alien knowledge" points, earned ONLY by repairing alien artifacts.
+-- Currency: "alien knowledge" points, earned by repairing alien artifacts and (3.2.0) by salvaging
+-- broken ones on Gaia. The tree itself is defined in lib/alien_tree.lua.
 -- [ASSUMPTION] 100 points per repair keeps the author's original node costs (100 .. 2000)
 -- meaningful: 1 repair = one tier 1 node, 20 repairs = the most expensive tier 3 node.
 ei_balance.alien_points_per_repair = 100
 
--- Tier 4/5 costs (N = 10, design doc §4 + brief log §2.2).
+-- 3.2.0: mining / deconstructing / destroying a broken (unrepaired) artifact on Gaia grants 10 % of
+-- the repair reward. No points are granted anymore once every node of the tree is unlocked.
+ei_balance.alien_points_per_salvage = ei_balance.alien_points_per_repair / 10
+
+-- 3.2.0: alien knowledge can be substituted from the player's main inventory when a node is paid.
+-- Payment priority: alien knowledge points -> alien resonance packs -> resonance data.
+ei_balance.alien_points_per_resonance_pack = 10   -- 1 ei-alien-resonance-pack = 10 points
+ei_balance.resonance_data_per_alien_point = 10    -- 10 ei-resonance-data = 1 point
+
+-- 3.2.0: loot of broken (unrepaired) artifacts. Salvaging them no longer returns the ruin itself but
+-- a small random amount of high tier resources ({name, min, max, probability}); used for both mining
+-- (minable.results) and destruction (loot). Keys are the broken entity name prefixes.
+ei_balance.artifact_salvage = {
+    ["ei-crystal-accumulator_off"] = {
+        {"ei-high-energy-crystal", 1, 1, 1},
+        {"ei-energy-crystal", 2, 4, 1},
+    },
+    ["ei-farstation_off"] = {
+        {"ei-magnet", 1, 3, 1},
+        {"ei-electronic-parts", 2, 5, 1},
+        {"ei-high-energy-crystal", 1, 1, 0.5},
+    },
+    ["ei-alien-beacon_off"] = {
+        {"ei-high-energy-crystal", 1, 2, 1},
+        {"ei-alien-resin", 2, 5, 1},
+        {"ei-resonance-data", 1, 1, 0.5},
+    },
+}
+
+-- Tier 4/5 costs (N = 10, design doc §4 + brief log §2.2). Every node of a tier shares its cost.
 -- `points`: alien knowledge (N repairs worth of points)
 -- `items`:  additionally consumed from the player's main inventory when the node is unlocked
 ei_balance.alien_tech_tier4_cost = {
@@ -114,6 +147,8 @@ ei_balance.storm_emp = {
 -- CONDUIT (lightning attractor, design doc §8)
 --====================================================================================================
 
+-- ei-conduit-gaia (3.2.0): non-craftable copy that replaces the fulgoran ruin attractors on Gaia.
+-- It only attracts lightning (no energy source) and can not be mined or destroyed.
 ei_balance.conduit = {
     efficiency = 0.8,            -- share of the strike energy converted to electricity
     buffer = "40MJ",             -- energy_source.buffer_capacity
@@ -125,11 +160,26 @@ ei_balance.conduit = {
 -- DATA CENTER (brief log §2.6, design doc §12)
 --====================================================================================================
 
+-- 3.2.0: every data center recipe produces exactly 1 pack and costs 1 computing power per UNIQUE
+-- component in the recursive production tree of the pack (see data_center_recipes.lua).
 ei_balance.data_center = {
     time_multiplier = 10,                -- craft time = original science pack recipe time * 10
-    computing_power_per_pack = 5,        -- [ASSUMPTION] ei-computing-power per produced pack
     fallback_time = 5,                   -- [ASSUMPTION] seconds if a pack has no recipe to copy
+    fallback_computing_power = 100,      -- used when the component walk is too deep / too large
+    max_depth = 25,                      -- recursion depth limit of the component walk
+    max_components = 400,                -- abort the walk after this many unique components
+    max_visited_recipes = 2000,          -- abort the walk after this many inspected recipes
     include_alien_packs = true,          -- false removes the mod's own alien packs from the list
+}
+
+--====================================================================================================
+-- RADIO STATIONS (3.2.0)
+--====================================================================================================
+-- Wireless circuit network channels: one transmitter per channel, any number of receivers.
+ei_balance.radio_station = {
+    energy_usage = "100kW",              -- ei-radio-station (same surface only)
+    crystal_energy_usage = "10MW",       -- ei-crystal-radio-station (every surface)
+    update_interval = 6,                 -- ticks between two signal transfers
 }
 
 return ei_balance

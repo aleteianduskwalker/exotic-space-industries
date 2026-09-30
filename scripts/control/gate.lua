@@ -5,10 +5,9 @@ local model = {}
 --GATE
 --====================================================================================================
 
--- teleport costs in MJ
+-- transport costs in MJ (the gate only transports items; the old drone/player teleport was removed)
 -- 50MW spare per portal -> 100 Items/s
 model.energy_costs = {
-    ["player"] = 10,
     ["item"] = 1
 }
 
@@ -289,11 +288,11 @@ function model.destroy_gate(gate, container)
 end
 
 
-function model.check_for_teleport(unit, gate)
-
-    -- loop over all gates and check if there is a player in range
-    -- if so check if enough power and if endpoint has exit
-    -- spawn in exit if not and teleport
+---Moves items from the gate container into the exit container (if powered, switched on and the
+---exit is valid). Every transported item costs model.energy_costs.item MJ.
+---@param unit integer gate unit number
+---@param gate LuaEntity
+function model.transfer_items(unit, gate)
 
     if not model.gate_state(gate) then
         return
@@ -446,14 +445,8 @@ function model.pay_energy(gate, tablein)
     -- if so, pay and return true
 
     local energy = 0
-    for i,v in ipairs(tablein) do
-        if type(v) == "string" and v == "player" then
-            energy = energy + model.energy_costs.player
-        end
-
-        if type(v) == "table" then --for item
-            energy = energy + model.energy_costs.item * v.count
-        end
+    for _, v in ipairs(tablein) do
+        energy = energy + model.energy_costs.item * v.count
     end
 
     -- change to Mj
@@ -467,27 +460,6 @@ function model.pay_energy(gate, tablein)
     return true
 
 end
-
----NOTE (3.1.0 audit): currently not called anywhere - player teleportation through the gate was
----never finished by the original author (only items are transferred, players use the remote).
----Kept for a future implementation; it already respects the hub rule.
-function model.teleport_player(character, gate)
-
-    local player = character.player
-    if not player then
-        return
-    end
-
-    local exit = storage.ei.gate.gate[gate.unit_number].exit
-    if not model.is_allowed_exit(gate.surface, game.get_surface(exit.surface or "")) then
-        return
-    end
-
-    -- teleport player
-    player.teleport({exit.x, exit.y}, exit.surface)
-
-end
-
 
 function model.update_energy(unit, gate)
 
@@ -683,7 +655,7 @@ function model.open_gui(player)
 
         titlebar.add{
             type = "empty-widget",
-            style = "ei_titlebar_nondraggable_spacer",
+            style = "ei-titlebar-nondraggable-spacer",
             ignored_by_interaction = true
         }
 
@@ -710,7 +682,7 @@ function model.open_gui(player)
     do -- Status subheader
         main_container.add{
             type = "frame",
-            style = "ei_subheader_frame",
+            style = "ei-subheader-frame",
         }.add{
             type = "label",
             caption = {"exotic-industries.gate-gui-status-title"},
@@ -721,7 +693,7 @@ function model.open_gui(player)
             type = "flow",
             name = "status-flow",
             direction = "vertical",
-            style = "ei_inner_content_flow",
+            style = "ei-inner-content-flow",
         }
 
         status_flow.add{
@@ -729,7 +701,7 @@ function model.open_gui(player)
             name = "energy",
             caption = {"exotic-industries.gate-gui-status-energy", 0},
             tooltip = {"exotic-industries.gate-gui-status-energy-tooltip"},
-            style = "ei_status_progressbar"
+            style = "ei-status-progressbar"
         }
 
     end
@@ -738,7 +710,7 @@ function model.open_gui(player)
     do -- Control subheader
         main_container.add{
             type = "frame",
-            style = "ei_subheader_frame",
+            style = "ei-subheader-frame",
         }.add{
             type = "label",
             caption = {"exotic-industries.gate-gui-control-title"},
@@ -749,7 +721,7 @@ function model.open_gui(player)
             type = "flow",
             name = "control-flow",
             direction = "horizontal",
-            style = "ei_inner_content_flow_horizontal",
+            style = "ei-inner-content-flow-horizontal",
         }
 
         local target_flow = control_flow.add{
@@ -795,7 +767,7 @@ function model.open_gui(player)
             type = "button",
             name = "position-button",
             caption = {"exotic-industries.gate-gui-control-position-button", 0, 0},
-            style = "ei_small_button",
+            style = "ei-small-button",
             tags = {
                 action = "set-position",
                 parent_gui = "ei-gate-console",
@@ -811,7 +783,7 @@ function model.open_gui(player)
             name = "state-button",
             caption = {"exotic-industries.gate-gui-control-state-button", "OFF"},
             tooltip = {"exotic-industries.gate-gui-control-state-button-tooltip"},
-            style = "ei_small_red_button",
+            style = "ei-small-red-button",
             tags = {
                 action = "set-state",
                 parent_gui = "ei-gate-console",
@@ -822,7 +794,7 @@ function model.open_gui(player)
         local camera_frame = control_flow.add{
             type = "frame",
             name = "camera-frame",
-            style = "ei_small_camera_frame"
+            style = "ei-small-camera-frame"
         }
         camera_frame.add{
             type = "camera",
@@ -830,7 +802,7 @@ function model.open_gui(player)
             position = {0, 0},
             surface_index = 1,
             zoom = 0.25,
-            style = "ei_small_camera"
+            style = "ei-small-camera"
         }
 
     end
@@ -897,10 +869,10 @@ function model.update_gui(player, data, ontick)
 
     -- State button
     if data.state then
-        state.style = "ei_small_green_button"
+        state.style = "ei-small-green-button"
         state.caption = {"exotic-industries.gate-gui-control-state-button", "ON"}
     else
-        state.style = "ei_small_red_button"
+        state.style = "ei-small-red-button"
         state.caption = {"exotic-industries.gate-gui-control-state-button", "OFF"}
     end
 
@@ -1090,29 +1062,6 @@ function model.change_permission(player, new_group)
 
 end
 
---[[
-function model.update_player_permissions()
-
-    if not script.active_mods["RemoteConfiguration"] then
-        return
-    end
-
-    if not storage.ei.gate.gate_user_permission then
-        return
-    end
-
-    for player_id,tick in pairs(storage.ei.gate.gate_user_permission) do
-        if game.tick > tick then
-            local player = game.get_player(player_id)
-            if player then
-                player.permission_group = game.permissions.get_group("gate-user")
-            end
-            storage.ei.gate.gate_user_permission[player_id] = nil
-        end
-    end
-
-end
-]]
 
 --HANDLERS
 -----------------------------------------------------------------------------------------------------
@@ -1181,7 +1130,7 @@ function model.update()
 
     local gate = gates[key].gate
     if gate and gate.valid then
-        model.check_for_teleport(key, gate)
+        model.transfer_items(key, gate)
         model.update_renders(key, gate)
         model.update_energy(key, gate)
     else

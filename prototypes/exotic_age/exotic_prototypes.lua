@@ -10,32 +10,6 @@ local ei_data = require("lib/data")
 ------------------------------------------------------------------------------------------------------
 
 data:extend({
-    {
-        name = "ei-black-hole-data",
-        type = "item",
-        icon = ei_graphics_item_path.."black-hole-data.png",
-        icon_size = 128,
-        subgroup = "ei-refining-tech",
-        order = "c-a",
-        stack_size = 200,
-        pictures = {
-            layers =
-            {
-              {
-                size = 128,
-                filename = ei_graphics_item_path.."black-hole-data.png",
-                scale = 0.25/2
-              },
-              {
-                draw_as_light = true,
-                flags = {"light"},
-                size = 128,
-                filename = ei_graphics_item_path.."space-data_light.png",
-                scale = 0.25/2
-              }
-            }
-          },
-    },
 
     {
         name = "ei-black-hole-exotic-age-tech",

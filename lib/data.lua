@@ -368,16 +368,6 @@ ei_data.tech_ages_with_sub_reverse = {
     ["four-quantum-age"] = "ei-high-tech-parts",
 }
 
--- store which age comes after which
--- used to make dummy techs
-
-ei_data.ages_dummy_dict = {
-    ["dark-age"] = "steam-age",
-    ["steam-age"] = "electricity-age",
-    ["electricity-age"] = "computer-age",
-    ["computer-age"] = "quantum-age",
-    ["quantum-age"] = "exotic-age",
-}
 
 --====================================================================================================
 --ROUGH TECH STRUCTURE

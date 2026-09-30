@@ -307,14 +307,14 @@ function ei_lib.add_prerequisite(tech, prerequisite)
     table.insert(technology.prerequisites, prerequisite)
 end
 
----Removes a prerequisite from a technology (dummy techs are left untouched).
+---Removes a prerequisite from a technology.
 function ei_lib.remove_prerequisite(tech, prerequisite)
     local technology = data.raw.technology[tech]
     if not technology then
         log("tech " .. tech .. " does not exist in data.raw.technology")
         return
     end
-    if not technology.prerequisites or string.find(tech, "-dummy", 1, true) then
+    if not technology.prerequisites then
         return
     end
 

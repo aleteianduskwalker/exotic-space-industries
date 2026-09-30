@@ -68,7 +68,7 @@ data:extend({
         type = "technology",
         icon = ei_void_engine_path.."void-engine.png",
         icon_size = 256,
-        prerequisites = {"ei-resonant-computation", "ei-void-engine"},
+        prerequisites = {"ei-resonance-synthesizer", "ei-void-engine"},
         effects = {
             {type = "unlock-recipe", recipe = "ei-void-rift-generator"},
         },

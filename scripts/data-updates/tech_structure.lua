@@ -1,7 +1,8 @@
 -- change prerequisites of vanilla techs for IE
 -- at first sort them into their respective ages
 -- also add age attribute to each tech
--- take all techs with same attribute age and make them prerequisites of their dummy tech
+-- NOTE: the "age" attribute is metadata only (science packs, informatron, sorting); since 3.2.0
+-- no technology count/percentage is required to research the next age anymore
 -- more detailed structure will get added later on
 
 local ei_data = require("lib/data")
@@ -89,42 +90,6 @@ local function set_packs_for_ages(tech_structure, science_packs)
 
 end
 
-local function make_dummy_techs(ages_dummy_dict)
-    -- loop over all techs in the game
-    -- if they have the age attribute
-    -- look up the next age in the ages_dummy_dict
-    -- and set them as prerequisite for the dummy tech
-
-    for i,v in pairs(data.raw["technology"]) do
-        if data.raw["technology"][i].age then
-
-            local age = data.raw["technology"][i].age
-
-            if i == "ei-quantum-age" then
-                goto continue
-            end
-
-            if ei_data.sub_age[age] then
-                age = ei_data.sub_age[age]
-            end
-
-            -- skip exotic-age
-            if age == "exotic-age" then
-                goto continue
-            end
-
-            local next_age = "ei-"..ages_dummy_dict[age].."-dummy"
-            
-            if next_age then
-                set_prerequisites(next_age, i)
-            end
-        end
-
-        ::continue::
-    end
-
-end
-
 local function set_new_prerequisites(table_in)
     -- table_in is idexed by ages
     -- loop over all ages
@@ -171,14 +136,12 @@ end
 local prerequisites_to_set = ei_data.prerequisites_to_set
 local science_packs = ei_data.science
 local tech_structure = ei_data.tech_structure
-local ages_dummy_dict = ei_data.ages_dummy_dict
 local add_to_sub_age = ei_data.add_to_sub_age
 -- structure of tech_structure is:
 -- tech_structure["dark-age"] ...
 
 set_prerequisites_for_ages(tech_structure)
 set_packs_for_ages(tech_structure, science_packs)
-make_dummy_techs(ages_dummy_dict)
 set_new_prerequisites(prerequisites_to_set)
 add_sub_age(add_to_sub_age)
 

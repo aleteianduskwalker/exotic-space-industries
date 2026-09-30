@@ -497,7 +497,7 @@ function model.open_gui(player)
     do -- Titlebar
         local titlebar = root.add{type = "flow", direction = "horizontal"}
         titlebar.add{type = "label", caption = {"exotic-industries.black-hole-gui-title"}, style = "frame_title"}
-        titlebar.add{type = "empty-widget", style = "ei_titlebar_nondraggable_spacer", ignored_by_interaction = true}
+        titlebar.add{type = "empty-widget", style = "ei-titlebar-nondraggable-spacer", ignored_by_interaction = true}
         titlebar.add{
             type = "sprite-button",
             sprite = "virtual-signal/informatron",
@@ -510,32 +510,32 @@ function model.open_gui(player)
     local main_container = root.add{type = "frame", name = "main-container", direction = "vertical", style = "inside_shallow_frame"}
 
     do -- Status
-        main_container.add{type = "frame", style = "ei_subheader_frame"}.add{
+        main_container.add{type = "frame", style = "ei-subheader-frame"}.add{
             type = "label",
             caption = {"exotic-industries.black-hole-gui-status-title"},
             style = "subheader_caption_label",
         }
-        local status_flow = main_container.add{type = "flow", name = "status-flow", direction = "vertical", style = "ei_inner_content_flow"}
+        local status_flow = main_container.add{type = "flow", name = "status-flow", direction = "vertical", style = "ei-inner-content-flow"}
         status_flow.add{type = "label", name = "mass", caption = {"exotic-industries.black-hole-gui-status-mass", 0}, tooltip = {"exotic-industries.black-hole-gui-status-mass-tooltip"}}
         status_flow.add{type = "label", name = "power", caption = {"exotic-industries.black-hole-gui-status-power", 0}, tooltip = {"exotic-industries.black-hole-gui-status-power-tooltip"}}
-        status_flow.add{type = "progressbar", name = "injectors", caption = {"exotic-industries.black-hole-gui-status-injectors", 0}, style = "ei_status_progressbar_red"}
-        status_flow.add{type = "progressbar", name = "extractors", caption = {"exotic-industries.black-hole-gui-status-extractors", 0}, style = "ei_status_progressbar_grey"}
+        status_flow.add{type = "progressbar", name = "injectors", caption = {"exotic-industries.black-hole-gui-status-injectors", 0}, style = "ei-status-progressbar-red"}
+        status_flow.add{type = "progressbar", name = "extractors", caption = {"exotic-industries.black-hole-gui-status-extractors", 0}, style = "ei-status-progressbar-grey"}
     end
 
     do -- Control
-        main_container.add{type = "frame", style = "ei_subheader_frame_with_top_border"}.add{
+        main_container.add{type = "frame", style = "ei-subheader-frame-with-top-border"}.add{
             type = "label",
             caption = {"exotic-industries.black-hole-gui-control-title"},
             style = "subheader_caption_label",
         }
-        local control_flow = main_container.add{type = "flow", name = "control-flow", direction = "vertical", style = "ei_inner_content_flow"}
-        control_flow.add{type = "progressbar", name = "stage", caption = {"exotic-industries.black-hole-gui-control-stage", 0}, style = "ei_status_progressbar"}
-        control_flow.add{type = "progressbar", name = "stage-progress", caption = {"exotic-industries.black-hole-gui-control-stage-progress", 0}, style = "ei_status_progressbar_grey"}
+        local control_flow = main_container.add{type = "flow", name = "control-flow", direction = "vertical", style = "ei-inner-content-flow"}
+        control_flow.add{type = "progressbar", name = "stage", caption = {"exotic-industries.black-hole-gui-control-stage", 0}, style = "ei-status-progressbar"}
+        control_flow.add{type = "progressbar", name = "stage-progress", caption = {"exotic-industries.black-hole-gui-control-stage-progress", 0}, style = "ei-status-progressbar-grey"}
         control_flow.add{
             type = "button",
             name = "control-button",
             caption = {"exotic-industries.black-hole-gui-control-button"},
-            style = "ei_green_button",
+            style = "ei-green-button",
             tags = {action = "control-start", parent_gui = "ei-black-hole-console"},
         }
     end
@@ -559,11 +559,11 @@ function model.update_player_guis()
 end
 
 local CONTROL_BUTTON_STYLES = {
-    [1] = "ei_green_button",
-    [2] = "ei_button",
-    [3] = "ei_green_button",
-    [4] = "ei_button",
-    [5] = "ei_button",
+    [1] = "ei-green-button",
+    [2] = "ei-button",
+    [3] = "ei-green-button",
+    [4] = "ei-button",
+    [5] = "ei-button",
 }
 
 function model.update_gui(player, data)
@@ -581,7 +581,7 @@ function model.update_gui(player, data)
     local injectors = status["injectors"]
     injectors.caption = {"exotic-industries.black-hole-gui-status-injectors", data.injectors.caption, data.injectors.max}
     injectors.value = data.injectors.value
-    injectors.style = data.injectors.value >= 1 and "ei_status_progressbar" or "ei_status_progressbar_red"
+    injectors.style = data.injectors.value >= 1 and "ei-status-progressbar" or "ei-status-progressbar-red"
 
     local extractors = status["extractors"]
     extractors.caption = {"exotic-industries.black-hole-gui-status-extractors", data.extractors.caption, data.extractors.max}

@@ -6,7 +6,8 @@
 --                        (scripts/data-final-updates/data_network.lua), connects ONLY to data cables
 --   fluid box 2 (west):  ei-morphium - regular pipe connection
 -- Not a fixed_recipe machine: it crafts
---   * ei-resonance-data        (unlocked by technology ei-resonance-synthesizer / alien tier 1)
+--   * ei-resonance-data        (unlocked by the lab technology ei-resonance-synthesizer;
+--                               3.2.0: multiplies data 1 -> 2, it can not create data from nothing)
 --   * ei-alien-resonance-pack  (unlocked by technology ei-resonant-computation / alien tier 4)
 -- WHY an own category: computing power can only reach machines whose fluid box is registered in
 -- the data network; regular "advanced-crafting" machines have no such connection.
@@ -82,6 +83,7 @@ data:extend({
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = recipe_data.morphium},
             {type = "fluid", name = "ei-computing-power", amount = recipe_data.computing_power},
+            {type = "item", name = "ei-resonance-data", amount = recipe_data.resonance_data},
         },
         results = {
             {type = "item", name = "ei-resonance-data", amount = recipe_data.result},
@@ -89,10 +91,12 @@ data:extend({
         enabled = false,
         always_show_made_in = true,
         main_product = "ei-resonance-data",
+        -- a multiplying loop must never gain productivity
+        allow_productivity = false,
     },
     {
-        -- regular technology AND alien tech tree tier 1 node "resonance-synthesizer"
-        -- (the alien tree can unlock it for alien knowledge instead of science packs)
+        -- regular lab technology; 3.2.0: anchor of every script-only alien tree technology
+        -- (lib/alien_tree.lua -> anchor_technology), it is no longer a node of the tree itself
         name = "ei-resonance-synthesizer",
         type = "technology",
         icon = ei_graphics_tech_path.."computer-core.png",
@@ -107,6 +111,5 @@ data:extend({
             ingredients = ei_data.science["alien-computer-age"],
             time = 20,
         },
-        -- NOTE: no `age` on purpose: age techs become mandatory prerequisites of the next age
     },
 })

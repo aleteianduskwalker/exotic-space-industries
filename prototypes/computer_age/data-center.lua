@@ -67,16 +67,15 @@ data:extend({
         type = "technology",
         icon = FACILITY_PATH.."icon-big.png",
         icon_size = 640,
-        prerequisites = {"ei-big-lab"},
+        -- 3.2.0: alien tree tier 4, script-only (scripts/data-final-updates/alien_tree_techs.lua)
+        prerequisites = {"ei-resonance-synthesizer"},
         effects = {
             -- the building recipe and one recipe per science pack are added in data-final-fixes
         },
-        unit = {
-            count = 100,
-            ingredients = ei_data.science["computer-age"],
-            time = 20,
+        research_trigger = {
+            type = "scripted",
+            trigger_description = {"technology-description.ei-alien-tree-trigger"},
         },
-        -- NOTE: no `age` on purpose (age techs become mandatory prerequisites of the next age)
     },
     {
         name = "ei-data-center",

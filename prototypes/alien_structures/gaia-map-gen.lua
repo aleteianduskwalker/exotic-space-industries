@@ -60,7 +60,8 @@ planet_map_gen.gaia = function()
         entities[resource] = table.deepcopy(PATCH_SETTINGS)
     end
     entities["scrap"] = table.deepcopy(PATCH_SETTINGS)
-    entities["fulgoran-ruin-attractor"] = table.deepcopy(PATCH_SETTINGS)
+    -- 3.2.0: the ESI copy of the conduit replaces the vanilla ruin attractor on Gaia
+    entities["ei-conduit-gaia"] = table.deepcopy(PATCH_SETTINGS)
 
     -- no cliffs on Gaia
     map_gen_settings.cliff_settings = map_gen_settings.cliff_settings or {}
@@ -104,6 +105,13 @@ planet_map_gen.enforce_gaia_map_gen = function()
         if data.raw.resource[resource] then
             settings.autoplace_settings.entity.settings[resource] = settings.autoplace_settings.entity.settings[resource] or table.deepcopy(PATCH_SETTINGS)
         end
+    end
+
+    -- 3.2.0: no vanilla ruin attractors on Gaia, only ei-conduit-gaia
+    local entity_settings = settings.autoplace_settings.entity.settings
+    entity_settings["fulgoran-ruin-attractor"] = nil
+    if data.raw["lightning-attractor"]["ei-conduit-gaia"] then
+        entity_settings["ei-conduit-gaia"] = entity_settings["ei-conduit-gaia"] or table.deepcopy(PATCH_SETTINGS)
     end
 
     -- drop entries of prototypes that were removed by other mods (would fail to load)

@@ -1,21 +1,26 @@
 --====================================================================================================
--- ALIEN SYSTEM (alien tech tree + artifact repair)
+-- ALIEN SYSTEM (alien tech tree + artifact repair / salvage)
 --====================================================================================================
--- Currency: "alien knowledge" points per force, earned by repairing alien artifacts with the
--- repair kits (model.repair_artifact). Points are spent in the alien tech tree, shown on the
--- InformaTron page "alien" (scripts/control/informatron.lua -> model.alien).
+-- Currency: "alien knowledge" points per force.
+--   * repairing an alien artifact with a repair kit: balance.alien_points_per_repair
+--   * 3.2.0: mining / deconstructing / destroying a broken artifact on Gaia:
+--     balance.alien_points_per_salvage (10 % of a repair)
+--   No points are granted anymore once every node of the tree is unlocked.
+-- Points are spent in the alien tech tree (lib/alien_tree.lua), shown on the InformaTron page
+-- "alien" (scripts/control/informatron.lua -> model.alien).
 --
--- TREE (model.tech_tree): tier -> row -> node. A node:
---   type   "tech" | "part" | "schematic"  (only "tech" is used, the others are legacy)
---   name   unique node name, also the button sprite suffix "ei_knowledge-<name>"
---   cost   alien knowledge points
---   items  optional {{name, count}} additionally taken from the player's main inventory
---   height row height (nodes with prerequisites inside the same row sit lower)
---   meta   technology that gets researched when the node is unlocked
---   prerequisites optional list of node names
--- Tiers 1-3 reactivate the author's commented nodes; tier 4/5 are new (design doc §4).
--- Every node of tier k must be unlocked before tier k+1 opens (any number of tiers).
--- A node whose technology was already researched in a lab counts as unlocked automatically.
+-- PAYMENT (3.2.0): the point cost of a node is paid in this priority:
+--   1) alien knowledge points
+--   2) ei-alien-resonance-pack from the main inventory (1 pack = 10 points, surplus is refunded as points)
+--   3) ei-resonance-data from the main inventory (10 data = 1 point)
+-- Explicit item costs of a node (tier 4/5) are reserved first and never used as currency.
+--
+-- RULES
+--   * tier k+1 opens when every node of tier k is unlocked (any number of tiers)
+--   * a node may require other nodes of its row (node.prerequisites)
+--   * 3.2.0: every prerequisite technology of the node's technology must be researched
+--     (the anchor technology "resonance synthesizer" for almost every node)
+--   * a node whose technology is already researched counts as unlocked automatically
 --
 -- storage.ei.alien[force_name] = {
 --     alien   = number        current points
@@ -26,82 +31,30 @@
 
 local ei_data = require("lib/data")
 local ei_balance = require("lib/balance")
+local alien_tree = require("lib/alien_tree")
 
 local model = {}
 
----Shorthand for a "tech" node.
-local function tech(name, cost, meta, height, prerequisites, items)
-    return {type = "tech", name = name, cost = cost, meta = meta, height = height or 1,
-            prerequisites = prerequisites, items = items}
-end
+local PACK = "ei-alien-resonance-pack"
+local DATA = "ei-resonance-data"
 
-local tier4 = ei_balance.alien_tech_tier4_cost
-local tier5 = ei_balance.alien_tech_tier5_cost
-
-model.tech_tree = {
-    -- tier 1: basics + automated resonance data (design doc §3: unlocked in tier 1, not tier 4)
-    {
-        {tech("gate", 100, "ei-gate")},
-        {tech("bio-chamber", 100, "ei-bio-chamber")},
-        {tech("crystal-accumulator-repair", 100, "ei-crystal-accumulator-repair")},
-        {tech("resonance-synthesizer", 100, "ei-resonance-synthesizer")},
-    },
-    -- tier 2: bio branch
-    {
-        {
-            tech("bio_insulated-wire", 200, "ei-bio-insulated-wire"),
-            tech("bio_electronic-parts", 300, "ei-bio-electronic-parts", 2, {"bio_insulated-wire"}),
-        },
-        {
-            tech("bio_energy-crystal", 200, "ei-bio-energy-crystal"),
-            tech("bio_high-energy-crystal", 300, "ei-bio-high-energy-crystal", 2, {"bio_energy-crystal"}),
-        },
-        {
-            tech("bio_hydrofluoric-acid", 200, "ei-bio-hydrofluoric-acid"),
-            tech("bio_nitric-acid", 300, "ei-bio-nitric-acid", 2, {"bio_hydrofluoric-acid"}),
-        },
-        {tech("farstation-repair", 300, "ei-farstation-repair")},
-    },
-    -- tier 3: old goals
-    {
-        {tech("alien-beacon-repair", 2000, "ei-alien-beacon-repair")},
-        {tech("farstation", 1000, "ei-farstation")},
-        {tech("bio_carbon-structure", 500, "ei-bio-carbon-structure")},
-        {tech("bio_magnet", 500, "ei-bio-magnet")},
-        {tech("bio_rocket-fuel", 500, "ei-bio-rocket-fuel")},
-    },
-    -- tier 4 (new): Resonant Computation - resonance pack recipe + underground data cable
-    {
-        {tech("resonant-computation", tier4.points, "ei-resonant-computation", 1, nil, tier4.items)},
-    },
-    -- tier 5 (new): Threshold Engineering - void rift generator
-    {
-        {tech("threshold-engineering", tier5.points, "ei-threshold-engineering", 1, nil, tier5.items)},
-    },
-}
-
+-- kept as a field: other modules and old code read model.tech_tree
+model.tech_tree = alien_tree.tiers
 model.repair_tools = ei_data.repair_tools
+
+-- broken artifact entity name -> true (the repair tool targets)
+local BROKEN_ARTIFACTS = {}
+for _, tool in pairs(ei_data.repair_tools) do
+    for entity_name, _ in pairs(tool.targets) do
+        BROKEN_ARTIFACTS[entity_name] = true
+    end
+end
 
 --UTIL
 ------------------------------------------------------------------------------------------------------
 
----Calls fn(node, tier_index) for every node of the tree.
-local function for_each_node(fn)
-    for tier, tier_data in ipairs(model.tech_tree) do
-        for _, row_data in ipairs(tier_data) do
-            for _, node in ipairs(row_data) do
-                fn(node, tier)
-            end
-        end
-    end
-end
-
----Returns the node with the given name (or nil).
-local function find_node(name)
-    local found
-    for_each_node(function(node) if node.name == name then found = node end end)
-    return found
-end
+local for_each_node = alien_tree.for_each_node
+local find_node = alien_tree.find_node
 
 function model.check_init()
     if not storage.ei.alien then
@@ -113,13 +66,13 @@ function model.entity_check(entity)
     return entity ~= nil and entity.valid
 end
 
----Returns the alien data of a force (nil while the force has not repaired any artifact).
+---Returns the alien data of a force (nil while the force has not gained any alien knowledge).
 ---@param force LuaForce
 function model.get_force_data(force)
     return storage.ei.alien and storage.ei.alien[force.name]
 end
 
----Enables the alien system for a force (first repaired artifact). Idempotent.
+---Enables the alien system for a force (first repaired / salvaged artifact). Idempotent.
 ---Accepts an entity (old signature) or a force.
 ---@param source LuaEntity|LuaForce
 function model.enable_alien(source)
@@ -135,7 +88,7 @@ end
 
 ---Brings the stored unlock list of a force in line with the current tree:
 ---adds missing nodes (new tiers of a mod update), refreshes their tier, drops removed nodes and
----recalculates the tier flags. Fixes the old hardcoded "3 tiers" limitation.
+---recalculates the tier flags.
 ---@param force_name string
 function model.migrate_force(force_name)
     local data = storage.ei.alien[force_name]
@@ -155,9 +108,37 @@ function model.migrate_force(force_name)
     model.recalculate_tiers(force_name)
 end
 
+---3.2.0: technologies became script-only. A force that already owns every recipe of a node's
+---technology (e.g. the conduit that was unlocked with Gaia before) gets the technology researched,
+---so an update never takes anything away.
+---@param force LuaForce
+local function grandfather_technologies(force)
+    for_each_node(function(node)
+        local technology = force.technologies[node.meta]
+        if not technology or technology.researched then return end
+
+        local has_recipes = false
+        for _, effect in pairs(technology.prototype.effects) do
+            if effect.type == "unlock-recipe" then
+                local recipe = force.recipes[effect.recipe]
+                if not (recipe and recipe.enabled) then return end
+                has_recipes = true
+            end
+        end
+        if has_recipes then
+            technology.researched = true
+        end
+    end)
+end
+
 ---Idempotent migration of all forces (on_configuration_changed).
 function model.migrate()
     model.check_init()
+    for _, force in pairs(game.forces) do
+        if force.name ~= "enemy" and force.name ~= "neutral" then
+            grandfather_technologies(force)
+        end
+    end
     for force_name in pairs(storage.ei.alien) do
         model.migrate_force(force_name)
         local force = game.forces[force_name]
@@ -165,13 +146,29 @@ function model.migrate()
     end
 end
 
----Adds alien knowledge points to a force.
+---Returns true if every node of the tree is unlocked for the force.
+---@param force LuaForce
+function model.is_tree_complete(force)
+    local data = model.get_force_data(force)
+    if not data then return false end
+    for _, unlock in ipairs(data.unlocks) do
+        if not unlock.unlocked then return false end
+    end
+    return true
+end
+
+---Adds alien knowledge points to a force. Returns false (nothing added) once the tree is complete.
 ---@param force LuaForce
 ---@param amount number
+---@return boolean added
 function model.add_alien(force, amount)
     model.enable_alien(force)
+    if model.is_tree_complete(force) then
+        return false
+    end
     local data = model.get_force_data(force)
     data.alien = data.alien + amount
+    return true
 end
 
 --STATE
@@ -187,19 +184,42 @@ function model.get_total_height(row_data)
     return height
 end
 
----Sprite of a tree button. NOTE: the sprites are named "ei_knowledge-<name>"
----(prototypes/informatron_sprites.lua); the former "ei-alien-<name>" sprites never existed.
+---Sprite of a tree button: the hand made "ei-knowledge-<name>" sprite if it exists, otherwise the
+---icon of the node technology.
 function model.get_button_sprite(node)
-    if node.type == "part" then return "ei_part" end
-    if node.type == "schematic" then return "ei_schematic" end
-    return "ei_knowledge-" .. node.name
+    local sprite = "ei-knowledge-" .. node.name
+    if helpers.is_valid_sprite_path(sprite) then
+        return sprite
+    end
+    return "technology/" .. node.meta
 end
 
----Tooltip: technology name, point cost and item costs.
-local function get_button_tooltip(node)
+---Prerequisite technologies of the node technology that are not researched yet.
+---@param node table
+---@param force LuaForce
+---@return string[]
+local function missing_technologies(node, force)
+    local missing = {}
+    local technology = force.technologies[node.meta]
+    if not technology then return missing end
+
+    for name, prerequisite in pairs(technology.prerequisites) do
+        if not prerequisite.researched then
+            table.insert(missing, name)
+        end
+    end
+    table.sort(missing)
+    return missing
+end
+
+---Tooltip: technology name, costs, payment hint and missing technologies.
+local function get_button_tooltip(node, force)
     local tooltip = {"", {"technology-name." .. node.meta}, "\n", {"exotic-industries-informatron.alien-cost", node.cost}}
     for _, item in ipairs(node.items or {}) do
         table.insert(tooltip, {"", "\n", {"exotic-industries-informatron.alien-cost-item", item.count, item.name}})
+    end
+    for _, technology in ipairs(missing_technologies(node, force)) do
+        table.insert(tooltip, {"", "\n", {"exotic-industries-informatron.alien-requires-technology", technology}})
     end
     return tooltip
 end
@@ -218,16 +238,10 @@ function model.get_button_tags(node)
 end
 
 function model.apply_effects(tags, force)
-    if tags.type == "schematic" then
-        force.print({"exotic-industries.schematic-researched", tags.name})
-    elseif tags.type == "part" then
-        force.print({"exotic-industries.part-researched", tags.name})
-    elseif tags.type == "tech" then
-        local technology = force.technologies[tags.meta]
-        if technology then
-            technology.researched = true
-            force.print({"exotic-industries.tech-researched", tags.meta}) -- [technology=__1__] rich text
-        end
+    local technology = force.technologies[tags.meta]
+    if technology then
+        technology.researched = true
+        force.print({"exotic-industries.tech-researched", tags.meta}) -- [technology=__1__] rich text
     end
 end
 
@@ -257,8 +271,8 @@ function model.set_unlocked(name, force, state)
     return false
 end
 
----Marks nodes as unlocked whose technology was already researched (e.g. in a lab), so no points
----are wasted on them, and recalculates the tiers.
+---Marks nodes as unlocked whose technology was already researched (e.g. by a command or an older
+---version of the mod), so no points are wasted on them, and recalculates the tiers.
 ---@param force LuaForce
 function model.sync_researched(force)
     local data = model.get_force_data(force)
@@ -284,7 +298,7 @@ function model.get_tier(name)
     return "tier_" .. tier_of
 end
 
----"green" unlocked, "grey" can be unlocked, "red" locked (tier or prerequisites missing).
+---"green" unlocked, "grey" can be unlocked, "red" locked (tier, prerequisites or technologies missing).
 function model.get_unlocked_state(name, force)
     force = force or game.forces["player"]
     local data = model.get_force_data(force)
@@ -292,12 +306,15 @@ function model.get_unlocked_state(name, force)
 
     if model.is_unlocked(name, force) then return "green" end
 
-    -- tier not open yet (missing flag = closed; the old code treated nil as open)
+    -- tier not open yet (missing flag = closed)
     if data[model.get_tier(name)] ~= true then return "red" end
 
     for _, prerequisite in ipairs(model.get_prerequisites(name) or {}) do
         if not model.is_unlocked(prerequisite, force) then return "red" end
     end
+
+    local node = find_node(name)
+    if node and #missing_technologies(node, force) > 0 then return "red" end
 
     return "grey"
 end
@@ -309,13 +326,13 @@ function model.recalculate_tiers(force_name)
     if not data then return end
 
     local complete = {}
-    for tier = 1, #model.tech_tree do complete[tier] = true end
+    for tier = 1, #alien_tree.tiers do complete[tier] = true end
     for _, unlock in ipairs(data.unlocks) do
         if not unlock.unlocked then complete[unlock.tier] = false end
     end
 
     data.tier_1 = true
-    for tier = 2, #model.tech_tree do
+    for tier = 2, #alien_tree.tiers do
         data["tier_" .. tier] = data["tier_" .. (tier - 1)] and complete[tier - 1] or false
     end
 end
@@ -325,42 +342,89 @@ function model.update_tier_status(player_index)
     model.recalculate_tiers(game.get_player(player_index).force.name)
 end
 
+--PAYMENT
+------------------------------------------------------------------------------------------------------
+
+---Computes how the cost of a node would be paid by a player (priority: points -> packs -> data).
+---@param player LuaPlayer
+---@param node table node or button tags ({cost, items})
+---@return table|nil plan {points, packs, data, change}, or nil
+---@return string|nil reason locale key of [exotic-industries] when the node can not be paid
+function model.payment_plan(player, node)
+    local data = model.get_force_data(player.force)
+    if not data then return nil, "not-enough-alien" end
+
+    -- explicit item costs are reserved first
+    local reserved = {}
+    for _, item in ipairs(node.items or {}) do
+        reserved[item.name] = (reserved[item.name] or 0) + item.count
+    end
+    for name, count in pairs(reserved) do
+        if player.get_item_count(name) < count then
+            return nil, "not-enough-alien-items"
+        end
+    end
+
+    local need = node.cost
+    local plan = {points = math.min(data.alien, need), packs = 0, data = 0, change = 0}
+    need = need - plan.points
+
+    -- 2) alien resonance packs (the surplus of the last pack is refunded as points)
+    if need > 0 then
+        local pack_value = ei_balance.alien_points_per_resonance_pack
+        local available = math.max(0, player.get_item_count(PACK) - (reserved[PACK] or 0))
+        plan.packs = math.min(available, math.ceil(need / pack_value))
+        local paid = plan.packs * pack_value
+        plan.change = math.max(0, paid - need)
+        need = math.max(0, need - paid)
+    end
+
+    -- 3) resonance data
+    if need > 0 then
+        local available = math.max(0, player.get_item_count(DATA) - (reserved[DATA] or 0))
+        local required = math.ceil(need * ei_balance.resonance_data_per_alien_point)
+        if available < required then
+            return nil, "not-enough-alien"
+        end
+        plan.data = required
+    end
+
+    return plan
+end
+
+---Checks the payment; prints the reason and returns nil if the node can not be paid.
+local function can_pay(player, tags)
+    local plan, reason = model.payment_plan(player, tags)
+    if not plan then
+        player.print({"exotic-industries." .. reason})
+    end
+    return plan
+end
+
+---Consumes points and items of a payment plan (plus the explicit item costs of the node).
+local function pay(player, tags, plan)
+    local data = model.get_force_data(player.force)
+    data.alien = data.alien - plan.points + plan.change
+    if plan.packs > 0 then player.remove_item({name = PACK, count = plan.packs}) end
+    if plan.data > 0 then player.remove_item({name = DATA, count = plan.data}) end
+    for _, item in ipairs(tags.items or {}) do
+        player.remove_item({name = item.name, count = item.count})
+    end
+end
+
 --UNLOCKING LOGIC
 ------------------------------------------------------------------------------------------------------
 
----Returns true if the player carries all item costs of a node.
-local function has_items(player, items)
-    for _, item in ipairs(items or {}) do
-        if player.get_item_count(item.name) < item.count then return false end
-    end
-    return true
-end
-
----Checks points and items; prints the reason and returns false if the node can not be paid.
-local function can_pay(player, tags)
-    local data = model.get_force_data(player.force)
-    if not data then return false end
-
-    if data.alien < tags.cost then
-        player.print({"exotic-industries.not-enough-alien"})
-        return false
-    end
-    if not has_items(player, tags.items) then
-        player.print({"exotic-industries.not-enough-alien-items"})
-        return false
-    end
-    return true
-end
-
 function model.try_select_alien(player, tags)
     if model.get_unlocked_state(tags.name, player.force) ~= "grey" then return end
-    if not can_pay(player, tags) then return end
+    local plan = can_pay(player, tags)
+    if not plan then return end
 
-    model.make_confirm_gui(player, tags, model.get_force_data(player.force).alien)
+    model.make_confirm_gui(player, tags, plan, model.get_force_data(player.force).alien)
 end
 
--- Maybe turn this into a generic confirm gui?
-function model.make_confirm_gui(player, tags, balance)
+---Confirm dialog: shows the node cost and exactly what will be consumed.
+function model.make_confirm_gui(player, tags, plan, balance)
     local screen_gui = player.gui.screen
     if screen_gui["ei-alien-confirm-console"] then
         screen_gui["ei-alien-confirm-console"].destroy()
@@ -369,16 +433,28 @@ function model.make_confirm_gui(player, tags, balance)
     local root = screen_gui.add{type = "frame", name = "ei-alien-confirm-console", direction = "vertical"}
     local main_container = root.add{type = "frame", name = "main-container", direction = "vertical", style = "inside_shallow_frame"}
 
-    main_container.add{type = "frame", style = "ei_subheader_frame"}.add{
+    main_container.add{type = "frame", style = "ei-subheader-frame"}.add{
         type = "label",
         caption = {"exotic-industries.alien-confirm-gui-title"},
         style = "subheader_caption_label",
     }
 
-    local content_flow = main_container.add{type = "flow", name = "control-flow", direction = "vertical", style = "ei_inner_content_flow"}
+    local content_flow = main_container.add{type = "flow", name = "control-flow", direction = "vertical", style = "ei-inner-content-flow"}
     content_flow.add{type = "label", caption = {"exotic-industries.alien-confirm-gui-label", tags.cost}}
     for _, item in ipairs(tags.items or {}) do
         content_flow.add{type = "label", caption = {"exotic-industries-informatron.alien-cost-item", item.count, item.name}}
+    end
+
+    -- payment breakdown (points -> packs -> data)
+    content_flow.add{type = "label", caption = {"exotic-industries.alien-confirm-gui-pay-points", plan.points}}
+    if plan.packs > 0 then
+        content_flow.add{type = "label", caption = {"exotic-industries.alien-confirm-gui-pay-packs", plan.packs}}
+    end
+    if plan.data > 0 then
+        content_flow.add{type = "label", caption = {"exotic-industries.alien-confirm-gui-pay-data", plan.data}}
+    end
+    if plan.change > 0 then
+        content_flow.add{type = "label", caption = {"exotic-industries.alien-confirm-gui-change", plan.change}}
     end
     content_flow.add{type = "label", caption = {"exotic-industries.alien-confirm-gui-label-2", balance}}
 
@@ -386,15 +462,15 @@ function model.make_confirm_gui(player, tags, balance)
     button_flow.add{
         type = "button",
         name = "confirm-button",
-        caption = {"exotic-industries.alien-confirm-gui-button", "Confirm"},
-        style = "ei_small_green_button",
+        caption = {"exotic-industries.alien-confirm-gui-button", {"gui.confirm"}},
+        style = "ei-small-green-button",
         tags = {action = "confirm-alien", parent_gui = "ei-alien-gui", tags = tags},
     }
     button_flow.add{
         type = "button",
         name = "exit-button",
-        caption = {"exotic-industries.alien-confirm-gui-button", "Cancel"},
-        style = "ei_small_red_button",
+        caption = {"exotic-industries.alien-confirm-gui-button", {"gui.cancel"}},
+        style = "ei-small-red-button",
         tags = {action = "exit-alien", parent_gui = "ei-alien-gui", tags = tags},
     }
 
@@ -406,19 +482,15 @@ function model.select_alien(player, tags)
     model.exit_confirm(player)
 
     local node = tags.tags
-    -- re-validate: the state may have changed while the confirm dialog was open
+    -- re-validate: the state and the inventory may have changed while the dialog was open
     if model.get_unlocked_state(node.name, player.force) ~= "grey" then return end
-    if not can_pay(player, node) then return end
+    local plan = can_pay(player, node)
+    if not plan then return end
 
-    local data = model.get_force_data(player.force)
-    data.alien = data.alien - node.cost
-    for _, item in ipairs(node.items or {}) do
-        player.remove_item({name = item.name, count = item.count})
-    end
-
+    pay(player, node, plan)
     model.set_unlocked(node.name, player.force, true)
     model.apply_effects(node, player.force)
-    model.recalculate_tiers(player.force.name) -- was never called before: tier 2+ stayed closed
+    model.recalculate_tiers(player.force.name)
     model.update_informatron(player)
 end
 
@@ -451,7 +523,8 @@ end
 ---@param player_index integer
 ---@param element LuaGuiElement
 function model.make_tiers(player_index, element)
-    local force = game.get_player(player_index).force
+    local player = game.get_player(player_index)
+    local force = player.force
     local data = model.get_force_data(force)
 
     if not data then
@@ -461,16 +534,18 @@ function model.make_tiers(player_index, element)
 
     model.sync_researched(force)
     element.add{type = "label", caption = {"exotic-industries-informatron.alien-balance", data.alien}, style = "heading_2_label"}
+    element.add{type = "label", caption = {"exotic-industries-informatron.alien-balance-items",
+        player.get_item_count(PACK), player.get_item_count(DATA)}}
 
-    for tier, tier_data in ipairs(model.tech_tree) do
+    for tier, tier_data in ipairs(alien_tree.tiers) do
         local tier_flow = element.add{
             type = "flow",
             name = "tier-flow_" .. tier,
             direction = "vertical",
-            style = "ei_inner_content_flow_vertical_centered",
+            style = "ei-inner-content-flow-vertical-centered",
         }
 
-        tier_flow.add{type = "frame", style = "ei_subheader_frame_with_top_border"}.add{
+        tier_flow.add{type = "frame", style = "ei-subheader-frame-with-top-border"}.add{
             type = "label",
             caption = {"exotic-industries-informatron.tier", tier},
             style = "subheader_caption_label",
@@ -484,7 +559,7 @@ function model.make_tiers(player_index, element)
                 type = "flow",
                 name = "inner-row-flow_" .. row,
                 direction = "vertical",
-                style = "ei_inner_content_flow_vertical_centered",
+                style = "ei-inner-content-flow-vertical-centered",
             }
 
             for height = 1, model.get_total_height(row_data) do
@@ -492,7 +567,7 @@ function model.make_tiers(player_index, element)
                     type = "flow",
                     name = "inner_row_flow_" .. row .. "_" .. height,
                     direction = "horizontal",
-                    style = "ei_inner_content_flow_horizontal_centered",
+                    style = "ei-inner-content-flow-horizontal-centered",
                 }
 
                 for _, node in ipairs(row_data) do
@@ -500,9 +575,9 @@ function model.make_tiers(player_index, element)
                         holder.add{
                             type = "sprite-button",
                             sprite = model.get_button_sprite(node),
-                            tooltip = get_button_tooltip(node),
+                            tooltip = get_button_tooltip(node, force),
                             tags = model.get_button_tags(node),
-                            style = "ei_alien_sprite_button_" .. model.get_unlocked_state(node.name, force),
+                            style = "ei-alien-sprite-button-" .. model.get_unlocked_state(node.name, force),
                         }
                     end
                 end
@@ -519,10 +594,24 @@ local function spill_resonance_data(entity)
     local drop = ei_balance.resonance_data_repair_drop
     entity.surface.spill_item_stack{
         position = entity.position,
-        stack = {name = "ei-resonance-data", count = math.random(drop.min, drop.max)},
+        stack = {name = DATA, count = math.random(drop.min, drop.max)},
         enable_looted = true,
         allow_belts = false,
         max_radius = 2.5,
+    }
+end
+
+---Shows "+N alien knowledge" above a position for one force.
+local function show_points(surface, position, force, amount)
+    rendering.draw_text{
+        text = {"exotic-industries.alien-knowledge-flying-text", amount},
+        surface = surface,
+        target = position,
+        color = {r = 0.6, g = 0.4, b = 1},
+        scale = 1.2,
+        alignment = "center",
+        forces = {force},
+        time_to_live = 120,
     }
 end
 
@@ -560,12 +649,28 @@ function model.repair_artifact(event)
 
             -- alien knowledge goes to the repairing player's force (artifacts are neutral)
             local reward_force = player and player.force or game.forces["player"]
-            model.add_alien(reward_force, ei_balance.alien_points_per_repair)
-            reward_force.print({"exotic-industries.alien-knowledge-gained", ei_balance.alien_points_per_repair})
+            if model.add_alien(reward_force, ei_balance.alien_points_per_repair) then
+                reward_force.print({"exotic-industries.alien-knowledge-gained", ei_balance.alien_points_per_repair})
+            end
 
             ei_victory.count_value("artifacts_repaired", 1)
             return
         end
+    end
+end
+
+---3.2.0: a broken artifact on Gaia was mined, deconstructed or destroyed by a force: grants
+---10 % of the repair reward (the resources themselves come from minable results / loot).
+---@param entity LuaEntity the broken artifact (still valid)
+---@param force LuaForce|nil the salvaging force
+function model.on_artifact_salvaged(entity, force)
+    if not (entity and entity.valid and BROKEN_ARTIFACTS[entity.name]) then return end
+    if not (force and force.valid) or force.name == "enemy" or force.name == "neutral" then return end
+    if not ei_gaia.is_gaia_surface(entity.surface) then return end
+
+    local amount = ei_balance.alien_points_per_salvage
+    if model.add_alien(force, amount) then
+        show_points(entity.surface, entity.position, force, amount)
     end
 end
 
@@ -599,12 +704,29 @@ function model.on_player_selected_area(event)
     end
 end
 
----A technology of a tree node researched in a lab marks the node as unlocked.
+---A technology of a tree node researched (by the tree or a command) marks the node as unlocked.
 function model.on_research_finished(event)
     local force = event.research.force
     if model.get_force_data(force) then
         model.sync_researched(force)
     end
+end
+
+---on_player_mined_entity / on_robot_mined_entity (after a successful mining action).
+function model.on_mined_entity(event)
+    local force
+    if event.player_index then
+        local player = game.get_player(event.player_index)
+        force = player and player.force
+    elseif event.robot and event.robot.valid then
+        force = event.robot.force
+    end
+    model.on_artifact_salvaged(event.entity, force)
+end
+
+---on_entity_died: `force` is the force that killed the entity (nil for e.g. lightning).
+function model.on_entity_died(event)
+    model.on_artifact_salvaged(event.entity, event.force)
 end
 
 return model

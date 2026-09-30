@@ -38,7 +38,7 @@ function model.on_built_entity(entity)
   -- set inital recipe and lock it
 
   if not entity.get_recipe() then
-      entity.set_recipe("ei_fusion-F1__ei-heated-deuterium-F2__ei-heated-tritium-TM__medium-FM__medium")
+      entity.set_recipe("ei-fusion-F1__ei-heated-deuterium-F2__ei-heated-tritium-TM__medium-FM__medium")
   end
   entity.recipe_locked = true
 
@@ -71,7 +71,7 @@ function model.open_gui(player)
       }
       titlebar.add{
           type = "empty-widget",
-          style = "ei_titlebar_nondraggable_spacer",
+          style = "ei-titlebar-nondraggable-spacer",
           ignored_by_interaction = true
       }
       titlebar.add{
@@ -96,7 +96,7 @@ function model.open_gui(player)
 
   main_container.add{ -- Status subheader
       type = "frame",
-      style = "ei_subheader_frame"
+      style = "ei-subheader-frame"
   }.add{
       type = "label",
       caption = {"exotic-industries.fusion-reactor-gui-status-title"},
@@ -107,28 +107,28 @@ function model.open_gui(player)
       type = "flow",
       name = "status-flow",
       direction = "vertical",
-      style = "ei_inner_content_flow"
+      style = "ei-inner-content-flow"
   }
 
   status_flow.add{
       type = "progressbar",
       name = "power-output",
-      style = "ei_status_progressbar"
+      style = "ei-status-progressbar"
   }
   status_flow.add{
       type = "progressbar",
       name = "neutron-flux",
-      style = "ei_status_progressbar_cyan"
+      style = "ei-status-progressbar-cyan"
   }
   status_flow.add{
       type = "progressbar",
       name = "efficiency",
-      style = "ei_status_progressbar_grey"
+      style = "ei-status-progressbar-grey"
   }
 
   main_container.add{ -- Control subheader
       type = "frame",
-      style = "ei_subheader_frame_with_top_border"
+      style = "ei-subheader-frame-with-top-border"
   }.add{
       type = "label",
       caption = {"exotic-industries.fusion-reactor-gui-control-title"},
@@ -139,7 +139,7 @@ function model.open_gui(player)
       type = "flow",
       name = "control-flow",
       direction = "vertical",
-      style = "ei_inner_content_flow"
+      style = "ei-inner-content-flow"
   }
 
   for i = 1, 2 do
@@ -159,10 +159,10 @@ function model.open_gui(player)
                   parent_gui = "ei-fusion-reactor-console",
                   fuel_name = fuel_name
               },
-              style = "ei_slot_button_radio"
+              style = "ei-slot-button-radio"
           }
       end
-      control_flow.add{type = "empty-widget", style = "ei_vertical_pusher"}
+      control_flow.add{type = "empty-widget", style = "ei-vertical-pusher"}
   end
 
   local temperature_flow = control_flow.add{type = "flow", name = "temperature-flow", direction = "horizontal"}
@@ -171,7 +171,7 @@ function model.open_gui(player)
       caption = {"exotic-industries.fusion-reactor-gui-temperature"},
       tooltip = {"exotic-industries.fusion-reactor-gui-temperature-tooltip"}
   }
-  temperature_flow.add{type = "empty-widget", style = "ei_horizontal_pusher"}
+  temperature_flow.add{type = "empty-widget", style = "ei-horizontal-pusher"}
   temperature_flow.add{
       type = "label",
       name = "level"
@@ -185,17 +185,17 @@ function model.open_gui(player)
           parent_gui = "ei-fusion-reactor-console",
           action = "set-temperature"
       },
-      style = "ei_relative_gui_slider"
+      style = "ei-relative-gui-slider"
   }
 
-  control_flow.add{type = "empty-widget", style = "ei_vertical_pusher"}
+  control_flow.add{type = "empty-widget", style = "ei-vertical-pusher"}
   local injection_rate_flow = control_flow.add{type = "flow", name = "injection-rate-flow", direction = "horizontal"}
   injection_rate_flow.add{
       type = "label",
       caption = {"exotic-industries.fusion-reactor-gui-injection-rate"},
       tooltip = {"exotic-industries.fusion-reactor-gui-injection-rate-tooltip"}
   }
-  injection_rate_flow.add{type = "empty-widget", style = "ei_horizontal_pusher"}
+  injection_rate_flow.add{type = "empty-widget", style = "ei-horizontal-pusher"}
   injection_rate_flow.add{
       type = "label",
       name = "level"
@@ -209,7 +209,7 @@ function model.open_gui(player)
           parent_gui = "ei-fusion-reactor-console",
           action = "set-injection-rate"
       },
-      style = "ei_relative_gui_slider"
+      style = "ei-relative-gui-slider"
   }
 
   local entity = player.opened_gui_type == defines.gui_type.entity and player.opened
@@ -273,7 +273,7 @@ function model.update_gui(player, data)
   fuel_2_frame.tags = {selected = data[2]}
   for _, elem in pairs(fuel_2_frame.children) do
       if ei_data.fusion.fuel_combinations[data[1]][elem.tags.fuel_name] then
-          elem.style = "ei_slot_button_radio"
+          elem.style = "ei-slot-button-radio"
           elem.enabled = (elem.tags.fuel_name ~= data[2]) and true or false
       else
           elem.style = "slot_button"
@@ -312,7 +312,7 @@ function model.update_recipe(player)
   local injection_rate = model.slider_array[injection_rate_slider.slider_value]
 
   local recipe = string.format(
-      "ei_fusion-F1__%s-F2__%s-TM__%s-FM__%s",
+      "ei-fusion-F1__%s-F2__%s-TM__%s-FM__%s",
       fuel_1, fuel_2, temperature, injection_rate
   )
   if prototypes.recipe[recipe] then

@@ -6,7 +6,7 @@ ei_data = require("lib/data")
 
 data:extend({
     {
-        name = "ei_fusion-reactor",
+        name = "ei-fusion-reactor",
         type = "recipe-category",
     },
     {
@@ -52,7 +52,7 @@ data:extend({
             --[[
             {
                 type = "unlock-recipe",
-                recipe = "ei_dt-fusion"
+                recipe = "ei-dt-fusion"
             },
             ]]
             {
@@ -92,13 +92,13 @@ data:extend({
         collision_box = {{-5.4, -5.4}, {5.4, 5.4}},
         selection_box = {{-5.5, -5.5}, {5.5, 5.5}},
         map_color = ei_data.colors.assembler,
-        crafting_categories = {"ei_fusion-reactor"},
+        crafting_categories = {"ei-fusion-reactor"},
         crafting_speed = 1,
         energy_source = {
             type = 'electric',
             usage_priority = 'secondary-input',
         },
-        -- fixed_recipe = "ei_fusion-F1__ei_heated-deuterium-F2__ei_heated-tritium-TM__medium-FM__medium",
+        -- fixed_recipe = "ei-fusion-F1__ei-heated-deuterium-F2__ei-heated-tritium-TM__medium-FM__medium",
         energy_usage = "400MW",
         fluid_boxes = {
             {   
@@ -208,9 +208,9 @@ data:extend({
 ------------------------------------------------------------------------------------------------------
 
 local base_recipe = {
-    name = "ei_dt-fusion",
+    name = "ei-dt-fusion",
     type = "recipe",
-    category = "ei_fusion-reactor",
+    category = "ei-fusion-reactor",
     energy_required = 1,
     ingredients = {
         {type = "fluid", name = "ei-heated-deuterium", amount = 15}, -- fuel 1
@@ -230,8 +230,8 @@ local base_recipe = {
 
 -- [possbile settings in fusion reactor GUI]
 
--- 1. fuel 1: "ei_heated-".."deuterium" or "tritium" or "protium" or "helium-3" or "lithium-6"
--- 2. fuel 2: "ei_heated-".."deuterium" or "tritium" or "protium" or "helium-3" or "lithium-6"
+-- 1. fuel 1: "ei-heated-".."deuterium" or "tritium" or "protium" or "helium-3" or "lithium-6"
+-- 2. fuel 2: "ei-heated-".."deuterium" or "tritium" or "protium" or "helium-3" or "lithium-6"
 
 -- 3. reactor temperature:
 --          low <=> high neutron flux, power output = 0.2 
@@ -286,7 +286,7 @@ for fuel1, fuel2_combinations in pairs(fuel_combinations) do
 
                 for fuel_injection_mode, fuel_injection_mode_values in pairs(fuel_injection_modes) do
                     local recipe = table.deepcopy(base_recipe)
-                    recipe.name = "ei_fusion-F1__"..fuel1.."-F2__"..fuel2.."-TM__"..temp_mode.."-FM__"..fuel_injection_mode
+                    recipe.name = "ei-fusion-F1__"..fuel1.."-F2__"..fuel2.."-TM__"..temp_mode.."-FM__"..fuel_injection_mode
 
                     recipe.ingredients[1].name = fuel1
                     recipe.ingredients[1].amount = fuel_injection_mode_values[2]

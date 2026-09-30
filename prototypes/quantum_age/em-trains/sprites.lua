@@ -21,7 +21,7 @@ local emt_train_glow = {
     animation_speed = 1,
 }
 local charger_beam = table.deepcopy(data.raw["beam"]["electric-beam"])
-charger_beam.name = "ei_charger-beam"
+charger_beam.name = "ei-charger-beam"
 charger_beam.action = nil
 charger_beam.working_sound.min_volume=0.05
 charger_beam.working_sound.max_volume=0.1
@@ -52,26 +52,26 @@ data:extend({
     emt_train_glow,
     charger_beam,
     {
-        name = "ei_emt-logo",
+        name = "ei-emt-logo",
         type = "sprite",
         filename = ei_trains_tech_path.."em-locomotive.png",
         size = 256,
         scale = 0.25,
     },
     {
-        name = "ei_emt-range-toggle",
+        name = "ei-emt-range-toggle",
         type = "sprite",
         filename = ei_trains_item_path.."charging.png",
         size = 64,
     },
     {
-        name = "ei_emt-radius",
+        name = "ei-emt-radius",
         type = "sprite",
         filename = ei_trains_entity_path.."radius.png",
         size = 256,
     },
     {
-        name = "ei_emt-radius_big",
+        name = "ei-emt-radius_big",
         type = "sprite",
         filename = ei_trains_entity_path.."radius_big.png",
         size = 256*4,
@@ -81,13 +81,13 @@ data:extend({
 
 local style = data.raw["gui-style"]["default"]
 
-style.ei_subheader_frame = {
+style["ei-subheader-frame"] = {
     type = "frame_style",
     parent = "subheader_frame",
     horizontally_stretchable = "on"
 }
 
-style.ei_inner_content_flow = {
+style["ei-inner-content-flow"] = {
     type = "vertical_flow_style",
     padding = 12
 }

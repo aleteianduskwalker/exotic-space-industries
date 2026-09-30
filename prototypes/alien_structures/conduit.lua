@@ -5,8 +5,9 @@
 -- Pure data-stage prototype, no script: Factorio's lightning-attractor natively
 --   * pulls lightning in its range (protecting nearby buildings - also from the storm EMP, §7)
 --   * converts `efficiency` of the strike energy into its electric buffer (energy_source)
--- Numbers: lib/balance.lua -> conduit. Unlocked together with the Gaia technology (ei-gaia),
--- because it is part of the basic "survive on Gaia" kit, not of the alien tree.
+-- Numbers: lib/balance.lua -> conduit. 3.2.0: unlocked by the script-only technology ei-conduit
+-- (alien tech tree tier 1). Until then players have to build next to the ei-conduit-gaia rods
+-- that Gaia generates instead of the fulgoran ruin attractors (intended).
 -- Graphics: Hurricane046 "conduit" package (graphics/conduit), animation parameters from its JSON:
 --   200x290 frames, 10 per line, 60 frames, scale 0.5; emission layer = glow / additive.
 -- [ASSUMPTION] recipe: not specified in the document, built from computer-age materials.
@@ -118,5 +119,48 @@ data:extend({
     },
 })
 
--- unlocked with Gaia (basic Gaia survival kit, design doc §8)
-table.insert(data.raw.technology["ei-gaia"].effects, {type = "unlock-recipe", recipe = "ei-conduit"})
+--====================================================================================================
+-- TECHNOLOGY (alien tree tier 1, script-only: scripts/data-final-updates/alien_tree_techs.lua)
+--====================================================================================================
+
+data:extend({
+    {
+        name = "ei-conduit",
+        type = "technology",
+        icon = CONDUIT_PATH.."conduit-icon-big.png",
+        icon_size = 640,
+        prerequisites = {"ei-resonance-synthesizer"},
+        effects = {
+            {type = "unlock-recipe", recipe = "ei-conduit"},
+        },
+        research_trigger = {
+            type = "scripted",
+            trigger_description = {"technology-description.ei-alien-tree-trigger"},
+        },
+    },
+})
+
+--====================================================================================================
+-- EI-CONDUIT-GAIA (3.2.0)
+--====================================================================================================
+-- Non-craftable copy of the conduit that Gaia generates instead of the fulgoran ruin attractors
+-- (prototypes/alien_structures/gaia-map-gen.lua). It only attracts lightning: no energy source,
+-- not minable, and like every lightning attractor 100 % resistant to all damage (data-final-fixes).
+
+local conduit_gaia = table.deepcopy(data.raw["lightning-attractor"]["ei-conduit"])
+conduit_gaia.name = "ei-conduit-gaia"
+conduit_gaia.flags = {"placeable-neutral", "not-blueprintable", "not-deconstructable", "not-upgradable"}
+conduit_gaia.minable = nil
+conduit_gaia.energy_source = nil
+conduit_gaia.efficiency = 0
+conduit_gaia.corpse = nil
+conduit_gaia.dying_explosion = nil
+
+-- same attraction range and map generation as the vanilla ruin attractor it replaces
+local ruin_attractor = data.raw["lightning-attractor"]["fulgoran-ruin-attractor"]
+conduit_gaia.range_elongation = 25
+if ruin_attractor then
+    conduit_gaia.autoplace = table.deepcopy(ruin_attractor.autoplace)
+end
+
+data:extend({conduit_gaia})

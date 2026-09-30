@@ -398,9 +398,9 @@ function model.calc_efficiency(entity, source)
 
     if source.name == "ei-fusion-reactor" then
 
-        -- recipe names look like "ei_fusion-F1__<fuel1>-F2__<fuel2>-TM__<temp>-FM__<injection>"
+        -- recipe names look like "ei-fusion-F1__<fuel1>-F2__<fuel2>-TM__<temp>-FM__<injection>"
         -- (previous versions matched "F1-" instead of "F1__", so fusion reactors always gave 0 flux)
-        local recipe = "ei_fusion-F1__ei-heated-deuterium-F2__ei-heated-tritium-TM__medium-FM__medium"
+        local recipe = "ei-fusion-F1__ei-heated-deuterium-F2__ei-heated-tritium-TM__medium-FM__medium"
         local current_recipe = source.get_recipe()
         if current_recipe then
             recipe = current_recipe.name

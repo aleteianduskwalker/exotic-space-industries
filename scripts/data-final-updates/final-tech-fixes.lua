@@ -38,7 +38,6 @@ end
 
 local function is_exoplanetary_science(pack)
   if string.sub(pack, 1, 3) == "ei-" then return false end
-  if string.sub(pack, 1, 3) == "ei_" then return false end
   if not ei_data.science_dict[pack] then return true end
   return false
 end
@@ -203,7 +202,6 @@ end
 
 for i,tech in pairs(data.raw.technology) do
     if string.sub(i, 1, 3) == "ei-" then goto continue end
-    if string.sub(i, 1, 3) == "ei_" then goto continue end
 
     -- if tech has age skip
     if tech.age then
@@ -313,39 +311,6 @@ for i,v in pairs(data.raw.technology) do
     if v.unit and v.unit.ingredients then
         v.unit.ingredients = unique_ingredients(v.unit.ingredients)
     end
-
-    -- icons
-    if data.raw.technology[i].age then
-
-        local effects = util.table.deepcopy(data.raw.technology[i].effects)
-        local icon_found = false
-
-        if not effects then goto continue end
-
-        local id = 1
-        while true do
-            if not effects[id] then
-                break
-            end
-
-            local y = effects[id]
-            if y.type == "nothing" then
-                if y.icon == ei_graphics_other_path.."tech_overlay.png" then
-                    table.remove(effects, id)
-                    icon_found = true
-                    id = 1
-                end
-            end
-
-            id = id + 1
-
-        end
-
-        data.raw.technology[i].effects = effects
-
-        ::continue::
-        
-    end
 end
 
 
@@ -368,10 +333,6 @@ for tech_id,_ in pairs(data.raw.technology) do
 
     local tech = data.raw.technology[tech_id]
 
-    -- skip techs that end with :dummy
-    if string.sub(tech_id, -6) == "-dummy" then
-        goto continue
-    end
     if tech_id == "ei-temp" then
         goto continue
     end
@@ -485,9 +446,7 @@ end
 
 for tech_id,_ in pairs(data.raw.technology) do
   local tech = data.raw.technology[tech_id]
-  if string.sub(tech_id, -6) == "-dummy" then goto continue end
   if string.sub(tech_id, 1, 3) == "ei-" then goto continue end
-  if string.sub(tech_id, 1, 3) == "ei_" then goto continue end
   if tech_id == "ei-temp" then goto continue end
   -- if not tech.prerequisites then goto continue end
   -- if #tech.prerequisites == 0 then goto continue end
@@ -568,9 +527,4 @@ ei_lib.remove_tech("steam-power")
 ei_lib.remove_tech("wdm_ship_fix_lock")
 
 ei_lib.remove_tech("ei-temp")
-ei_lib.remove_tech("ei-steam-age-dummy")
-ei_lib.remove_tech("ei-electricity-age-dummy")
-ei_lib.remove_tech("ei-computer-age-dummy")
-ei_lib.remove_tech("ei-quantum-age-dummy")
-ei_lib.remove_tech("ei-exotic-age-dummy")
 
