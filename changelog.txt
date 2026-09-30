@@ -6,8 +6,7 @@ Date: 30-09-26
       visible in the technology screen and depends on the lab technology "Resonance synthesizer"
       (the bio chamber keeps its own prerequisites: the alien science pack needs it). A node can
       only be bought when the prerequisites of its technology are researched.
-    - Tree layout: tier 1 gets the conduit instead of the resonance synthesizer (which stays a lab
-      technology), tier 4 adds the data center and the crystal radio station, tier 5 the void engine
+    - Tree layout: tier 1 gets the conduit, tier 4 adds the data center and the crystal radio station, tier 5 the void engine
       (same costs as the other nodes of their tier).
     - Alien knowledge payment: missing knowledge is paid from the inventory in the priority
       knowledge -> alien resonance packs (10 knowledge each, surplus is refunded) -> resonance data
@@ -18,8 +17,7 @@ Date: 30-09-26
       No more knowledge is granted once the whole tree is unlocked.
     - Unrepaired ruins are immune to lightning.
     - Ancient conduit (ei-conduit-gaia): a non-craftable, indestructible lightning rod that replaces
-      the fulgoran ruin attractors on Gaia (new chunks, existing Gaia surfaces are migrated).
-      Until the conduit is unlocked players have to build next to them.
+      the fulgoran ruin attractors on Gaia. Until the conduit is unlocked players have to build next to them.
     - Radio station (electricity age, 100 kW): wireless circuit network channels on one surface.
       Any signal is a channel, one transmitter and any number of receivers per channel.
     - Crystal radio station (alien tier 4, 10 MW): the same for every surface of the game.
@@ -29,8 +27,8 @@ Date: 30-09-26
       container, transfer exactly one item between two containers or gates, guard a zone (up to
       21x21) with repair packs from the port by priority (class order, then lowest health). Drones
       carry 50 items, fly 0.3 tiles/tick, work up to 64 tiles from their port on every surface, are
-      invulnerable pictures and need a powered port (1 MJ per departure). The port has filtered
-      slots. All numbers in lib/balance.lua -> drones.
+      invulnerable and need a powered port (1 MJ per departure). The port has filtered
+      slots.
     - Gaia boulders: six minable boulder families (violet, rust-red, slate, basalt, ice, sandstone)
       with thematic mining results. They are scattered alone on Gaia and replace the vanilla rocks of
       ruins (POI) spawned on Gaia. Existing Gaia surfaces get them in newly generated chunks.
@@ -39,34 +37,27 @@ Date: 30-09-26
       crushed from local raw materials and can only be made on their planet (Vulcanus, Gleba,
       Fulgora, Aquilo, Gaia; unlocked with the gate). Nauvis needs no sample, space platforms need
       none but are only reachable while they orbit Gaia. Modded planets are no gate exits until a
-      compatibility patch defines their sample (global ei_make_planet_sample, example in
-      prototypes/alien_structures/planet-samples.lua). Exits of existing gates are grandfathered.
+      compatibility patch defines their sample. Exits of existing gates are grandfathered.
     - Alien terminal (alien tier 1): the access point of the alien tech tree. Nodes can only be
       bought within 16 tiles of a terminal of the own force on Gaia (the terminal node itself can be
       bought anywhere). Resonance packs and resonance data put into a terminal are converted into
-      alien knowledge at the payment rates. Broken terminals are a new Gaia ruin (POI) with their
+      alien knowledge at the payment rates. Broken terminals are a Gaia ruin (POI) with their
       own repair kit (unlocked with Gaia); a repaired terminal belongs to the repairing force and
       grants 200 knowledge once. The terminal GUI opens the tree. Forces that already used the tree
       get the terminal technology.
     - Holographic gas cloud (unlocked with the space platform).
   Changes:
     - Resonance synthesizer recipe multiplies data: 1 resonance data + 100 morphium + 50 computing
-      power -> 2 resonance data (was 3 from nothing).
+      power -> 2 resonance data.
     - Data center recipes always produce 1 pack and cost 1 computing power per unique component of
       the pack's recursive production chain (loop-safe, 100 as fallback for too large chains).
     - The "Vent dirty water" recipe is unlocked by the purifier technology.
     - The gate technology description no longer promises travel (the gate only moves items).
     - Alien tech tree page: every tier is drawn on a space background (deep space for tiers 4-5).
-    - Ruin presets (POI) can be restricted to Gaia (gaia_only).
-    - Unified mod prefix: every "ei_" name is now "ei-" (entities, items, recipes, technologies,
-      settings, sprites, styles, GUI elements). Saves are migrated (migrations/3.2.0.json); the
-      renamed settings "ei-ticks_per_full_update", "ei-trains_max_updates_per_tick",
-      "ei-fueler_max_updates_per_tick" and "ei-fueler_range" return to their defaults once.
   Removed:
     - Age progression gate ("research N % of the previous age"): hidden dummy technologies, the
       "counts for age progression" overlay and the InformaTron "age progress" remnants. Ages stay as
       technology metadata.
-    - Drone port / drone remnants and the unused gate.teleport_player.
     - Space destinations remnants (InformaTron page, styles, black hole data item, rocket silo GUI
       texts, satellites and planet rocks locale).
     - Orphaned locale entries of prototypes that no longer exist.
@@ -82,9 +73,8 @@ Date: 30-09-26
       drill when destroyed). Each drill has its own remnants and explosion now.
     - Advanced roboport engine animation path contained a double slash.
     - Technology age detection overflowed the stack when mods created a prerequisite cycle; the
-      cycle is now cut and logged once as a readable chain (based on a player patch).
+      cycle is now cut and logged once as a readable chain (based on a hyper.temp@Discord patch).
   Locale:
-    - Russian: "Морфий" -> "Морфиум", "Дальняя станция" -> "Дальстанция".
     - Short flavor descriptions for every entity, item, fluid, recipe, technology, tile and the
       planet that had none (English and Russian).
 ---------------------------------------------------------------------------------------------------
@@ -92,16 +82,15 @@ Version: 3.1.0
 Date: 29-09-26
   Major Features:
     - Alien tech tree reactivated (InformaTron page "Alien tech tree", 5 tiers). Repairing an alien
-      artifact grants "alien knowledge" points (100 per repair) that unlock technologies instead of
-      researching them in a lab. Tiers 1-3 restore original (known as EI knowledge system) nodes, tier 4 "Resonant
-      computation" and tier 5 "Threshold engineering" are new and also consume resonance data /
-      alien resonance packs from the inventory. Technologies researched in a lab count as unlocked.
+      artifact grants "alien knowledge" points that unlock technologies instead of
+      researching them in a lab. Tiers 1-3 restore original (known as EI knowledge system) nodes, tier 4 and tier 5 are new and also consume resonance data /
+      alien resonance packs from the inventory. 
     - Resonance data: every repaired artifact spills 2-4 pieces. The new resonance synthesizer
-      (alien tier 1 or regular research) synthesizes it from morphium and computing power.
+      (alien tier 1) synthesizes it from morphium and computing power.
     - Alien resonance pack: second alien science tier, crafted in the resonance synthesizer and only
       on Gaia (recipe surface conditions).
     - Data center: crafts any science pack of the big lab (vanilla, Space Age, other mods and the
-      alien packs) from computing power only, 10x slower than regular production. Recipes are
+      alien packs) from computing power only, ~10x slower than regular production. Recipes are
       generated automatically in data-final-fixes. Graphics: Hurricane046 cybernetics facility.
     - Conduit: lightning attractor that turns 80 % of every captured strike into electricity
       (40 MJ buffer, 5 MW output). Unlocked with Gaia. Graphics: Hurricane046 conduit.
@@ -109,24 +98,20 @@ Date: 29-09-26
       engines and restores the original terrain and resources when removed.
     - Gaia storm EMP: lightning strikes on Gaia that miss every lightning attractor disable machines,
       inserters and combinators around the impact for 5 seconds (map setting "Gaia storm EMP").
-    - Gate hub rule: every gate jump goes through Gaia. A gate outside of Gaia can only lead to Gaia,
-      a gate on Gaia to every other surface. Invalid exits of old saves are reset.
+    - Every gate jump goes through Gaia. A gate outside of Gaia can only lead to Gaia,
+      a gate on Gaia to every other surface.
     - Platform requests scanner (orbital combinator) consumes 1 computing power per minute through
       a hidden data port while an orbiting platform has requests; without it the signals freeze
       and a warning icon is shown.
-    - Underground data cable (alien tier 4).
+    - Underground data cable.
     - Five new hand-made Gaia ruin presets (shrine, grove, outpost, sanctuary, monument).
   Bugfixes:
-    - Restored Alien (knowledge system) tech tree: the tree was empty, the InformaTron page "alien" did not exist, the currency
-      was never granted, tier unlocking was hardcoded to 3 tiers and never called, button sprites
-      pointed to non-existing sprites and the node state always used the "player" force.
     - Artifact spawner: 5 presets could never spawn (rarity "temp" / "very-rare" typos, duplicate
       table keys "accu-site_5" and "beacon-site_small-2" overwrote each other).
     - InformaTron: gate and repair pages were unreachable (dependency on the never-set
       storage.ei.knowledge), empty "surface patches" headings removed, the "tech" section and the
       space destinations page restored (text updated for Space Age), "Informatron wiki updated"
       messages were never sent and used a non-existing sprite.
-    - Alien confirm dialog used missing locale keys (renamed knowledge-confirm-* keys).
     - Missing locale: technology names of modules 4-6, solar panels 2/3 and crystal accumulator,
       gate remote item name, black hole start button caption.
     - Void engine and burner quarry used the Factorio 1.x "module_specification" field that 2.0
