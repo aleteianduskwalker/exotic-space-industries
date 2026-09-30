@@ -31,6 +31,7 @@ local ei_register = require("scripts/control/register_util")
 local ei_powered_beacon = require("scripts/control/powered_beacon")
 local ei_beacon_overload = require("scripts/control/beacon_overload")
 local ei_spidertron_limiter = require("scripts/control/spidertron_limiter")
+local mod_gui = require("mod-gui")
 
 ei_victory = require("scripts/control/victory_disabler")
 ei_alien_spawner = require("scripts/control/alien_spawner")
@@ -196,7 +197,6 @@ end)
 ---stay forever (and their click tags no longer match), so they are removed; the modules recreate
 ---their GUIs with the new names when needed.
 local function remove_legacy_guis()
-    local mod_gui = require("mod-gui")
     for _, player in pairs(game.players) do
         local roots = {player.gui.top, player.gui.left, player.gui.center, player.gui.screen, player.gui.relative,
                        mod_gui.get_button_flow(player), mod_gui.get_frame_flow(player)}

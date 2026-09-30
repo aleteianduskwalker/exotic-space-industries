@@ -39,7 +39,7 @@ local shadow = {
     width = 600,
     height = 400,
     scale = 0.5,
-    shift = {1.2, 0.3},
+    shift = {0.2, 0.3},
     draw_as_shadow = true,
 }
 
