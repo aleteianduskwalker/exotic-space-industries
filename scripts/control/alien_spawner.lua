@@ -31,6 +31,13 @@ model.forbidden_entities = {
     ["teleporter-flying-text"] = true,
 }
 
+-- vanilla rocks of the recorded presets; on Gaia they become Gaia boulders (3.2.0)
+model.gaia_rock_replacements = {
+    ["huge-rock"] = true,
+    ["big-rock"] = true,
+    ["big-sand-rock"] = true,
+}
+
 -- floating warnings shown when alien flowers get destroyed
 model.flower_counter_warnings = {
     [3] = {"exotic-industries.flower-count-3"},
@@ -127,6 +134,21 @@ local function prepare_entities(preset, surface, pos)
     end
 end
 
+---Name of the entity to spawn for a preset entry: vanilla rocks of ruins on Gaia are replaced by
+---a random Gaia boulder family (math.random is deterministic in the control stage, MP safe).
+---@param name string preset entity name
+---@param on_gaia boolean
+local function spawn_name(name, on_gaia)
+    if on_gaia and model.gaia_rock_replacements[name] then
+        local boulders = ei_gaia.GAIA_BOULDERS
+        local boulder = boulders[math.random(#boulders)]
+        if prototypes.entity[boulder] then
+            return boulder
+        end
+    end
+    return name
+end
+
 ---Places the preset entities around `pos` and marks the spot with an artifact flag.
 local function spawn_entities(preset, surface, pos)
     if not preset.structure then
@@ -134,18 +156,20 @@ local function spawn_entities(preset, surface, pos)
     end
 
     local force = preset.force or "neutral"
+    local on_gaia = ei_gaia.is_gaia_surface(surface)
     prepare_entities(preset, surface, pos)
 
     for _, entity_data in ipairs(preset.structure) do
         local position = {x = pos.x + entity_data.position.x, y = pos.y + entity_data.position.y}
+        local name = spawn_name(entity_data.name, on_gaia)
 
         if model.forbidden_entities[entity_data.name] then
             goto continue
         end
-        if not prototypes.entity[entity_data.name] then
+        if not prototypes.entity[name] then
             goto continue -- preset references an entity from a mod that is not active
         end
-        if not surface.can_place_entity({name = entity_data.name, position = position, force = force}) then
+        if not surface.can_place_entity({name = name, position = position, force = force}) then
             goto continue
         end
 
@@ -158,7 +182,7 @@ local function spawn_entities(preset, surface, pos)
 
         do
             local spawned = surface.create_entity({
-                name = entity_data.name,
+                name = name,
                 position = position,
                 force = force,
                 raise_built = true,

@@ -376,21 +376,42 @@ function model.replace_ruin_attractors(surface, area)
     end
 end
 
----Future chunks of an existing Gaia surface generate ei-conduit-gaia instead of ruin attractors.
+-- entities that are autoplaced on every Gaia surface since 3.2.0 (settings of new map chunks)
+local GAIA_BOULDERS = {
+    "ei-gaia-boulder-violet", "ei-gaia-boulder-red", "ei-gaia-boulder-slate",
+    "ei-gaia-boulder-basalt", "ei-gaia-boulder-ice", "ei-gaia-boulder-sandstone",
+}
+model.GAIA_BOULDERS = GAIA_BOULDERS
+
+---Future chunks of an existing Gaia surface generate ei-conduit-gaia instead of ruin attractors
+---and the Gaia boulders (3.2.0).
 ---@param surface LuaSurface
 local function update_map_gen_settings(surface)
     local settings = surface.map_gen_settings
     local entity_settings = settings.autoplace_settings
         and settings.autoplace_settings.entity
         and settings.autoplace_settings.entity.settings
-    if not (entity_settings and entity_settings[RUIN_ATTRACTOR]) then
+    if not entity_settings then
         return
     end
 
-    entity_settings[GAIA_CONDUIT] = entity_settings[RUIN_ATTRACTOR]
-    entity_settings[RUIN_ATTRACTOR] = nil
-    -- never let a map gen detail break the migration
-    pcall(function() surface.map_gen_settings = settings end)
+    local changed = false
+    if entity_settings[RUIN_ATTRACTOR] then
+        entity_settings[GAIA_CONDUIT] = entity_settings[RUIN_ATTRACTOR]
+        entity_settings[RUIN_ATTRACTOR] = nil
+        changed = true
+    end
+    for _, boulder in pairs(GAIA_BOULDERS) do
+        if not entity_settings[boulder] and prototypes.entity[boulder] then
+            entity_settings[boulder] = {frequency = 1, size = 1, richness = 1}
+            changed = true
+        end
+    end
+
+    if changed then
+        -- never let a map gen detail break the migration
+        pcall(function() surface.map_gen_settings = settings end)
+    end
 end
 
 ---Migration (idempotent): every existing Gaia surface.

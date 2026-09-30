@@ -13,6 +13,9 @@ require("alien-stabilizer")
 require("gaia-tiles")
 -- add new trees
 require("gaia-trees")
+
+-- minable Gaia boulders (3.2.0), scattered on Gaia and used in the ruins
+require("gaia-boulders")
 -- add gate
 require("gate")
 -- add crystal accumulator

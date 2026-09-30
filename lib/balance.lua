@@ -173,6 +173,24 @@ ei_balance.data_center = {
 }
 
 --====================================================================================================
+-- GAIA BOULDERS (3.2.0)
+--====================================================================================================
+-- Six families of Gaia boulders (prototypes/alien_structures/gaia-boulders.lua). Each family uses
+-- some of the 15 sprites of graphics-2/graphics/terrain/gaia-boulder-<n>.png as random variations.
+--   sprites      sprite numbers used as variations
+--   results      mining results {name, min, max, probability}
+--   probability  autoplace probability per tile on Gaia ("sometimes alone")
+-- Rocks of the ruin presets (POI) spawned on Gaia are replaced by these boulders at runtime.
+ei_balance.gaia_boulders = {
+    violet    = {sprites = {1, 2},          results = {{"stone", 12, 20, 1}, {"ei-energy-crystal", 1, 2, 0.3}}, probability = 0.00025},
+    red       = {sprites = {3, 4},          results = {{"stone", 12, 20, 1}, {"iron-ore", 5, 10, 1}},           probability = 0.00025},
+    slate     = {sprites = {5, 6},          results = {{"stone", 12, 20, 1}, {"copper-ore", 5, 10, 1}},         probability = 0.00025},
+    basalt    = {sprites = {7, 8, 9},       results = {{"stone", 12, 20, 1}, {"coal", 8, 15, 1}},               probability = 0.0003},
+    ice       = {sprites = {10, 11},        results = {{"ice", 10, 20, 1}, {"ei-cryodust", 1, 3, 0.5}},         probability = 0.0002},
+    sandstone = {sprites = {12, 13, 14, 15}, results = {{"stone", 8, 15, 1}, {"ei-sand", 10, 20, 1}},           probability = 0.0004},
+}
+
+--====================================================================================================
 -- RADIO STATIONS (3.2.0)
 --====================================================================================================
 -- Wireless circuit network channels: one transmitter per channel, any number of receivers.
