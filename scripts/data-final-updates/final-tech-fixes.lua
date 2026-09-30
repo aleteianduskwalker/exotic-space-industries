@@ -101,40 +101,68 @@ end
 
 
 
+-- get_ages state (data stage only):
+--   age_cache   tech name -> ages of a non-root tech (memoization, also avoids exponential walks)
+--   age_active  tech name -> its index in age_path while it is being resolved (cycle detection)
+--   age_path    current prerequisite chain (for the cycle log)
+local age_cache, age_active, age_path = {}, {}, {}
+local logged_cycles = {}
+
 ---Returns all ages a technology belongs to (its own age or the ages of its prerequisites).
+---Prerequisite cycles (usually two mods depending on each other's technologies) no longer
+---overflow the stack: the chain is written to factorio-current.log once and cut there.
+---(3.2.0, based on a player patch)
 ---@param tech table technology prototype
 ---@param is_root boolean|nil true for the technology whose age is being determined
 local function get_ages(tech, is_root)
     if not tech then return {} end
 
+    if not is_root and age_cache[tech.name] then
+        return age_cache[tech.name]
+    end
+
+    -- cycle: log the chain (once per entry point) and stop descending
+    local start = age_active[tech.name]
+    if start then
+        local cycle = {}
+        for i = start, #age_path do
+            table.insert(cycle, age_path[i])
+        end
+        table.insert(cycle, tech.name)
+        local text = table.concat(cycle, " -> ")
+        if not logged_cycles[text] then
+            logged_cycles[text] = true
+            log("[exotic-space-industries] WARNING: technology prerequisite cycle (please report it to the mods involved):\n    " .. text)
+        end
+        return tech.age and {tech.age} or {}
+    end
+
+    age_active[tech.name] = #age_path + 1
+    table.insert(age_path, tech.name)
+
+    local result
     -- A tech that unlocks an age tech pack gives that age to the techs depending on it.
     -- The unlocking tech itself must NOT get that age: it would need the pack it unlocks
     -- (e.g. "kr-imersium-processing" requiring the imersite tech pack it unlocks).
     if not is_root and ei_data.tech_ages_with_sub[tech.name] then
-        return {ei_data.tech_ages_with_sub[tech.name]}
-    end
-
-    if tech.age then
-        return {tech.age}
-    end
-
-    if not tech.prerequisites then
-        return {}
-    end
-
-    local return_ages = {}
-    
-    for i,v in ipairs(tech.prerequisites) do
-        local ages = get_ages(data.raw.technology[v])
-        if ages then
-            for x,y in ipairs(ages) do
-                table.insert(return_ages, y)
+        result = {ei_data.tech_ages_with_sub[tech.name]}
+    elseif tech.age then
+        result = {tech.age}
+    else
+        result = {}
+        for _, prerequisite in ipairs(tech.prerequisites or {}) do
+            for _, age in ipairs(get_ages(data.raw.technology[prerequisite])) do
+                table.insert(result, age)
             end
         end
     end
 
-    return return_ages
-
+    table.remove(age_path)
+    age_active[tech.name] = nil
+    if not is_root then
+        age_cache[tech.name] = result
+    end
+    return result
 end
 
 

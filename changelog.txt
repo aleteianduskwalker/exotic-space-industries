@@ -81,6 +81,8 @@ Date: 30-09-26
       the superior drill overwrote the advanced one (and the vanilla drill looked like a kirazy
       drill when destroyed). Each drill has its own remnants and explosion now.
     - Advanced roboport engine animation path contained a double slash.
+    - Technology age detection overflowed the stack when mods created a prerequisite cycle; the
+      cycle is now cut and logged once as a readable chain (based on a player patch).
   Locale:
     - Russian: "Морфий" -> "Морфиум", "Дальняя станция" -> "Дальстанция".
     - Short flavor descriptions for every entity, item, fluid, recipe, technology, tile and the
