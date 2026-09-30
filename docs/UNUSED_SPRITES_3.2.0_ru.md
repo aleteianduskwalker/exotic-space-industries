@@ -2,12 +2,12 @@
 
 Метод: data-стадия мода (все зависимости base / space-age, настройки по умолчанию) прогнана в эмуляторе; из `data.raw` (включая `gui-style`) собраны все пути `__exotic-space-industries*__/...`. Control-стадия файлов напрямую не использует (только имена спрайтов-прототипов, которые уже в `data.raw`). Файл из списка считается неиспользуемым, если его путь не встречается в загруженных прототипах.
 
-Итого: в списке 2025 файлов, используется 1319, **не используется 701** (+5 используются только вместе с Krastorio2).
+Итого: в списке 2026 файлов, используется 1352, **не используется 669** (+5 используются только вместе с Krastorio2).
 
-> Замечание: `graphics/entities//64x64_empty.png` (graphics-2) подключается с двойным слэшем в пути — файл используется, но путь стоит поправить.
+Исправлено в 3.2.0 по итогам первой версии отчёта: тепловые трубы снова используют все варианты спрайтов, у продвинутого и превосходного бура свои остатки (tier_1 больше не перезаписывается), удалена неиспользуемая таблица `ei_pipe_basic`, исправлен путь с двойным слэшем `entities//64x64_empty.png`, удалён мёртвый `stone_well_pump.lua`.
 
 
-## 1. Версии низкого разрешения (в Factorio 2.0 используются только hr-версии) (264)
+## 1. Версии низкого разрешения (в Factorio 2.0 используются только hr-версии) (295)
 
 Для каждого файла рядом есть используемый `hr-`вариант.
 
@@ -39,15 +39,45 @@
 
 **exotic-space-industries-graphics-1/graphics/heat-pipes/cold_connections/**
 
+- heat-pipe-corner-down-left-1.png
+- heat-pipe-corner-down-left-2.png
+- heat-pipe-corner-down-left-3.png
+- heat-pipe-corner-down-left-4.png
+- heat-pipe-corner-down-left-5.png
 - heat-pipe-corner-down-left-6.png
+- heat-pipe-corner-down-right-1.png
+- heat-pipe-corner-down-right-2.png
+- heat-pipe-corner-down-right-3.png
+- heat-pipe-corner-down-right-4.png
+- heat-pipe-corner-down-right-5.png
 - heat-pipe-corner-down-right-6.png
+- heat-pipe-corner-up-left-1.png
+- heat-pipe-corner-up-left-2.png
+- heat-pipe-corner-up-left-3.png
+- heat-pipe-corner-up-left-4.png
+- heat-pipe-corner-up-left-5.png
 - heat-pipe-corner-up-left-6.png
+- heat-pipe-corner-up-right-1.png
+- heat-pipe-corner-up-right-2.png
+- heat-pipe-corner-up-right-3.png
+- heat-pipe-corner-up-right-4.png
+- heat-pipe-corner-up-right-5.png
 - heat-pipe-corner-up-right-6.png
 - heat-pipe-ending-down-1.png
 - heat-pipe-ending-left-1.png
 - heat-pipe-ending-right-1.png
 - heat-pipe-ending-up-1.png
+- heat-pipe-straight-horizontal-1.png
+- heat-pipe-straight-horizontal-2.png
+- heat-pipe-straight-horizontal-3.png
+- heat-pipe-straight-horizontal-4.png
+- heat-pipe-straight-horizontal-5.png
 - heat-pipe-straight-horizontal-6.png
+- heat-pipe-straight-vertical-1.png
+- heat-pipe-straight-vertical-2.png
+- heat-pipe-straight-vertical-3.png
+- heat-pipe-straight-vertical-4.png
+- heat-pipe-straight-vertical-5.png
 - heat-pipe-straight-vertical-6.png
 - heat-pipe-straight-vertical-single.png
 - heat-pipe-t-1.png
@@ -201,6 +231,10 @@
 - electric-mining-drill-smoke-front.png
 - electric-mining-drill-smoke.png
 - electric-mining-drill.png
+
+**exotic-space-industries-graphics-1/graphics/other/kirazy-semi-classic-mining-drill/tier_1/remnants/**
+
+- electric-mining-drill-remnants.png
 
 **exotic-space-industries-graphics-1/graphics/other/kirazy-semi-classic-mining-drill/tier_2/**
 
@@ -434,7 +468,18 @@
 - lab.png
 - tech_overlay.png
 
-## 6. Дубликаты графики ЭМ-поездов и заправщика в graphics-2 / временные спрайты (используются версии из graphics-3) (89)
+## 6. Каменный колодец (мёртвый файл stone_well_pump.lua эпохи 1.1 удалён в 3.2.0) (2)
+
+
+**exotic-space-industries-graphics-2/graphics/entities/**
+
+- stone-waterwell.png
+
+**exotic-space-industries-graphics-2/graphics/icons/**
+
+- stone-waterwell.png
+
+## 7. Дубликаты графики ЭМ-поездов и заправщика в graphics-2 / временные спрайты (используются версии из graphics-3) (88)
 
 
 **exotic-space-industries-graphics-2/graphics/**
@@ -450,7 +495,6 @@
 
 **exotic-space-industries-graphics-2/graphics/entities/**
 
-- 64x64_empty.png
 - charger.png
 - charger_animation.png
 - em-cargo-wagon_1.png
@@ -547,7 +591,7 @@
 - 64_empty.png
 - 64_red.png
 
-## 7. Kirazy: старый бур (папка unused и неиспользуемый вариант kirazy-mining-drill) (66)
+## 8. Kirazy: старый бур (папка unused и неиспользуемый вариант kirazy-mining-drill) (66)
 
 
 **exotic-space-industries-graphics-1/graphics/other/kirazy-mining-drill/entity/**
@@ -625,77 +669,14 @@
 
 - mining-productivity.png
 
-## 8. Тепловые трубы: hr-варианты 1–5 и низкое разрешение (скрипт basic-heat-pipe.lua подставляет только последний вариант каждого направления — похоже на баг) (61)
+## 9. Тепловые трубы (1)
 
-
-**exotic-space-industries-graphics-1/graphics/heat-pipes/cold_connections/**
-
-- heat-pipe-corner-down-left-1.png
-- heat-pipe-corner-down-left-2.png
-- heat-pipe-corner-down-left-3.png
-- heat-pipe-corner-down-left-4.png
-- heat-pipe-corner-down-left-5.png
-- heat-pipe-corner-down-right-1.png
-- heat-pipe-corner-down-right-2.png
-- heat-pipe-corner-down-right-3.png
-- heat-pipe-corner-down-right-4.png
-- heat-pipe-corner-down-right-5.png
-- heat-pipe-corner-up-left-1.png
-- heat-pipe-corner-up-left-2.png
-- heat-pipe-corner-up-left-3.png
-- heat-pipe-corner-up-left-4.png
-- heat-pipe-corner-up-left-5.png
-- heat-pipe-corner-up-right-1.png
-- heat-pipe-corner-up-right-2.png
-- heat-pipe-corner-up-right-3.png
-- heat-pipe-corner-up-right-4.png
-- heat-pipe-corner-up-right-5.png
-- heat-pipe-straight-horizontal-1.png
-- heat-pipe-straight-horizontal-2.png
-- heat-pipe-straight-horizontal-3.png
-- heat-pipe-straight-horizontal-4.png
-- heat-pipe-straight-horizontal-5.png
-- heat-pipe-straight-vertical-1.png
-- heat-pipe-straight-vertical-2.png
-- heat-pipe-straight-vertical-3.png
-- heat-pipe-straight-vertical-4.png
-- heat-pipe-straight-vertical-5.png
-- hr-heat-pipe-corner-down-left-1.png
-- hr-heat-pipe-corner-down-left-2.png
-- hr-heat-pipe-corner-down-left-3.png
-- hr-heat-pipe-corner-down-left-4.png
-- hr-heat-pipe-corner-down-left-5.png
-- hr-heat-pipe-corner-down-right-1.png
-- hr-heat-pipe-corner-down-right-2.png
-- hr-heat-pipe-corner-down-right-3.png
-- hr-heat-pipe-corner-down-right-4.png
-- hr-heat-pipe-corner-down-right-5.png
-- hr-heat-pipe-corner-up-left-1.png
-- hr-heat-pipe-corner-up-left-2.png
-- hr-heat-pipe-corner-up-left-3.png
-- hr-heat-pipe-corner-up-left-4.png
-- hr-heat-pipe-corner-up-left-5.png
-- hr-heat-pipe-corner-up-right-1.png
-- hr-heat-pipe-corner-up-right-2.png
-- hr-heat-pipe-corner-up-right-3.png
-- hr-heat-pipe-corner-up-right-4.png
-- hr-heat-pipe-corner-up-right-5.png
-- hr-heat-pipe-straight-horizontal-1.png
-- hr-heat-pipe-straight-horizontal-2.png
-- hr-heat-pipe-straight-horizontal-3.png
-- hr-heat-pipe-straight-horizontal-4.png
-- hr-heat-pipe-straight-horizontal-5.png
-- hr-heat-pipe-straight-vertical-1.png
-- hr-heat-pipe-straight-vertical-2.png
-- hr-heat-pipe-straight-vertical-3.png
-- hr-heat-pipe-straight-vertical-4.png
-- hr-heat-pipe-straight-vertical-5.png
 
 **exotic-space-industries-graphics-1/graphics/heat-pipes/heated_connections/**
 
 - heated-glow.png
 
-## 9. Маски цвета / превью (не поддерживаются прототипом или не нужны в игре) (6)
+## 10. Маски цвета / превью (не поддерживаются прототипом или не нужны в игре) (6)
 
 
 **exotic-space-industries/graphics/conduit/**
@@ -713,7 +694,7 @@
 
 - radio-station-preview-static.png
 
-## 10. Glow-спрайты неиспользуемых размеров/вариантов (19)
+## 11. Glow-спрайты неиспользуемых размеров/вариантов (19)
 
 
 **exotic-space-industries/graphics/glow/big_pngs/**
@@ -756,7 +737,7 @@
 
 - glow.png
 
-## 11. Декор и тайлы Гайи без прототипов (валуны, тайлы низкого разрешения) (22)
+## 12. Декор и тайлы Гайи без прототипов (валуны, тайлы низкого разрешения) (22)
 
 
 **exotic-space-industries-graphics-2/graphics/terrain/**
@@ -784,7 +765,7 @@
 - gaia-rock-2.png
 - gaia-rock-3.png
 
-## 12. Прочие ассеты без ссылок в коде (старые предметы, иконки, технологии, трубы) (90)
+## 13. Прочие ассеты без ссылок в коде (старые предметы, иконки, технологии, трубы) (90)
 
 
 **exotic-space-industries-graphics-1/graphics/data-pipes/remnants/**
@@ -867,12 +848,9 @@
 - uranium-extraction.png
 - uranium-purification.png
 
-**exotic-space-industries-graphics-1/graphics/other/kirazy-semi-classic-mining-drill/tier_1/remnants/**
-
-- electric-mining-drill-remnants.png
-
 **exotic-space-industries-graphics-1/graphics/pipe-covers/**
 
+- north_basic_covers.png
 - north_long_basic_covers.png
 
 **exotic-space-industries-graphics-1/graphics/techs/**
@@ -922,7 +900,7 @@
 
 - gaia.png
 
-## 13. Упоминаются в коде, но в игру не загружаются (16)
+## 14. Упоминаются в коде, но в игру не загружаются (12)
 
 - `exotic-space-industries-graphics-1/graphics/128_empty.png` — ei_lib.empty_sprite(128) — никем не вызывается
 - `exotic-space-industries-graphics-1/graphics/256_empty.png` — ei_lib.empty_sprite(256) — вызывали только удалённые dummy-технологии эпох
@@ -932,13 +910,9 @@
 - `exotic-space-industries-graphics-1/graphics/items/core-patch.png` — закомментированный ресурс ei-core-patch (drill-deposits.lua)
 - `exotic-space-industries-graphics-1/graphics/items/exotic-quantum-age-tech.png` — закомментированный код в quantum_prototypes.lua
 - `exotic-space-industries-graphics-1/graphics/other/kirazy-mining-drill/icon/electric-mining-drill.png` — закомментированный код в electricity_prototypes.lua
-- `exotic-space-industries-graphics-1/graphics/other/kirazy-semi-classic-mining-drill/tier_1/remnants/hr-electric-mining-drill-remnants.png` — остатки бура tier_1 перезаписываются остатками tier_2 (superior-electric-mining-drill.lua)
 - `exotic-space-industries-graphics-1/graphics/other/power_overlay.png` — закомментированный код в electricity_prototypes.lua
 - `exotic-space-industries-graphics-1/graphics/other/processing-unit.png` — закомментированный код в quantum_prototypes.lua
-- `exotic-space-industries-graphics-1/graphics/pipe-covers/north_basic_covers.png` — глобальная таблица ei_pipe_basic (pipe-covers.lua) нигде не используется
 - `exotic-space-industries-graphics-1/graphics/techs/induction-matrix-advanced-solenoid.png` — закомментированная технология в induction-matrix.lua
-- `exotic-space-industries-graphics-2/graphics/entities/stone-waterwell.png` — prototypes/dark_age/stone_well_pump.lua нигде не подключается (require)
-- `exotic-space-industries-graphics-2/graphics/icons/stone-waterwell.png` — prototypes/dark_age/stone_well_pump.lua нигде не подключается (require)
 - `exotic-space-industries-graphics-3/graphics/em-trains/entities/charger.png` — закомментированная анимация в em-trains/charger.lua
 
 ## Используются только с Krastorio2-spaced-out (5) — не удалять

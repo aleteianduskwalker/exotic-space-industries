@@ -50,21 +50,19 @@ pipe.heat_buffer.max_temperature = 275
 pipe.heat_buffer.specific_heat = ei_data.specific_heat
 pipe.heat_buffer.minimum_glow_temperature = pipe.heat_buffer.max_temperature * 0.5
 
--- loop over connection sprites and change the filename
+-- loop over connection sprites and change the filename of EVERY variant
+-- (3.2.0 fix: the old loop wrote filename/size onto the variant list itself, so the whole list was
+-- read as one sprite and only the last variant of each direction was ever shown)
 
-for i,v in pairs(pipe.connection_sprites) do
+for _, variants in pairs(pipe.connection_sprites) do
+    for _, sprite in ipairs(variants) do
+        -- keep only the file name of the vanilla sprite, e.g. "heat-pipe-straight-vertical-3.png"
+        local file = sprite.filename:gsub("^(.*/)", "")
 
-    -- loop over all sprite variants
-    for j,k in ipairs(pipe.connection_sprites[i]) do
-        -- remove the path from filename
-        local file = k.filename:gsub("^(.*/)", "")
-        -- change the filename and hr version
-
-        pipe.connection_sprites[i].filename = ei_graphics_heat_path.."cold_connections/".."hr-"..file
-        pipe.connection_sprites[i].scale = 0.5
-        pipe.connection_sprites[i].height = 64
-        pipe.connection_sprites[i].width = 64
-        
+        sprite.filename = ei_graphics_heat_path.."cold_connections/".."hr-"..file
+        sprite.scale = 0.5
+        sprite.height = 64
+        sprite.width = 64
     end
 end
 

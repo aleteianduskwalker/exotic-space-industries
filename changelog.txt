@@ -45,6 +45,15 @@ Date: 30-09-26
   Bugfixes:
     - InformaTron "cranes and belts" page referenced the non-existing item ei-big-inserter.
     - Metalworks level overlays and a few item descriptions referenced wrong names.
+    - Basic heat pipe showed only the last sprite variant of every direction (the new file name was
+      written onto the variant list instead of each variant).
+    - Advanced and superior electric mining drills edited the vanilla remnants and dying explosion:
+      the superior drill overwrote the advanced one (and the vanilla drill looked like a kirazy
+      drill when destroyed). Each drill has its own remnants and explosion now.
+    - Advanced roboport engine animation path contained a double slash.
+  Removed:
+    - Unused pipe cover table ei_pipe_basic and the never loaded Factorio 1.1 file
+      stone_well_pump.lua.
   Locale:
     - Russian: "Морфий" -> "Морфиум", "Дальняя станция" -> "Дальстанция".
     - Short flavor descriptions for every entity, item, fluid, recipe, technology, tile and the
