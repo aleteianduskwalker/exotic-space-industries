@@ -236,6 +236,11 @@ data:extend({
                 recipe = "ei-water-vent"
             },
             {
+                -- 3.2.0: fallback sink for dirty water (landfill / fluorite are the regular ways)
+                type = "unlock-recipe",
+                recipe = "ei-dirty-water-vent"
+            },
+            {
                 type = "unlock-recipe",
                 recipe = "ei-dirty-water-landfill"
             },

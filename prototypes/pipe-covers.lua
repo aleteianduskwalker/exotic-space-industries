@@ -74,27 +74,6 @@ local empty_sprite = {
 --PIPE PICTURES
 --====================================================================================================
 
-ei_pipe_basic = {
-    north = {
-        filename = ei_graphics_pipe_path.."north_basic_covers.png",
-        priority = "extra-high",
-        width = 45,
-        height = 40,
-        shift = util.by_pixel(0, 25),
-        scale = 0.5
-    },
-    south = {
-        filename = ei_graphics_pipe_path.."south_basic_covers.png",
-		    priority = "high",
-		    width = 55,
-        height = 50,
-        shift = {0.01, -0.58},
-        scale = 0.5
-    },
-    west = empty_sprite,
-    east = empty_sprite
-}
-
 ei_pipe_south_basic = {
     north = empty_sprite,
     south = {

@@ -1509,7 +1509,7 @@ function model.open_gui(player)
         }
         titlebar.add{
             type = "empty-widget",
-            style = "ei_titlebar_draggable_spacer",
+            style = "ei-titlebar-draggable-spacer",
             ignored_by_interaction = true
         }
         titlebar.add{
@@ -1545,7 +1545,7 @@ function model.open_gui(player)
 
     main_container.add{ -- Console subheader
         type = "frame",
-        style = "ei_subheader_frame"
+        style = "ei-subheader-frame"
     }.add{
         type = "label",
         caption = {"exotic-industries.induction-matrix-gui-console-title"},
@@ -1556,13 +1556,13 @@ function model.open_gui(player)
         type = "flow",
         name = "console-flow",
         direction = "vertical",
-        style = "ei_inner_content_flow"
+        style = "ei-inner-content-flow"
     } --[[@as LuaGuiElement]]
 
     local camera_frame = console_flow.add{
         type = "frame",
         name = "camera-frame",
-        style = "ei_camera_frame"
+        style = "ei-camera-frame"
     } --[[@as LuaGuiElement]]
 
     camera_frame.add{
@@ -1570,7 +1570,7 @@ function model.open_gui(player)
         name = "camera",
         position = entity.position,
         surface_index = entity.surface.index,
-        style = "ei_camera"
+        style = "ei-camera"
     }
 
 
@@ -1581,7 +1581,7 @@ function model.open_gui(player)
         caption = {"exotic-industries.induction-matrix-gui-max-energy-transfer"},
         tooltip = {"exotic-industries.induction-matrix-gui-max-energy-transfer-tooltip"}
     }
-    max_et.add{type = "empty-widget", style = "ei_horizontal_pusher"}
+    max_et.add{type = "empty-widget", style = "ei-horizontal-pusher"}
     max_et.add{
         type = "label",
         name = "max-et-value"
@@ -1596,14 +1596,14 @@ function model.open_gui(player)
     local power_bar = capacity.add{
         type = "progressbar",
         name = "stored-power-value",
-        style = "ei_status_progressbar",
+        style = "ei-status-progressbar",
         tooltip = {"exotic-industries.induction-matrix-gui-capacity-tooltip"}
     }
     power_bar.style.horizontal_align = "right"
 
     console_flow.add{
         type = "empty-widget",
-        style = "ei_vertical_pusher"
+        style = "ei-vertical-pusher"
     }
 
     local button_flow = console_flow.add{type = "flow"} --[[@as LuaGuiElement]]

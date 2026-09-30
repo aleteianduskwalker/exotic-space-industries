@@ -4,17 +4,17 @@
 
 data:extend({
     {
-        name = "ei_fueler",
+        name = "ei-fueler",
         type = "item",
         icon = ei_fueler_graphics_path.."fueler_icon.png",
         icon_size = 64,
         subgroup = "train-transport",
         order = "0",
-        place_result = "ei_fueler",
+        place_result = "ei-fueler",
         stack_size = 10,
     },
     {
-        name = "ei_fueler",
+        name = "ei-fueler",
         type = "recipe",
         category = "crafting",
         energy_required = 1,
@@ -24,11 +24,11 @@ data:extend({
             {type="item", name="gun-turret", amount=1},
             {type="item", name="inserter", amount=10},
         },
-        results = {{type="item", name="ei_fueler", amount=1}},
+        results = {{type="item", name="ei-fueler", amount=1}},
         enabled = false,
     },
     {
-        name = "ei_fueler",
+        name = "ei-fueler",
         type = "technology",
         icon = ei_fueler_graphics_path.."fueler_tech.png",
         icon_size = 256,
@@ -36,7 +36,7 @@ data:extend({
         effects = {
             {
                 type = "unlock-recipe",
-                recipe = "ei_fueler"
+                recipe = "ei-fueler"
             }
         },
         unit = {
@@ -49,12 +49,12 @@ data:extend({
         age = "steam-age",
     },
     {
-        name = "ei_fueler",
+        name = "ei-fueler",
         type = "container",
         icon = ei_fueler_graphics_path.."fueler_icon.png",
         icon_size = 64,
         flags = {"placeable-neutral", "player-creation"},
-        minable = {mining_time = 0.2, result = "ei_fueler"},
+        minable = {mining_time = 0.2, result = "ei-fueler"},
         max_health = 100,
         corpse = "small-remnants",
         collision_box = {{-1.4, -1.4}, {1.4, 1.4}},
@@ -78,26 +78,26 @@ data:extend({
                 width = 256,
                 height = 256
             },
-            distance = settings.startup["ei_fueler_range"].value
+            distance = settings.startup["ei-fueler_range"].value
         },
         
     },
     {
-        name = "ei_fueler-sprite",
+        name = "ei-fueler-sprite",
         type = "sprite",
         filename = ei_fueler_graphics_path.."fueler_picture.png",
         width = 512,
         height = 512
     },
     {
-        name = "ei_vehicle",
+        name = "ei-vehicle",
         type = "sprite",
         filename = ei_fueler_graphics_path.."vehicle.png",
         width = 40,
         height = 40,
     },
     {
-        name = "ei_equipment",
+        name = "ei-equipment",
         type = "sprite",
         filename = ei_fueler_graphics_path.."equipment.png",
         width = 40,
@@ -106,7 +106,7 @@ data:extend({
 })
 
 local fuel_beam = table.deepcopy(data.raw["beam"]["electric-beam"])
-fuel_beam.name = "ei_fuel-beam"
+fuel_beam.name = "ei-fuel-beam"
 fuel_beam.action = nil
 fuel_beam.working_sound.sound.volume = 0.0
 

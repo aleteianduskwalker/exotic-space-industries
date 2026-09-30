@@ -170,3 +170,8 @@ table.insert(data.raw["technology"]["ei-black-hole"].effects, {type = "unlock-re
 
 make_holo("galaxy", 128, 128, 8, 1.2)
 table.insert(data.raw["technology"]["ei-black-hole"].effects, {type = "unlock-recipe", recipe = "ei-holo-galaxy"})
+
+-- 3.2.0: gas cloud hologram (destinations/gas.png + gas_animation.png, 8x8 frames of 128 px),
+-- unlocked together with the space platform
+make_holo("gas", 128, 128, 8, 1)
+table.insert(data.raw["technology"]["space-platform"].effects, {type = "unlock-recipe", recipe = "ei-holo-gas"})

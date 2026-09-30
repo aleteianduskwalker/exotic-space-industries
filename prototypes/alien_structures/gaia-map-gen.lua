@@ -19,6 +19,17 @@ local GAIA_RESOURCES = {
     "ei-coal-gas-patch",
 }
 
+-- minable boulders scattered on Gaia (prototypes/alien_structures/gaia-boulders.lua, 3.2.0)
+local GAIA_BOULDERS = {
+    "ei-gaia-boulder-violet",
+    "ei-gaia-boulder-red",
+    "ei-gaia-boulder-slate",
+    "ei-gaia-boulder-basalt",
+    "ei-gaia-boulder-ice",
+    "ei-gaia-boulder-sandstone",
+}
+planet_map_gen.GAIA_BOULDERS = GAIA_BOULDERS
+
 -- the only tiles that are generated on Gaia
 local GAIA_TILES = {
     "ei-gaia-grass-1",
@@ -60,7 +71,11 @@ planet_map_gen.gaia = function()
         entities[resource] = table.deepcopy(PATCH_SETTINGS)
     end
     entities["scrap"] = table.deepcopy(PATCH_SETTINGS)
-    entities["fulgoran-ruin-attractor"] = table.deepcopy(PATCH_SETTINGS)
+    -- 3.2.0: the ESI copy of the conduit replaces the vanilla ruin attractor on Gaia
+    entities["ei-conduit-gaia"] = table.deepcopy(PATCH_SETTINGS)
+    for _, boulder in pairs(GAIA_BOULDERS) do
+        entities[boulder] = table.deepcopy(TILE_SETTINGS)
+    end
 
     -- no cliffs on Gaia
     map_gen_settings.cliff_settings = map_gen_settings.cliff_settings or {}
@@ -103,6 +118,18 @@ planet_map_gen.enforce_gaia_map_gen = function()
         end
         if data.raw.resource[resource] then
             settings.autoplace_settings.entity.settings[resource] = settings.autoplace_settings.entity.settings[resource] or table.deepcopy(PATCH_SETTINGS)
+        end
+    end
+
+    -- 3.2.0: no vanilla ruin attractors on Gaia, only ei-conduit-gaia
+    local entity_settings = settings.autoplace_settings.entity.settings
+    entity_settings["fulgoran-ruin-attractor"] = nil
+    if data.raw["lightning-attractor"]["ei-conduit-gaia"] then
+        entity_settings["ei-conduit-gaia"] = entity_settings["ei-conduit-gaia"] or table.deepcopy(PATCH_SETTINGS)
+    end
+    for _, boulder in pairs(GAIA_BOULDERS) do
+        if data.raw["simple-entity"][boulder] then
+            entity_settings[boulder] = entity_settings[boulder] or table.deepcopy(TILE_SETTINGS)
         end
     end
 

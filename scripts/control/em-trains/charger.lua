@@ -8,7 +8,7 @@
 --   grows with the number of rails in range (250 kW per rail + 10 MW idle).
 -- * Charger efficiency research (ei_eff_1..5) lowers the consumption and the charge cost.
 -- * Acceleration / speed research (ei_acc_N, ei_spd_N, N <= 20) selects the fuel item
---   "ei_emt-fuel_<acc>_<speed>".
+--   "ei-emt-fuel_<acc>_<speed>".
 --
 -- storage.ei_emt:
 --   chargers[unit]  = {entity, rail_count, surface}
@@ -27,14 +27,14 @@ local util = require("scripts/control/util")
 local model = {}
 
 model.trains = {
-    ["ei_em-locomotive"] = true,
+    ["ei-em-locomotive"] = true,
 }
 
 -- research name prefix -> buff name
 model.techs = {
-    ["ei_eff"] = "eff",
-    ["ei_acc"] = "acc",
-    ["ei_spd"] = "spd",
+    ["ei-eff"] = "eff",
+    ["ei-acc"] = "acc",
+    ["ei-spd"] = "spd",
 }
 
 -- charger efficiency per research level (fraction of energy saved); level 0 = base value
@@ -64,7 +64,7 @@ for _, rail_type in pairs(RAIL_TYPES) do
 end
 
 -- duration of the charging beam (one updater cycle)
-local BEAM_DURATION = math.max(1, math.floor(settings.startup["ei_ticks_per_full_update"].value / 9))
+local BEAM_DURATION = math.max(1, math.floor(settings.startup["ei-ticks_per_full_update"].value / 9))
 
 --STORAGE
 ------------------------------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ function model.check_buffs()
 
     for buff, _ in pairs(levels) do
         for tier = MAX_BUFF_LEVEL, 1, -1 do
-            local tech = technologies["ei_" .. buff .. "_" .. tier]
+            local tech = technologies["ei-" .. buff .. "_" .. tier]
             if tech and tech.researched then
                 levels[buff] = tier
                 break
@@ -188,7 +188,7 @@ function model.cast_beam(charger, target)
         return
     end
     charger.surface.create_entity({
-        name = "ei_charger-beam",
+        name = "ei-charger-beam",
         position = charger.position,
         source_offset = {0, -1},
         source = charger,
@@ -273,7 +273,7 @@ function model.animate_range(charger, players)
     local radius = storage.ei_emt.buffs.charger_range
     model.render_status_rings(charger, "default", radius, 10)
     return rendering.draw_sprite{
-        sprite = "ei_emt-radius_big",
+        sprite = "ei-emt-radius_big",
         x_scale = radius / 16,
         y_scale = radius / 16,
         target = charger,
@@ -368,7 +368,7 @@ local function set_burner(train, charge)
     local buffs = storage.ei_emt.buffs
     local acc = util.clamp(buffs.acc_level, 0, MAX_BUFF_LEVEL)
     local speed = util.clamp(buffs.speed_level, 0, MAX_BUFF_LEVEL)
-    local fuel = prototypes.item["ei_emt-fuel_" .. acc .. "_" .. speed]
+    local fuel = prototypes.item["ei-emt-fuel_" .. acc .. "_" .. speed]
     if not fuel then
         return "error"
     end
@@ -429,7 +429,7 @@ function model.update_charger_from_rail(rail, sign)
     local chargers = rail.surface.find_entities_filtered({
         position = rail.position,
         radius = storage.ei_emt.buffs.charger_range,
-        name = "ei_charger",
+        name = "ei-charger",
     })
 
     for _, charger in ipairs(chargers) do
@@ -491,7 +491,7 @@ function model.reinitialize_chargers()
     model.check_global()
     storage.ei_emt.chargers = {}
     for _, surface in pairs(game.surfaces) do
-        for _, entity in pairs(surface.find_entities_filtered{name = "ei_charger"}) do
+        for _, entity in pairs(surface.find_entities_filtered{name = "ei-charger"}) do
             model.register_charger(entity)
         end
     end
@@ -617,7 +617,7 @@ function model.on_built_entity(entity)
         return
     end
 
-    if entity.name == "ei_charger" then
+    if entity.name == "ei-charger" then
         model.register_charger(entity)
         model.animate_range(entity, nil)
         model.fix_toggle_range()
@@ -636,7 +636,7 @@ function model.on_destroyed_entity(entity)
         return
     end
 
-    if entity.name == "ei_charger" then
+    if entity.name == "ei-charger" then
         model.unregister_charger(entity)
         em_trains_gui.mark_dirty()
     elseif RAIL_TYPE_SET[entity.type] then

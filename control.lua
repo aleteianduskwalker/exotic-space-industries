@@ -56,9 +56,12 @@ em_trains_gui = require("scripts/control/em-trains/gui")
 
 orbital_combinator = require("scripts/control/orbital_combinator")
 ei_storm_emp = require("scripts/control/storm_emp")
+ei_radio_station = require("scripts/control/radio_station")
+ei_drone_port = require("scripts/control/drone_port")
+ei_alien_console = require("scripts/control/alien_console")
 
 -- startup settings (constant for the whole session and identical on every peer)
-ei_ticksPerFullUpdate = settings.startup["ei_ticks_per_full_update"].value
+ei_ticksPerFullUpdate = settings.startup["ei-ticks_per_full_update"].value
 ei_maxEntityUpdates = settings.startup["ei-max_updates_per_tick"].value
 
 -- remote interfaces and commands have to be registered in the main chunk (every load)
@@ -152,6 +155,17 @@ script.on_event(defines.events.on_tick, function(event)
     -- updates that run every tick (cheap when there is nothing to do)
     em_trains_gui.updater()
     ei_alien_spawner.update()
+
+    -- drones fly every tick, their task logic runs every few ticks
+    ei_drone_port.update(event.tick)
+
+    -- alien terminals convert resonance packs / data into knowledge every few ticks
+    ei_alien_console.update(event.tick)
+
+    -- radio stations transfer their channels every few ticks
+    if event.tick % ei_radio_station.UPDATE_INTERVAL == 0 then
+        ei_radio_station.update()
+    end
     ei_induction_matrix.update()
     ei_black_hole.update()
 end)
@@ -177,6 +191,24 @@ end)
 --====================================================================================================
 --INIT AND MIGRATION
 --====================================================================================================
+
+---3.2.0: GUI elements were renamed from "ei_..." to "ei-...". Old elements stored in a save would
+---stay forever (and their click tags no longer match), so they are removed; the modules recreate
+---their GUIs with the new names when needed.
+local function remove_legacy_guis()
+    local mod_gui = require("mod-gui")
+    for _, player in pairs(game.players) do
+        local roots = {player.gui.top, player.gui.left, player.gui.center, player.gui.screen, player.gui.relative,
+                       mod_gui.get_button_flow(player), mod_gui.get_frame_flow(player)}
+        for _, root in pairs(roots) do
+            for _, child in pairs(root.children) do
+                if child.valid and child.name and string.sub(child.name, 1, 3) == "ei_" then
+                    child.destroy()
+                end
+            end
+        end
+    end
+end
 
 ---Refreshes everything that depends on prototypes or startup settings.
 local function refresh_runtime_data()
@@ -222,6 +254,11 @@ script.on_configuration_changed(function(event)
         ei_alien_system.migrate()
         ei_gate.check_global_init()
         ei_gate.migrate()
+        -- 3.2.0: ei-conduit-gaia instead of ruin attractors (alien_system.migrate above also
+        -- grandfathers the now script-only alien technologies)
+        ei_gaia.migrate_conduits()
+        ei_alien_console.migrate()
+        remove_legacy_guis()
 
         -- rebuild registries that older versions could leave with duplicates/stale entries
         em_trains.reinitialize_chargers()
@@ -267,6 +304,8 @@ local function on_built_entity(entity, event)
     ei_fueler.on_built_entity(entity)
     em_trains.on_built_entity(entity)
     orbital_combinator.add(entity)
+    ei_radio_station.on_built_entity(entity)
+    ei_drone_port.on_built_entity(entity)
 
     -- loaders only snap to belts/containers when built by hand (not from blueprints)
     if event.name == defines.events.on_built_entity then
@@ -276,6 +315,10 @@ local function on_built_entity(entity, event)
     -- last: may destroy the entity (build restrictions) or swap it for its Gaia variant
     if entity.valid then
         ei_gaia.on_built_entity(entity)
+    end
+    -- after the Gaia build restriction (terminals only work on Gaia)
+    if entity.valid then
+        ei_alien_console.on_built_entity(entity)
     end
 end
 
@@ -302,10 +345,16 @@ script.on_event(defines.events.on_entity_cloned, function(event)
     if name == "ei-orbital-combinator-computing-port" then
         -- ports belong to their combinator: the cloned combinator creates / reuses its own port
         destination.destroy()
-    elseif name == "ei_fueler" then
+    elseif name == "ei-fueler" then
         ei_fueler.on_entity_cloned(source, destination)
     elseif name == "ei-black-hole" then
         ei_black_hole.register_black_hole(destination, source.valid and ei_black_hole.get(source.unit_number) or nil)
+    elseif name == ei_radio_station.OUTPUT or ei_radio_station.STATIONS[name] then
+        ei_radio_station.on_entity_cloned(source, destination)
+    elseif name == ei_drone_port.PORT or name == ei_drone_port.ENERGY then
+        ei_drone_port.on_entity_cloned(destination)
+    elseif name == ei_alien_console.NAME then
+        ei_alien_console.register(destination)
     else
         if ei_powered_beacon.counts_for_fluid_handling(destination) then
             ei_register.register_fluid_entity(destination)
@@ -353,6 +402,14 @@ local function on_destroyed_entity(event)
     orbital_combinator.rem(entity)
     ei_storm_emp.on_destroyed_entity(entity)
     ei_gaia.on_destroyed_entity(entity)
+    ei_radio_station.on_destroyed_entity(entity)
+    ei_drone_port.on_destroyed_entity(entity)
+    ei_alien_console.on_destroyed_entity(entity)
+
+    -- destroyed broken artifacts on Gaia grant alien knowledge (mining: see on_mined_entity below)
+    if event.name == defines.events.on_entity_died then
+        ei_alien_system.on_entity_died(event)
+    end
 end
 
 script.on_event({
@@ -362,6 +419,14 @@ script.on_event({
     defines.events.on_space_platform_pre_mined,
     defines.events.script_raised_destroy,
 }, on_destroyed_entity)
+
+-- after a SUCCESSFUL mining action (the pre-mined events above also fire when mining fails)
+script.on_event({
+    defines.events.on_player_mined_entity,
+    defines.events.on_robot_mined_entity,
+}, function(event)
+    ei_alien_system.on_mined_entity(event)
+end)
 
 script.on_event({
     defines.events.on_player_built_tile,
@@ -390,6 +455,12 @@ end)
 script.on_event(defines.events.on_player_selected_area, function(event)
     ei_alien_spawner.on_player_selected_area(event)
     ei_alien_system.on_player_selected_area(event)
+    ei_drone_port.on_player_selected_area(event, false)
+end)
+
+-- alt selection with the drone remote cancels the target selection
+script.on_event(defines.events.on_player_alt_selected_area, function(event)
+    ei_drone_port.on_player_selected_area(event, true)
 end)
 
 script.on_event(defines.events.on_selected_entity_changed, function(event)
@@ -412,6 +483,7 @@ script.on_event(defines.events.on_research_finished, function(event)
 end)
 
 script.on_event(defines.events.on_chunk_generated, function(event)
+    ei_gaia.on_chunk_generated(event)
     ei_alien_spawner.on_chunk_generated(event)
 end)
 
@@ -479,8 +551,14 @@ script.on_event(defines.events.on_gui_opened, function(event)
         ei_black_hole.open_gui(player)
     elseif name == "ei-gate-container" then
         ei_gate.open_gui(player)
-    elseif name == "ei_fueler" then
+    elseif name == "ei-fueler" then
         ei_fueler.open_gui(player)
+    elseif ei_radio_station.STATIONS[name] then
+        ei_radio_station.open_gui(player, event.entity)
+    elseif name == ei_drone_port.PORT then
+        ei_drone_port.open_gui(player, event.entity)
+    elseif name == ei_alien_console.NAME then
+        ei_alien_console.open_gui(player, event.entity)
     end
 end)
 
@@ -497,8 +575,14 @@ script.on_event(defines.events.on_gui_closed, function(event)
         ei_black_hole.close_gui(player)
     elseif name == "ei-gate-container" then
         ei_gate.close_gui(player)
-    elseif name == "ei_fueler" then
+    elseif name == "ei-fueler" then
         ei_fueler.close_gui(player)
+    elseif ei_radio_station.STATIONS[name] then
+        ei_radio_station.close_gui(player)
+    elseif name == ei_drone_port.PORT then
+        ei_drone_port.close_gui(player)
+    elseif name == ei_alien_console.NAME then
+        ei_alien_console.close_gui(player)
     end
 end)
 
@@ -509,10 +593,12 @@ local CLICK_HANDLERS = {
     ["ei-black-hole-console"] = function(event) ei_black_hole.on_gui_click(event) end,
     ["ei-gate-console"] = function(event) ei_gate.on_gui_click(event) end,
     ["ei-alien-gui"] = function(event) ei_alien_system.on_gui_click(event) end,
-    ["ei_fueler-console"] = function(event) ei_fueler.on_gui_click(event) end,
+    ["ei-drone-port-console"] = function(event) ei_drone_port.on_gui_click(event) end,
+    ["ei-alien-console-gui"] = function(event) ei_alien_console.on_gui_click(event) end,
+    ["ei-fueler-console"] = function(event) ei_fueler.on_gui_click(event) end,
     ["mod_gui"] = function(event) em_trains_gui.on_gui_click(event) end,
     ["em_trains_mod-gui"] = function(event) em_trains_gui.on_gui_click(event) end,
-    ["ei_mod-gui"] = function(event) em_trains_gui.on_gui_click(event) end,
+    ["ei-mod-gui"] = function(event) em_trains_gui.on_gui_click(event) end,
 }
 
 script.on_event(defines.events.on_gui_click, function(event)
@@ -550,8 +636,30 @@ script.on_event(defines.events.on_gui_value_changed, function(event)
     end
 end)
 
+script.on_event(defines.events.on_gui_elem_changed, function(event)
+    local parent_gui = event.element.tags.parent_gui
+    if parent_gui == "ei-radio-station-console" then
+        ei_radio_station.on_gui_elem_changed(event)
+    elseif parent_gui == "ei-drone-port-console" then
+        ei_drone_port.on_gui_elem_changed(event)
+    end
+end)
+
+script.on_event(defines.events.on_gui_switch_state_changed, function(event)
+    if event.element.tags.parent_gui == "ei-radio-station-console" then
+        ei_radio_station.on_gui_switch_state_changed(event)
+    end
+end)
+
+script.on_event(defines.events.on_entity_settings_pasted, function(event)
+    ei_radio_station.on_entity_settings_pasted(event)
+end)
+
 script.on_event(defines.events.on_gui_selection_state_changed, function(event)
-    if event.element.tags.parent_gui == "ei-gate-console" then
+    local parent_gui = event.element.tags.parent_gui
+    if parent_gui == "ei-gate-console" then
         ei_gate.on_gui_selection_state_changed(event)
+    elseif parent_gui == "ei-drone-port-console" then
+        ei_drone_port.on_gui_selection_state_changed(event)
     end
 end)

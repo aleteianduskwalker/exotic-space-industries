@@ -157,7 +157,7 @@ ei_lib.set_prerequisites("wdm_home_planet",{})
 ei_lib.set_prerequisites("ei-quantum-age",{"ei-advanced-computer-age-tech","ei-alien-computer-age-tech"})
 
 ei_lib.set_prerequisites("automation-2",{"automation","ei-electricity-age"})
-ei_lib.set_prerequisites("ei_fueler",{"ei-electricity-age"})
+ei_lib.set_prerequisites("ei-fueler",{"ei-electricity-age"})
 
 ei_lib.add_prerequisite("laser-shooting-speed-1","laser")
 ei_lib.add_prerequisite("laser-turret","laser")

@@ -1,4 +1,93 @@
 ---------------------------------------------------------------------------------------------------
+Version: 3.2.0
+Date: 30-09-26
+  Major Features:
+    - Alien tech tree rework. Every technology of the tree is now script-only (no lab research),
+      visible in the technology screen and depends on the lab technology "Resonance synthesizer"
+      (the bio chamber keeps its own prerequisites: the alien science pack needs it). A node can
+      only be bought when the prerequisites of its technology are researched.
+    - Tree layout: tier 1 gets the conduit instead of the resonance synthesizer (which stays a lab
+      technology), tier 4 adds the data center and the crystal radio station, tier 5 the void engine
+      (same costs as the other nodes of their tier).
+    - Alien knowledge payment: missing knowledge is paid from the inventory in the priority
+      knowledge -> alien resonance packs (10 knowledge each, surplus is refunded) -> resonance data
+      (10 per knowledge). The confirm dialog shows exactly what is consumed.
+    - Salvaging broken ruins: mining, deconstructing or destroying an unrepaired alien artifact on
+      Gaia grants 10 % of the repair reward. Salvaged ruins no longer return themselves but a small
+      random amount of high tier resources (high energy crystals, magnets, alien resin, ...).
+      No more knowledge is granted once the whole tree is unlocked.
+    - Unrepaired ruins are immune to lightning.
+    - Ancient conduit (ei-conduit-gaia): a non-craftable, indestructible lightning rod that replaces
+      the fulgoran ruin attractors on Gaia (new chunks, existing Gaia surfaces are migrated).
+      Until the conduit is unlocked players have to build next to them.
+    - Radio station (electricity age, 100 kW): wireless circuit network channels on one surface.
+      Any signal is a channel, one transmitter and any number of receivers per channel.
+    - Crystal radio station (alien tier 4, 10 MW): the same for every surface of the game.
+    - Drone port and drones (alien tier 2, 300 knowledge): script drones for exactly one job each,
+      controlled from the drone port GUI and targeted with the drone remote. Tasks: salvage one
+      neutral structure (result into the port), mine a resource patch like a player into a
+      container, transfer exactly one item between two containers or gates, guard a zone (up to
+      21x21) with repair packs from the port by priority (class order, then lowest health). Drones
+      carry 50 items, fly 0.3 tiles/tick, work up to 64 tiles from their port on every surface, are
+      invulnerable pictures and need a powered port (1 MJ per departure). The port has filtered
+      slots. All numbers in lib/balance.lua -> drones.
+    - Gaia boulders: six minable boulder families (violet, rust-red, slate, basalt, ice, sandstone)
+      with thematic mining results. They are scattered alone on Gaia and replace the vanilla rocks of
+      ruins (POI) spawned on Gaia. Existing Gaia surfaces get them in newly generated chunks.
+    - Gate calibration with planet samples: the first gate exit a force sets on a planet consumes a
+      rock sample of that planet (from the player inventory, else from the gate). Samples are
+      crushed from local raw materials and can only be made on their planet (Vulcanus, Gleba,
+      Fulgora, Aquilo, Gaia; unlocked with the gate). Nauvis needs no sample, space platforms need
+      none but are only reachable while they orbit Gaia. Modded planets are no gate exits until a
+      compatibility patch defines their sample (global ei_make_planet_sample, example in
+      prototypes/alien_structures/planet-samples.lua). Exits of existing gates are grandfathered.
+    - Alien terminal (alien tier 1): the access point of the alien tech tree. Nodes can only be
+      bought within 16 tiles of a terminal of the own force on Gaia (the terminal node itself can be
+      bought anywhere). Resonance packs and resonance data put into a terminal are converted into
+      alien knowledge at the payment rates. Broken terminals are a new Gaia ruin (POI) with their
+      own repair kit (unlocked with Gaia); a repaired terminal belongs to the repairing force and
+      grants 200 knowledge once. The terminal GUI opens the tree. Forces that already used the tree
+      get the terminal technology.
+    - Holographic gas cloud (unlocked with the space platform).
+  Changes:
+    - Resonance synthesizer recipe multiplies data: 1 resonance data + 100 morphium + 50 computing
+      power -> 2 resonance data (was 3 from nothing).
+    - Data center recipes always produce 1 pack and cost 1 computing power per unique component of
+      the pack's recursive production chain (loop-safe, 100 as fallback for too large chains).
+    - The "Vent dirty water" recipe is unlocked by the purifier technology.
+    - The gate technology description no longer promises travel (the gate only moves items).
+    - Alien tech tree page: every tier is drawn on a space background (deep space for tiers 4-5).
+    - Ruin presets (POI) can be restricted to Gaia (gaia_only).
+    - Unified mod prefix: every "ei_" name is now "ei-" (entities, items, recipes, technologies,
+      settings, sprites, styles, GUI elements). Saves are migrated (migrations/3.2.0.json); the
+      renamed settings "ei-ticks_per_full_update", "ei-trains_max_updates_per_tick",
+      "ei-fueler_max_updates_per_tick" and "ei-fueler_range" return to their defaults once.
+  Removed:
+    - Age progression gate ("research N % of the previous age"): hidden dummy technologies, the
+      "counts for age progression" overlay and the InformaTron "age progress" remnants. Ages stay as
+      technology metadata.
+    - Drone port / drone remnants and the unused gate.teleport_player.
+    - Space destinations remnants (InformaTron page, styles, black hole data item, rocket silo GUI
+      texts, satellites and planet rocks locale).
+    - Orphaned locale entries of prototypes that no longer exist.
+    - Unused pipe cover table ei_pipe_basic and the never loaded Factorio 1.1 file
+      stone_well_pump.lua.
+  Bugfixes:
+    - InformaTron "cranes and belts" page referenced the non-existing item ei-big-inserter.
+    - Metalworks level overlays and a few item descriptions referenced wrong names.
+    - Basic heat pipe showed only the last sprite variant of every direction (the new file name was
+      written onto the variant list instead of each variant).
+    - Advanced and superior electric mining drills edited the vanilla remnants and dying explosion:
+      the superior drill overwrote the advanced one (and the vanilla drill looked like a kirazy
+      drill when destroyed). Each drill has its own remnants and explosion now.
+    - Advanced roboport engine animation path contained a double slash.
+    - Technology age detection overflowed the stack when mods created a prerequisite cycle; the
+      cycle is now cut and logged once as a readable chain (based on a player patch).
+  Locale:
+    - Russian: "Морфий" -> "Морфиум", "Дальняя станция" -> "Дальстанция".
+    - Short flavor descriptions for every entity, item, fluid, recipe, technology, tile and the
+      planet that had none (English and Russian).
+---------------------------------------------------------------------------------------------------
 Version: 3.1.0
 Date: 29-09-26
   Major Features:

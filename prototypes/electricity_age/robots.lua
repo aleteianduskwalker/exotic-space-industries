@@ -702,7 +702,7 @@ data:extend({
             scale = 0.35,
         },
         base_animation = {
-            filename = ei_robots_entity_path.."/64x64_empty.png",
+            filename = ei_robots_entity_path.."64x64_empty.png",
             width = 64,
             height = 64,
             shift = {0, 0},

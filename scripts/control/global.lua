@@ -49,6 +49,9 @@ end
 function ei_global.init()
     storage.ei = {}
     ei_global.check_init()
+    -- 3.2.0 one-time migrations have nothing to grandfather in a new game
+    storage.ei.gate_calibration_migrated = true
+    storage.ei.alien_console_migrated = true
 end
 
 ---Fills in every missing storage field. Safe to call any number of times.
@@ -74,6 +77,22 @@ function ei_global.check_init()
     -- 3.1.0: Gaia hub systems
     ei.storm_emp = ei.storm_emp or {}                         -- storm_emp.lua
     ei.void_rift_generators = ei.void_rift_generators or {}   -- gaia.lua
+
+    -- 3.2.0: drone ports and their tasks (drone_port.lua)
+    ei.drones = ei.drones or {}
+    ei.drones.ports = ei.drones.ports or {}
+    ei.drones.tasks = ei.drones.tasks or {}
+    ei.drones.next_id = ei.drones.next_id or 1
+    ei.drones.pending = ei.drones.pending or {}
+    ei.drones.gui = ei.drones.gui or {}
+
+    -- 3.2.0: alien terminals (alien_console.lua) and gate calibrations (gate.lua, created on demand)
+    ei.alien_consoles = ei.alien_consoles or {}
+
+    -- 3.2.0: radio stations (radio_station.lua)
+    ei.radio = ei.radio or {}
+    ei.radio.stations = ei.radio.stations or {}
+    ei.radio.transmitters = ei.radio.transmitters or {}
 
     -- master/slave registries (copper/iron beacons) and fluid handling entities
     ei.copper_beacon = ei.copper_beacon or {}

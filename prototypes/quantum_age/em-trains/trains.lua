@@ -144,37 +144,37 @@ local back_light =
 end
 data:extend({
     {
-        name = "ei_em-locomotive",
+        name = "ei-em-locomotive",
         type = "item",
         icon = ei_trains_item_path.."em-locomotive.png",
         icon_size = 64,
         subgroup = "transport",
         order = "x1",
-        place_result = "ei_em-locomotive",
+        place_result = "ei-em-locomotive",
         stack_size = 50
     },
 	{
-        name = "ei_em-fluid-wagon",
+        name = "ei-em-fluid-wagon",
         type = "item",
         icon = ei_trains_item_path.."em-fluid-wagon.png",
         icon_size = 64,
         subgroup = "transport",
         order = "x3",
-        place_result = "ei_em-fluid-wagon",
+        place_result = "ei-em-fluid-wagon",
         stack_size = 50
     },
 	{
-        name = "ei_em-cargo-wagon",
+        name = "ei-em-cargo-wagon",
         type = "item",
         icon = ei_trains_item_path.."em-cargo-wagon.png",
         icon_size = 64,
         subgroup = "transport",
         order = "x2",
-        place_result = "ei_em-cargo-wagon",
+        place_result = "ei-em-cargo-wagon",
         stack_size = 50
     },
 	{
-        name = "ei_em-fielder",
+        name = "ei-em-fielder",
         type = "item",
         icon = ei_trains_item_path.."fielder.png",
         icon_size = 64,
@@ -190,7 +190,7 @@ data:extend({
 
 data:extend({
     {
-        name = "ei_em-locomotive",
+        name = "ei-em-locomotive",
         type = "recipe",
         category = "crafting",
         energy_required = 10,
@@ -199,15 +199,15 @@ data:extend({
           {type="item", name="ei-carbon-structure", amount=25},
           {type="item", name="ei-clean-plating", amount=25},
           {type="item", name="ei-advanced-motor", amount=20},
-          {type="item", name="ei_em-fielder", amount=14},
+          {type="item", name="ei-em-fielder", amount=14},
 		},
-        results = {{type="item", name="ei_em-locomotive", amount=1}},
+        results = {{type="item", name="ei-em-locomotive", amount=1}},
         enabled = false,
         always_show_made_in = true,
-        main_product = "ei_em-locomotive",
+        main_product = "ei-em-locomotive",
     },
 	{
-        name = "ei_em-fluid-wagon",
+        name = "ei-em-fluid-wagon",
         type = "recipe",
         category = "crafting",
         energy_required = 10,
@@ -215,15 +215,15 @@ data:extend({
     {type="item", name="fluid-wagon", amount=1},
 	{type="item", name="ei-carbon-structure", amount=15},
 	{type="item", name="ei-clean-plating", amount=15},
-	{type="item", name="ei_em-fielder", amount=8},
+	{type="item", name="ei-em-fielder", amount=8},
 		},
-        results = {{type="item", name="ei_em-fluid-wagon", amount=1}},
+        results = {{type="item", name="ei-em-fluid-wagon", amount=1}},
         enabled = false,
         always_show_made_in = true,
-        main_product = "ei_em-fluid-wagon",
+        main_product = "ei-em-fluid-wagon",
     },
 	{
-        name = "ei_em-cargo-wagon",
+        name = "ei-em-cargo-wagon",
         type = "recipe",
         category = "crafting",
         energy_required = 10,
@@ -231,15 +231,15 @@ data:extend({
    {type="item", name="cargo-wagon", amount=1},
 	{type="item", name="ei-carbon-structure", amount=15},
 	{type="item", name="ei-clean-plating", amount=15},
-	{type="item", name="ei_em-fielder", amount=8},
+	{type="item", name="ei-em-fielder", amount=8},
 		},
-        results = {{type="item", name="ei_em-cargo-wagon", amount=1}},
+        results = {{type="item", name="ei-em-cargo-wagon", amount=1}},
         enabled = false,
         always_show_made_in = true,
-        main_product = "ei_em-cargo-wagon",
+        main_product = "ei-em-cargo-wagon",
     },
 	{
-        name = "ei_em-fielder",
+        name = "ei-em-fielder",
         type = "recipe",
         category = "crafting",
         energy_required = 20,
@@ -249,10 +249,10 @@ data:extend({
     {type="item", name="ei-eu-magnet", amount=2},
     {type="item", name="ei-superior-data", amount=6},
         },
-        results = {{type="item", name="ei_em-fielder", amount=1}},
+        results = {{type="item", name="ei-em-fielder", amount=1}},
         enabled = false,
         always_show_made_in = true,
-        main_product = "ei_em-fielder",
+        main_product = "ei-em-fielder",
     },
 })
 
@@ -262,7 +262,7 @@ data:extend({
 
 data:extend({
     {
-        name = "ei_em-trains",
+        name = "ei-em-trains",
         type = "technology",
         icon = ei_trains_tech_path.."em-locomotive.png",
         icon_size = 256,
@@ -270,23 +270,23 @@ data:extend({
         effects = {
             {
                 type = "unlock-recipe",
-                recipe = "ei_em-locomotive"
+                recipe = "ei-em-locomotive"
             },
 			{
 				type = "unlock-recipe",
-				recipe = "ei_em-fluid-wagon"
+				recipe = "ei-em-fluid-wagon"
 			},
 			{
 				type = "unlock-recipe",
-				recipe = "ei_em-cargo-wagon"
+				recipe = "ei-em-cargo-wagon"
 			},
 			{
 				type = "unlock-recipe",
-				recipe = "ei_charger"
+				recipe = "ei-charger"
 			},
 			{
 				type = "unlock-recipe",
-				recipe = "ei_em-fielder"
+				recipe = "ei-em-fielder"
 			},
         },
 
@@ -314,15 +314,15 @@ local acc = {1,20,{["dynamic"] = "acc_"}, unit}
 local function make_multiple_techs(tab)
 
 	local blank = {
-        name = "ei_advanced-port",
+        name = "ei-advanced-port",
         type = "technology",
         icon = "advanced-port.png",
         icon_size = 256,
-        prerequisites = {"ei_em-trains"},
+        prerequisites = {"ei-em-trains"},
         effects = {
             {
                 type = "unlock-recipe",
-                recipe = "ei_advanced-port"
+                recipe = "ei-advanced-port"
             },
         },
         unit = {
@@ -338,8 +338,9 @@ local function make_multiple_techs(tab)
 		local blank_copy = util.table.deepcopy(blank)
 		local path = tab[3]["dynamic"]..tostring(i)
 
-		blank_copy.name = "ei_"..path
+		blank_copy.name = "ei-"..path
 		blank_copy.localised_name = {"exotic-industries-emt."..tab[3]["dynamic"].."name", tostring(i)}
+		blank_copy.localised_description = {"exotic-industries-emt."..tab[3]["dynamic"].."description"}
 
 		if not tab[3]["static"] then
 			blank_copy.icon = ei_trains_tech_path..path..".png"
@@ -357,7 +358,7 @@ local function make_multiple_techs(tab)
 		end
 
 		if i > 1 then
-			blank_copy.prerequisites = {"ei_"..tab[3]["dynamic"]..tostring(i-1)}
+			blank_copy.prerequisites = {"ei-"..tab[3]["dynamic"]..tostring(i-1)}
 		end
 
 		blank_copy.effects = {
@@ -401,14 +402,14 @@ local air_resistance = 0.0001
 data:extend({
     {
 		type = "locomotive",
-		name = "ei_em-locomotive",
+		name = "ei-em-locomotive",
 		icon = ei_trains_item_path.."em-locomotive.png",
         icon_size = 64,
 		flags = {"placeable-neutral", "player-creation", "placeable-off-grid", },
 		minable = 
         {
             mining_time = 1,
-            result = "ei_em-locomotive"
+            result = "ei-em-locomotive"
         },
 		mined_sound = {filename = "__core__/sound/deconstruct-medium.ogg"},
 		max_health = 800,
@@ -441,7 +442,7 @@ data:extend({
 		},
     energy_source = {
       type = "burner",
-			fuel_categories = {"ei_emt-fuel"},
+			fuel_categories = {"ei-emt-fuel"},
 			effectivity = 1,
 			fuel_inventory_size = 1,
 		},		
@@ -602,14 +603,14 @@ data:extend({
 	},
 	{
 		type = "fluid-wagon",
-		name = "ei_em-fluid-wagon",
+		name = "ei-em-fluid-wagon",
 		icon = ei_trains_item_path.."em-fluid-wagon.png",
         icon_size = 64,
 		flags = {"placeable-neutral", "player-creation", "placeable-off-grid", },
 		capacity = 50000,
 		minable = {
             mining_time = 1,
-            result = "ei_em-fluid-wagon"
+            result = "ei-em-fluid-wagon"
         },
 		mined_sound = {filename = "__core__/sound/deconstruct-medium.ogg"},
 		max_health = 600,
@@ -777,14 +778,14 @@ data:extend({
 	},
 	{
 		type = "cargo-wagon",
-		name = "ei_em-cargo-wagon",
+		name = "ei-em-cargo-wagon",
 		icon = ei_trains_item_path.."em-cargo-wagon.png",
         icon_size = 64,
 		flags = {"placeable-neutral", "player-creation", "placeable-off-grid", },
 		inventory_size = 60,
 		minable = {
             mining_time = 1,
-            result = "ei_em-cargo-wagon"
+            result = "ei-em-cargo-wagon"
         },
 		mined_sound = {filename = "__core__/sound/deconstruct-medium.ogg"},
 		max_health = 600,
@@ -908,17 +909,17 @@ data:extend({
 data:extend({
 	{
 		type = "fuel-category",
-		name = "ei_emt-fuel"
+		name = "ei-emt-fuel"
 	},
 })
 
 local foo = {
 	type = "item",
-	name = "ei_emt-fuel_0_0",
+	name = "ei-emt-fuel_0_0",
 	icon = ei_trains_item_path.."dummy.png",
 	icon_size = 64,
 	stack_size = 1,
-	fuel_category = "ei_emt-fuel",
+	fuel_category = "ei-emt-fuel",
 	hidden = true,
 	fuel_value = "1GJ",
 	fuel_acceleration_multiplier = 1,
@@ -928,7 +929,7 @@ local foo = {
 for i=0,20 do
 	for j=0,20 do
 		local bar = table.deepcopy(foo)
-		bar.name = "ei_emt-fuel_"..i.."_"..j
+		bar.name = "ei-emt-fuel_"..i.."_"..j
 		bar.localised_name = {"exotic-industries-emt.fuelname", tostring(j), tostring(i)}
 		bar.fuel_acceleration_multiplier = 1 + (0.1*i)
 		bar.fuel_top_speed_multiplier = 1 + (0.1*j)

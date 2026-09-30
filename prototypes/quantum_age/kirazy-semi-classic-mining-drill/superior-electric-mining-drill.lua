@@ -259,8 +259,11 @@ local circuit_connectors = circuit_connector_definitions.create_vector(universal
 ----------------------------------------------------------------------------------------------------
 
 
--- Remnants
-local mining_drill_remnants = data.raw["corpse"]["electric-mining-drill-remnants"]
+-- Remnants: an own copy per drill tier (3.2.0). Previously both kirazy drills edited the vanilla
+-- "electric-mining-drill-remnants", so the last loaded tier overwrote the other one (and the
+-- vanilla drill got kirazy remnants as well).
+local mining_drill_remnants = table.deepcopy(data.raw["corpse"]["electric-mining-drill-remnants"])
+mining_drill_remnants.name = "ei-superior-electric-mining-drill-remnants"
 mining_drill_remnants.icon = ei_graphics_item_path.."advanced-electric-mining-drill.png"
 mining_drill_remnants.icon_size = 64
 --mining_drill_remnants.icon_mipmaps = 4
@@ -277,8 +280,9 @@ mining_drill_remnants.animation = make_rotated_animation_variations_from_sheet (
     scale = 0.5,
 })
 
--- Explosion
-local mining_drill_explosion = data.raw["explosion"]["electric-mining-drill-explosion"]
+-- Explosion: an own copy per drill tier (same reason as the remnants)
+local mining_drill_explosion = table.deepcopy(data.raw["explosion"]["electric-mining-drill-explosion"])
+mining_drill_explosion.name = "ei-superior-electric-mining-drill-explosion"
 mining_drill_explosion.icon = ei_graphics_item_path.."advanced-electric-mining-drill.png"
 mining_drill_explosion.icon_size = 64
 --mining_drill_explosion.icon_mipmaps = 4
@@ -1597,6 +1601,8 @@ mining_drill.integration_patch = {
 
 mining_drill.name = "ei-superior-electric-mining-drill"
 mining_drill.minable.result = "ei-superior-electric-mining-drill"
+mining_drill.corpse = mining_drill_remnants.name
+mining_drill.dying_explosion = mining_drill_explosion.name
 -- mining_drill.next_upgrade = "ei-superior-electric-mining-drill"
 mining_drill.fast_replaceable_group = "electric-mining-drill"
 mining_drill.mining_speed = 1.25
@@ -1656,4 +1662,4 @@ data:extend({
     },
 })
 
-data:extend({mining_drill})
+data:extend({mining_drill, mining_drill_remnants, mining_drill_explosion})

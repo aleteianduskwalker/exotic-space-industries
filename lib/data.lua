@@ -368,16 +368,6 @@ ei_data.tech_ages_with_sub_reverse = {
     ["four-quantum-age"] = "ei-high-tech-parts",
 }
 
--- store which age comes after which
--- used to make dummy techs
-
-ei_data.ages_dummy_dict = {
-    ["dark-age"] = "steam-age",
-    ["steam-age"] = "electricity-age",
-    ["electricity-age"] = "computer-age",
-    ["computer-age"] = "quantum-age",
-    ["quantum-age"] = "exotic-age",
-}
 
 --====================================================================================================
 --ROUGH TECH STRUCTURE
@@ -756,6 +746,15 @@ ei_data.repair_tools = {
             ["ei-alien-beacon_off-3"] = true,
         },
         result = "ei-alien-beacon"
+    },
+    -- 3.2.0: broken alien terminal (POI "gaia-terminal_ruin"). The repaired terminal belongs to the
+    -- repairing force (own_force) and grants a one-time knowledge bonus (balance.alien_console).
+    ["ei-alien-console-repair"] = {
+        targets = {
+            ["ei-alien-console_off"] = true,
+        },
+        result = "ei-alien-console",
+        own_force = true,
     }
 }
 

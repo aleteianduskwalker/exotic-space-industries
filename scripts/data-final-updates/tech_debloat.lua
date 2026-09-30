@@ -17,7 +17,7 @@ end
 ---True for packs that are neither EI packs nor vanilla packs EI replaces.
 local function is_exoplanetary_science(pack)
     local prefix = string.sub(pack, 1, 3)
-    if prefix == "ei-" or prefix == "ei_" then
+    if prefix == "ei-" then
         return false
     end
     return not ei_data.science_dict[pack]

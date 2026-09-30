@@ -7,17 +7,17 @@
 data:extend({
 
     {
-        name = "ei_charger",
+        name = "ei-charger",
         type = "item",
         icon = ei_trains_item_path.."charger.png",
         icon_size = 64,
         subgroup = "transport",
         order = "x4",
-        place_result = "ei_charger",
+        place_result = "ei-charger",
         stack_size = 1
     },
     {
-        name = "ei_charger",
+        name = "ei-charger",
         type = "recipe",
         category = "crafting",
         energy_required = 20,
@@ -25,15 +25,15 @@ data:extend({
         {
           {type="item", name="ei-copper-beacon", amount=6},
           {type="item", name="processing-unit", amount=25},
-          {type="item", name="ei_em-fielder", amount=2},
+          {type="item", name="ei-em-fielder", amount=2},
         },
-        results = {{type="item", name="ei_charger", amount=1}},
+        results = {{type="item", name="ei-charger", amount=1}},
         enabled = false,
         always_show_made_in = true,
-        main_product = "ei_charger",
+        main_product = "ei-charger",
     },
     {
-        name = "ei_charger",
+        name = "ei-charger",
         type = "electric-energy-interface",
         --type = "assembling-machine",
         icon = ei_trains_item_path.."charger.png",
@@ -41,7 +41,7 @@ data:extend({
         flags = {"placeable-neutral", "placeable-player", "player-creation"},
         minable = {
             mining_time = 4,
-            result = "ei_charger"
+            result = "ei-charger"
         },
         max_health = 1000,
         corpse = "big-remnants",
@@ -49,9 +49,6 @@ data:extend({
         collision_box = {{-2.4, -2.4}, {2.4, 2.4}},
         selection_box = {{-2.5, -2.5}, {2.5, 2.5}},
         map_color = {r = 1, g = 0.67, b = 0.3},
-        -- fixed_recipe = "ei_charger:running",
-        crafting_categories = {"ei_charger"},
-        crafting_speed = 1,
         energy_source = {
             type = 'electric',
             usage_priority = 'secondary-input',
@@ -118,9 +115,9 @@ data:extend({
     },
     --[[
     {
-        name = "ei_charger:running",
+        name = "ei-charger:running",
         type = "recipe",
-        category = "ei_charger",
+        category = "ei-charger",
         energy_required = 1000,
         ingredients = {},
         results = {},
@@ -133,7 +130,7 @@ data:extend({
         order = "x4",
     },
     {
-        name = "ei_charger",
+        name = "ei-charger",
         type = "recipe-category",
     },
     ]]

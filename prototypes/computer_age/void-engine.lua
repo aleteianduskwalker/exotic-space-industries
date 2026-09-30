@@ -93,7 +93,8 @@ data:extend({
         type = "technology",
         icon = ei_void_engine_path.."void-engine.png",
         icon_size = 256,
-        prerequisites = {"ei-sus-plating"},
+        -- 3.2.0: alien tree tier 5, script-only (scripts/data-final-updates/alien_tree_techs.lua)
+        prerequisites = {"ei-resonance-synthesizer"},
         effects = {
             {
                 type = "unlock-recipe",
@@ -108,10 +109,9 @@ data:extend({
                 recipe = "ei-void-fuel"
             },
         },
-        unit = {
-            count = 100,
-            ingredients = ei_data.science["alien-computer-age"],
-            time = 20
+        research_trigger = {
+            type = "scripted",
+            trigger_description = {"technology-description.ei-alien-tree-trigger"},
         },
     },
     {

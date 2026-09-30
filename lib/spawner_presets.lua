@@ -283,4 +283,24 @@ model.entity_presets["gaia-monument_cluster"] = {
     ["structure"] = monument,
 }
 
+-- 3.2.0: broken alien terminal (only on Gaia, repaired with ei-alien-console-repair): a small
+-- square of walls with gaps, boulders and flowers around it
+local terminal = {entity("ei-alien-console_off", 0, 0)}
+-- L-shaped wall remains in the four corners (tile centres, 3 walls each)
+for _, corner in pairs({{-1, -1}, {1, -1}, {-1, 1}, {1, 1}}) do
+    local sx, sy = corner[1], corner[2]
+    local x, y = 3 * sx + 0.5, 3 * sy + 0.5
+    table.insert(terminal, entity("stone-wall", x, y))
+    table.insert(terminal, entity("stone-wall", x - sx, y))
+    table.insert(terminal, entity("stone-wall", x, y - sy))
+end
+table.insert(terminal, entity("ei-alien-flowers-5", -2, 0))
+table.insert(terminal, entity("ei-alien-flowers-9", 2, 0))
+table.insert(terminal, entity("big-rock", 0, 6))
+model.entity_presets["gaia-terminal_ruin"] = {
+    ["rarity"] = "rare",
+    ["gaia_only"] = true,
+    ["structure"] = terminal,
+}
+
 return model
