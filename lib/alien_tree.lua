@@ -85,6 +85,8 @@ alien_tree.tiers = {
             node("bio_nitric-acid", "ei-bio-nitric-acid", 300, {height = 2, prerequisites = {"bio_hydrofluoric-acid"}}),
         },
         {node("farstation-repair", "ei-farstation-repair", 300)},
+        -- 3.2.0: drone port, drones and the drone remote
+        {node("drone-port", "ei-drone-port", 300)},
     },
     -- tier 3: old goals
     {

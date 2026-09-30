@@ -15,6 +15,7 @@ local TECH_PAGES = {
     ["ei-resonance-synthesizer"] = "title_alien",
     ["ei-data-center"] = "title_gaia_hub",
     ["ei-radio-station"] = "title_radio_stations",
+    ["ei-drone-port"] = "title_drones",
 }
 
 ---Prints the wiki update message for a page title key to a force.

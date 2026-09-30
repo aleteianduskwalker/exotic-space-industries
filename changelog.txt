@@ -23,6 +23,14 @@ Date: 30-09-26
     - Radio station (electricity age, 100 kW): wireless circuit network channels on one surface.
       Any signal is a channel, one transmitter and any number of receivers per channel.
     - Crystal radio station (alien tier 4, 10 MW): the same for every surface of the game.
+    - Drone port and drones (alien tier 2, 300 knowledge): script drones for exactly one job each,
+      controlled from the drone port GUI and targeted with the drone remote. Tasks: salvage one
+      neutral structure (result into the port), mine a resource patch like a player into a
+      container, transfer exactly one item between two containers or gates, guard a zone (up to
+      21x21) with repair packs from the port by priority (class order, then lowest health). Drones
+      carry 50 items, fly 0.3 tiles/tick, work up to 64 tiles from their port on every surface, are
+      invulnerable pictures and need a powered port (1 MJ per departure). The port has filtered
+      slots. All numbers in lib/balance.lua -> drones.
     - Gaia boulders: six minable boulder families (violet, rust-red, slate, basalt, ice, sandstone)
       with thematic mining results. They are scattered alone on Gaia and replace the vanilla rocks of
       ruins (POI) spawned on Gaia. Existing Gaia surfaces get them in newly generated chunks.

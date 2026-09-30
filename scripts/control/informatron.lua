@@ -43,6 +43,7 @@ function model.menu(player_index)
             train_progression = 1,
             cranes_and_belts = 1,
             radio_stations = 1,
+            drones = 1,
         },
         new_mechanics = {
             beacon_overhaul = 1,
@@ -244,6 +245,13 @@ function model.radio_stations(player_index, element)
 end
 
 
+-- 3.2.0: drone port and script drones
+function model.drones(player_index, element)
+    element.add{type = "label", caption = {"exotic-industries-informatron.drones"}, style = "heading_1_label"}
+    element.add{type = "label", caption = {"exotic-industries-informatron.drones-text"}}
+end
+
+
 function model.new_mechanics(player_index, element)
     element.add{type = "label", caption = {"exotic-industries-informatron.new-mechanics"}, style = "heading_1_label"}
     element.add{type = "label", caption = {"exotic-industries-informatron.new-mechanics-text"}}
@@ -384,6 +392,7 @@ local PAGES = {
     train_progression = model.train_progression,
     cranes_and_belts = model.cranes_and_belts,
     radio_stations = model.radio_stations,
+    drones = model.drones,
     new_mechanics = model.new_mechanics,
     beacon_overhaul = model.beacon_overhaul,
     specialised_pipes = model.specialised_pipes,

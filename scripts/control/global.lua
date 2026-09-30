@@ -75,6 +75,14 @@ function ei_global.check_init()
     ei.storm_emp = ei.storm_emp or {}                         -- storm_emp.lua
     ei.void_rift_generators = ei.void_rift_generators or {}   -- gaia.lua
 
+    -- 3.2.0: drone ports and their tasks (drone_port.lua)
+    ei.drones = ei.drones or {}
+    ei.drones.ports = ei.drones.ports or {}
+    ei.drones.tasks = ei.drones.tasks or {}
+    ei.drones.next_id = ei.drones.next_id or 1
+    ei.drones.pending = ei.drones.pending or {}
+    ei.drones.gui = ei.drones.gui or {}
+
     -- 3.2.0: radio stations (radio_station.lua)
     ei.radio = ei.radio or {}
     ei.radio.stations = ei.radio.stations or {}

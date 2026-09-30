@@ -2,9 +2,9 @@
 
 Метод: data-стадия мода (все зависимости base / space-age, настройки по умолчанию) прогнана в эмуляторе; из `data.raw` (включая `gui-style`) собраны все пути `__exotic-space-industries*__/...`. Control-стадия файлов напрямую не использует (только имена спрайтов-прототипов, которые уже в `data.raw`). Файл из списка считается неиспользуемым, если его путь не встречается в загруженных прототипах.
 
-Итого: в списке 2026 файлов, используется 1367, **не используется 654** (+5 используются только вместе с Krastorio2).
+Итого: в списке 2026 файлов, используется 1374, **не используется 647** (+5 используются только вместе с Krastorio2).
 
-Исправлено в 3.2.0 по итогам первой версии отчёта: тепловые трубы снова используют все варианты спрайтов, у продвинутого и превосходного бура свои остатки (tier_1 больше не перезаписывается), удалена неиспользуемая таблица `ei_pipe_basic`, исправлен путь с двойным слэшем `entities//64x64_empty.png`, удалён мёртвый `stone_well_pump.lua`; валуны `gaia-boulder-1…15` задействованы как валуны Гайи.
+Исправлено в 3.2.0 по итогам первой версии отчёта: тепловые трубы снова используют все варианты спрайтов, у продвинутого и превосходного бура свои остатки (tier_1 больше не перезаписывается), удалена неиспользуемая таблица `ei_pipe_basic`, исправлен путь с двойным слэшем `entities//64x64_empty.png`, удалён мёртвый `stone_well_pump.lua`; валуны `gaia-boulder-1…15` задействованы как валуны Гайи; графика дрона и порта дронов задействована новой системой дронов.
 
 
 ## 1. Версии низкого разрешения (в Factorio 2.0 используются только hr-версии) (295)
@@ -405,26 +405,7 @@
 - uran-mining.png
 - watch-satellite.png
 
-## 3. Дрон и порт дрона (система удалена) (7)
-
-
-**exotic-space-industries-graphics-2/graphics/entities/**
-
-- drone-port.png
-- drone-port_animation.png
-- drone_animation.png
-- drone_shadow.png
-
-**exotic-space-industries-graphics-2/graphics/items/**
-
-- drone-port.png
-- drone.png
-
-**exotic-space-industries-graphics-2/graphics/techs/**
-
-- drone-port.png
-
-## 4. Инопланетная консоль и старая система знаний (удалены) (17)
+## 3. Инопланетная консоль и старая система знаний (удалены) (17)
 
 
 **exotic-space-industries-graphics-1/graphics/items/**
@@ -459,7 +440,7 @@
 - knowledge-science_3.png
 - scanner.png
 
-## 5. Прогресс эпох (система удалена) (3)
+## 4. Прогресс эпох (система удалена) (3)
 
 
 **exotic-space-industries-graphics-1/graphics/other/**
@@ -468,7 +449,7 @@
 - lab.png
 - tech_overlay.png
 
-## 6. Каменный колодец (мёртвый файл stone_well_pump.lua эпохи 1.1 удалён в 3.2.0) (2)
+## 5. Каменный колодец (мёртвый файл stone_well_pump.lua эпохи 1.1 удалён в 3.2.0) (2)
 
 
 **exotic-space-industries-graphics-2/graphics/entities/**
@@ -479,7 +460,7 @@
 
 - stone-waterwell.png
 
-## 7. Дубликаты графики ЭМ-поездов и заправщика в graphics-2 / временные спрайты (используются версии из graphics-3) (88)
+## 6. Дубликаты графики ЭМ-поездов и заправщика в graphics-2 / временные спрайты (используются версии из graphics-3) (88)
 
 
 **exotic-space-industries-graphics-2/graphics/**
@@ -591,7 +572,7 @@
 - 64_empty.png
 - 64_red.png
 
-## 8. Kirazy: старый бур (папка unused и неиспользуемый вариант kirazy-mining-drill) (66)
+## 7. Kirazy: старый бур (папка unused и неиспользуемый вариант kirazy-mining-drill) (66)
 
 
 **exotic-space-industries-graphics-1/graphics/other/kirazy-mining-drill/entity/**
@@ -669,14 +650,14 @@
 
 - mining-productivity.png
 
-## 9. Тепловые трубы (1)
+## 8. Тепловые трубы (1)
 
 
 **exotic-space-industries-graphics-1/graphics/heat-pipes/heated_connections/**
 
 - heated-glow.png
 
-## 10. Маски цвета / превью (не поддерживаются прототипом или не нужны в игре) (6)
+## 9. Маски цвета / превью (не поддерживаются прототипом или не нужны в игре) (6)
 
 
 **exotic-space-industries/graphics/conduit/**
@@ -694,7 +675,7 @@
 
 - radio-station-preview-static.png
 
-## 11. Glow-спрайты неиспользуемых размеров/вариантов (19)
+## 10. Glow-спрайты неиспользуемых размеров/вариантов (19)
 
 
 **exotic-space-industries/graphics/glow/big_pngs/**
@@ -737,7 +718,7 @@
 
 - glow.png
 
-## 12. Тайлы Гайи низкого разрешения (7)
+## 11. Тайлы Гайи низкого разрешения (7)
 
 
 **exotic-space-industries-graphics-2/graphics/terrain/**
@@ -750,7 +731,7 @@
 - gaia-rock-2.png
 - gaia-rock-3.png
 
-## 13. Прочие ассеты без ссылок в коде (старые предметы, иконки, технологии, трубы) (90)
+## 12. Прочие ассеты без ссылок в коде (старые предметы, иконки, технологии, трубы) (90)
 
 
 **exotic-space-industries-graphics-1/graphics/data-pipes/remnants/**
@@ -885,7 +866,7 @@
 
 - gaia.png
 
-## 14. Упоминаются в коде, но в игру не загружаются (12)
+## 13. Упоминаются в коде, но в игру не загружаются (12)
 
 - `exotic-space-industries-graphics-1/graphics/128_empty.png` — ei_lib.empty_sprite(128) — никем не вызывается
 - `exotic-space-industries-graphics-1/graphics/256_empty.png` — ei_lib.empty_sprite(256) — вызывали только удалённые dummy-технологии эпох

@@ -191,6 +191,30 @@ ei_balance.gaia_boulders = {
 }
 
 --====================================================================================================
+-- DRONES (3.2.0)
+--====================================================================================================
+-- Script drones of the drone port (prototypes/alien_structures/drone-port.lua,
+-- scripts/control/drone_port.lua). A flying drone is only a picture: no collision, invulnerable.
+ei_balance.drones = {
+    capacity = 50,                  -- items a drone carries per trip
+    speed = 0.3,                    -- tiles per tick
+    range = 64,                     -- max distance of every task position from the port (tiles)
+    flight_height = 1.5,            -- drawn height above its shadow (tiles)
+    port_slots = 10,                -- port inventory slots (filters: drones, repair packs, loot)
+    port_buffer = "20MJ",           -- energy buffer of the port
+    port_input = "2MW",             -- max charge rate of the buffer
+    port_idle_usage = "100kW",      -- constant consumption of a built port
+    trip_energy = 1000000,          -- J taken from the port buffer for every departure of a drone
+    mining_speed = 0.5,             -- resource mining speed (same as a player)
+    salvage_time_multiplier = 1,    -- salvage duration = mining_time * multiplier (seconds)
+    repair_health_per_second = 30,  -- repaired health per second per point of repair tool "speed"
+    repair_packs_per_trip = 10,     -- repair packs loaded per trip (durability is taken exactly)
+    max_zone_size = 21,             -- guard zone: max width / height (tiles)
+    scan_interval = 60,             -- ticks between two scans of an idle guard / waiting drone
+    logic_interval = 10,            -- ticks between two logic steps of a working drone
+}
+
+--====================================================================================================
 -- RADIO STATIONS (3.2.0)
 --====================================================================================================
 -- Wireless circuit network channels: one transmitter per channel, any number of receivers.

@@ -37,3 +37,5 @@ require("resonance-pack")
 require("void-rift-generator")
 -- conduit: lightning attractor that harvests the Gaia storms (alien tree tier 1) + ei-conduit-gaia
 require("conduit")
+-- drone port + script drones (3.2.0, alien tier 2)
+require("drone-port")
