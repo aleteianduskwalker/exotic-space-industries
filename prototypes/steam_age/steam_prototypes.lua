@@ -372,24 +372,6 @@ data:extend({
     },
 
     {
-        name = "ei-steel-mechanical-parts-from-plate",
-        type = "recipe",
-        category = "crafting",
-        energy_required = 1,
-        ingredients = {
-            {type="item", name="steel-plate", amount=1}
-        },
-        results = {
-            {type = "item", name = "ei-steel-mechanical-parts", amount = 2},
-        },
-        always_show_made_in = true,
-        enabled = false,
-        main_product = "ei-steel-mechanical-parts",
-    },
-
-
-
-    {
         name = "ei-tank",
         type = "recipe",
         category = "crafting",
