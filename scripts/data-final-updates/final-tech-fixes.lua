@@ -108,6 +108,20 @@ end
 local age_cache, age_active, age_path = {}, {}, {}
 local logged_cycles = {}
 
+-- make sure every tech has its name set to its id
+for i,tech in pairs(data.raw.technology) do
+    if not tech.name then
+        tech.name = i
+    elseif tech.name ~= i then
+        tech.name = i
+    end
+end
+
+-- Depth guard (safety net for extremely deep but acyclic trees)
+local age_depth = 0
+local age_max_depth = 400
+local age_logged_depth = false
+
 ---Returns all ages a technology belongs to (its own age or the ages of its prerequisites).
 ---Prerequisite cycles (usually two mods depending on each other's technologies) no longer
 ---overflow the stack: the chain is written to factorio-current.log once and cut there.
@@ -117,7 +131,25 @@ local logged_cycles = {}
 local function get_ages(tech, is_root)
     if not tech then return {} end
 
+    age_depth = age_depth + 1
+    if age_depth > age_max_depth then
+        if not age_logged_depth then
+            age_logged_depth = true
+            local path = {}
+            for i = 1, #age_path do
+                table.insert(path, age_path[i])
+            end
+            table.insert(path, tostring(tech.name))
+            log("[exotic-space-industries] WARNING: recursive tech depth exceeded " ..
+                age_max_depth .. ":\n    " ..
+                table.concat(path, "\n -> "))
+        end
+        age_depth = age_depth - 1
+        return {}
+    end
+
     if not is_root and age_cache[tech.name] then
+        age_depth = age_depth - 1
         return age_cache[tech.name]
     end
 
@@ -134,6 +166,7 @@ local function get_ages(tech, is_root)
             logged_cycles[text] = true
             log("[exotic-space-industries] WARNING: technology prerequisite cycle (please report it to the mods involved):\n    " .. text)
         end
+        age_depth = age_depth - 1
         return tech.age and {tech.age} or {}
     end
 
@@ -150,9 +183,13 @@ local function get_ages(tech, is_root)
         result = {tech.age}
     else
         result = {}
+        local seen_age = {}
         for _, prerequisite in ipairs(tech.prerequisites or {}) do
             for _, age in ipairs(get_ages(data.raw.technology[prerequisite])) do
-                table.insert(result, age)
+                if not seen_age[age] then
+                    seen_age[age] = true
+                    table.insert(result, age)
+                end
             end
         end
     end
@@ -162,6 +199,7 @@ local function get_ages(tech, is_root)
     if not is_root then
         age_cache[tech.name] = result
     end
+    age_depth = age_depth - 1
     return result
 end
 
