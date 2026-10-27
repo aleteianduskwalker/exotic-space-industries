@@ -22,6 +22,8 @@ ei_data = require("lib/data")
 --MAIN CONTENT CODE
 --====================================================================================================
 
+
+
 -- add new categories, entities, items, techs, recipes fluids, resources
 
 require("prototypes/pipe-covers")
@@ -40,11 +42,15 @@ require("prototypes/exotic_age/exotic_age")
 require("prototypes/dark_age/loaders")
 require("prototypes/electricity_age/robots")
 
+
+
 --====================================================================================================
 --COMPATIBILITY CODE
 --====================================================================================================
 
--- dummy lab so that Factorio doesn't complain about there being no lab that can handle techs
+
+
+-- Добавляем фиктивную лабораторию, чтобы движок игры не выдавал предупреждений о её отсутствии
 data:extend({
   {
     name = "ei-dummy-lab",
@@ -55,9 +61,10 @@ data:extend({
   }
 })
 
--- Alien Biomes: keep the Gaia and induction matrix tiles on top of its tile layers
+-- Совместимость с Alien Biomes: оставляем тайлы Gaia и матрицы индукции поверх слоев тайлов
 alien_biomes_priority_tiles = alien_biomes_priority_tiles or {}
 for _, tile in pairs(data.raw.tile) do
+  -- Если тайл относится к Gaia или индукционной матрице, добавляем его в приоритетный список
   if ei_lib.contains(tile.name, "gaia") or ei_lib.contains(tile.name, "induction-matrix") then
     table.insert(alien_biomes_priority_tiles, tile.name)
   end

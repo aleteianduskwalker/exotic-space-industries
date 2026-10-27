@@ -154,6 +154,8 @@ end
 --LIGHTNING (Gaia storms)
 --====================================================================================================
 
+
+
 for name, _ in pairs(data.raw["lightning-attractor"]) do
     data.raw["lightning-attractor"][name].resistances = {}
     for damage_type, _ in pairs(data.raw["damage-type"]) do
@@ -165,7 +167,7 @@ data.raw["lightning-attractor"]["fulgoran-ruin-attractor"].range_elongation = 25
 
 for _, lightning in pairs(data.raw["lightning"]) do
     lightning.attracted_volume_modifier = 0.0
-    -- damage is a number in Factorio 2.0 (a {amount, type} table in later versions)
+    -- Корректируем урон от молний для совместимости с форматами Factorio 2.x
     if type(lightning.damage) == "table" then
         lightning.damage.amount = (lightning.damage.amount or 100) * 2.0
     else
@@ -173,9 +175,7 @@ for _, lightning in pairs(data.raw["lightning"]) do
     end
 end
 
--- Storm EMP (design doc §7): every strike raises the script event "ei-storm-emp".
--- scripts/control/storm_emp.lua decides at runtime whether it counts (Gaia only, not near an
--- attractor) and temporarily disables machines around the impact.
+-- Storm EMP (design doc §7): каждый удар молнии вызывает скриптовое событие "ei-storm-emp"
 local STORM_EMP_TRIGGER = {
     type = "direct",
     action_delivery = {
@@ -184,18 +184,28 @@ local STORM_EMP_TRIGGER = {
     },
 }
 
----Appends the EMP trigger to a lightning strike_effect (Trigger: a single item or an array).
----@param strike_effect table|nil
+
+
+---Добавляет EMP триггер к эффекту удара молнии (strike_effect).
+---@param strike_effect table|nil Исходный эффект удара молнии.
+---@return table Обновлённый список или элемент триггера.
 local function add_storm_emp(strike_effect)
+    -- Если эффектов не было, возвращаем список с новым триггером
     if strike_effect == nil then
         return {STORM_EMP_TRIGGER}
     end
-    if strike_effect.type then -- single trigger item -> array of trigger items
+
+    -- Если передана одиночная структура триггера, превращаем её в массив
+    if strike_effect.type then
         return {strike_effect, STORM_EMP_TRIGGER}
     end
+
+    -- Добавляем триггер в существующий массив
     table.insert(strike_effect, STORM_EMP_TRIGGER)
     return strike_effect
 end
+
+
 
 for _, lightning in pairs(data.raw["lightning"]) do
     lightning.strike_effect = add_storm_emp(lightning.strike_effect)

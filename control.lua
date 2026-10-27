@@ -80,9 +80,16 @@ end)
 -- visited once per full cycle (capped by the "max updates per tick" setting).
 -- Each updater processes ONE entity per call and returns false when it has nothing to do.
 
+
+---Возвращает количество элементов в таблице.
+---@param tbl table|nil Таблица для подсчёта элементов.
+---@return integer Количество элементов в таблице или 0.
 local function count(tbl)
+    -- Если таблица передана, возвращаем её размер, иначе 0
     return tbl and table_size(tbl) or 0
 end
+
+
 
 local UPDATERS = {
     {
@@ -126,25 +133,33 @@ local UPDATERS = {
 -- how many times each updater runs per full update cycle
 local UPDATER_CALLS_PER_CYCLE = math.max(1, ei_ticksPerFullUpdate / #UPDATERS)
 
----Runs the round-robin updater that belongs to this tick.
----@param tick integer
+
+
+---Запускает апдейтер сущностей по круговой системе (round-robin) для текущего тика.
+---@param tick integer Номер текущего игрового тика.
 local function run_entity_updater(tick)
+    -- Выбираем апдейтер из списка по номеру тика
     local updater = UPDATERS[tick % #UPDATERS + 1]
 
+    -- Подсчитываем количество зарегистрированных сущностей
     local entities = updater.count()
     if entities == 0 then
         return
     end
 
+    -- Вычисляем требуемое количество обновлений на текущий тик
     local updates = math.ceil(entities / UPDATER_CALLS_PER_CYCLE)
     updates = ei_util.clamp(updates, 1, ei_maxEntityUpdates)
 
+    -- Выполняем порцию обновлений сущностей
     for _ = 1, updates do
         if not updater.update() then
             break
         end
     end
 end
+
+
 
 script.on_event(defines.events.on_tick, function(event)
     if not storage.ei then
@@ -193,14 +208,17 @@ end)
 --INIT AND MIGRATION
 --====================================================================================================
 
----3.2.0: GUI elements were renamed from "ei_..." to "ei-...". Old elements stored in a save would
----stay forever (and their click tags no longer match), so they are removed; the modules recreate
----their GUIs with the new names when needed.
+
+---Удаляет старые элементы пользовательского интерфейса, имя которых начинается с "ei_".
 local function remove_legacy_guis()
+    -- Обходим всех игроков на сервере
     for _, player in pairs(game.players) do
         local roots = {player.gui.top, player.gui.left, player.gui.center, player.gui.screen, player.gui.relative,
                        mod_gui.get_button_flow(player), mod_gui.get_frame_flow(player)}
+
+        -- Проверяем каждый контейнер GUI игрока
         for _, root in pairs(roots) do
+            -- Удаляем элементы с устаревшим префиксом "ei_"
             for _, child in pairs(root.children) do
                 if child.valid and child.name and string.sub(child.name, 1, 3) == "ei_" then
                     child.destroy()
@@ -210,8 +228,11 @@ local function remove_legacy_guis()
     end
 end
 
----Refreshes everything that depends on prototypes or startup settings.
+
+
+---Обновляет все исполняемые данные, зависящие от прототипов или настроек запуска.
 local function refresh_runtime_data()
+    -- Инициализируем и проверяем глобальные модули и настройки
     ei_global.check_init()
     ei_tech_scaling.init()
     ei_victory.init()
@@ -221,6 +242,8 @@ local function refresh_runtime_data()
     em_trains.check_buffs()
     em_trains_gui.mark_dirty()
 end
+
+
 
 script.on_init(function()
     if remote.interfaces["freeplay"] then
@@ -273,19 +296,22 @@ end)
 --ENTITY HANDLERS
 --====================================================================================================
 
----Every module registration for a newly built entity.
----@param entity LuaEntity
----@param event table the original build event
+
+---Регистрирует свежепостроенную сущность во всех соответствующих подсистемах мода.
+---@param entity LuaEntity Созданная сущность.
+---@param event table Исходное событие постройки.
 local function on_built_entity(entity, event)
+    -- Проверяем валидность созданной сущности
     if not ei_util.is_valid(entity) then
         return
     end
 
+    -- Регистрируем сущность с флюидной обработкой при необходимости
     if ei_powered_beacon.counts_for_fluid_handling(entity) then
         ei_register.register_fluid_entity(entity)
     end
 
-    -- copper and iron beacons: master + hidden powered slave
+    -- Медные и железные маяки: создаём ведущую сущность и невидимый ведомый элемент
     if entity.name == "ei-copper-beacon" or entity.name == "ei-iron-beacon" then
         local master_unit = ei_register.register_master_entity("copper_beacon", entity)
         local slave = ei_register.make_slave("copper_beacon", master_unit, entity.name .. "_slave", {x = 0, y = 0})
@@ -294,6 +320,7 @@ local function on_built_entity(entity, event)
         ei_register.add_spaced_update()
     end
 
+    -- Оповещаем остальные подсистемы о постройке сущности
     ei_beacon_overload.on_built_entity(entity)
     ei_neutron_collector.on_built_entity(entity)
     ei_fusion_reactor.on_built_entity(entity)
@@ -307,20 +334,23 @@ local function on_built_entity(entity, event)
     ei_radio_station.on_built_entity(entity)
     ei_drone_port.on_built_entity(entity)
 
-    -- loaders only snap to belts/containers when built by hand (not from blueprints)
+    -- Погрузчики привязываются только при ручной постройке
     if event.name == defines.events.on_built_entity then
         ei_loaders_lib.on_built_entity(entity)
     end
 
-    -- last: may destroy the entity (build restrictions) or swap it for its Gaia variant
+    -- Проверка ограничений постройки на планете Gaia
     if entity.valid then
         ei_gaia.on_built_entity(entity)
     end
-    -- after the Gaia build restriction (terminals only work on Gaia)
+
+    -- Регистрация терминала инопланетян
     if entity.valid then
         ei_alien_console.on_built_entity(entity)
     end
 end
+
+
 
 script.on_event({
     defines.events.on_built_entity,
@@ -366,21 +396,23 @@ script.on_event(defines.events.on_entity_cloned, function(event)
     end
 end)
 
----Every module cleanup for an entity that is about to be removed.
----All these events fire BEFORE the entity is actually removed.
+---Обрабатывает уничтожение или демонтаж сущности перед её фактическим удалением.
+---@param event table Данные события уничтожения/демонтажа сущности.
 local function on_destroyed_entity(event)
     local entity = event.entity
     if not ei_util.is_valid(entity) then
         return
     end
 
-    -- robot / player index: needed to check whether mining can succeed (full inventory)
+    -- Определяем инициатора демонтажа (робот или игрок)
     local transfer = event.robot or event.player_index
 
+    -- Удаляем сущность из гидравлического реестра при необходимости
     if ei_powered_beacon.counts_for_fluid_handling(entity) then
         ei_register.deregister_fluid_entity(entity)
     end
 
+    -- Удаляем медные/железные маяки и связанные с ними ведомые элементы
     if entity.name == "ei-copper-beacon" or entity.name == "ei-iron-beacon" then
         local master = storage.ei.copper_beacon.master[entity.unit_number]
         if master then
@@ -390,6 +422,7 @@ local function on_destroyed_entity(event)
         end
     end
 
+    -- Очищаем данные сущности во всех системах
     ei_beacon_overload.on_destroyed_entity(entity)
     ei_neutron_collector.on_destroyed_entity(entity)
     ei_alien_spawner.on_destroyed_entity(entity)
@@ -406,11 +439,13 @@ local function on_destroyed_entity(event)
     ei_drone_port.on_destroyed_entity(entity)
     ei_alien_console.on_destroyed_entity(entity)
 
-    -- destroyed broken artifacts on Gaia grant alien knowledge (mining: see on_mined_entity below)
+    -- Если артефакт инопланетян уничтожен, начисляем инопланетные знания
     if event.name == defines.events.on_entity_died then
         ei_alien_system.on_entity_died(event)
     end
 end
+
+
 
 script.on_event({
     defines.events.on_entity_died,
