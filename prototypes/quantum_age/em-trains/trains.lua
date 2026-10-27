@@ -769,7 +769,6 @@ data:extend({
             min_speed = max_speed_sound_levelon,
             max_speed = max_speed_sound_leveloff
 		},
-		crash_trigger = crash_trigger(),
 		open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
 		close_sound = { filename = "__base__/sound/machine-close.ogg", volume = 0.75 },
 		sound_minimum_speed = em_sound_minimum_speed,
@@ -893,7 +892,6 @@ data:extend({
             min_speed = max_speed_sound_levelon,
             max_speed = max_speed_sound_leveloff
 		},
-		crash_trigger = crash_trigger(),
 		open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
 		close_sound = { filename = "__base__/sound/machine-close.ogg", volume = 0.75 },
 		sound_minimum_speed = em_sound_minimum_speed,
