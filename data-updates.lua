@@ -11,6 +11,8 @@ ei_lib = require("lib/lib")
 --CONTENT UPDATES
 --====================================================================================================
 
+
+
 -- reorganize vanilla data
 
 -- remove vanilla resources from autoplace-controls
@@ -29,6 +31,7 @@ require("scripts/data-updates/icon_updates")
 -- apply locale patches
 require("scripts/data-updates/locale_updates")
 
+-- Проверяем сложность прототипов погрузчиков в настройках
 if ei_lib.config("loader-prototype-complexity") then
   require("scripts/data-updates/loader_patches")
 end
@@ -43,12 +46,20 @@ require("scripts/data-updates/solar_patches")
 require("scripts/data-updates/text_plates_patches")
 require("scripts/data-updates/extra_storage_tanks_patches")
 
--- =======================================================================================
 
+
+--====================================================================================================
+--ROCKET LIFT CAPACITY BUFF
+--====================================================================================================
+
+
+
+-- Если бафф грузоподъемности ракет отключен в настройках запуска, завершаем обработку
 if settings.startup["ei-rocket-lift-capacity-buff"].value == 0 then
   return
 end
 
+-- Применяем множитель грузоподъемности ракет и стартовых пакетов космических платформ
 local size_multiplier = settings.startup["ei-rocket-lift-capacity-buff"].value
 data.raw["utility-constants"]["default"].rocket_lift_weight = data.raw["utility-constants"]["default"].rocket_lift_weight * size_multiplier
 data.raw["space-platform-starter-pack"]["space-platform-starter-pack"].weight = data.raw["utility-constants"]["default"].rocket_lift_weight
