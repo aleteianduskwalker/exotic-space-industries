@@ -21,7 +21,7 @@ data:extend({
     {
         name = "ei-big-inserter-normal",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {

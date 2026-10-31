@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-nano-factory",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -162,7 +162,7 @@ data:extend({
     {
         name = "ei-crushed-coal",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "coal", amount = 1},
@@ -177,7 +177,7 @@ data:extend({
     {
         name = "ei-carbon",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 5,
         ingredients = {
             {type = "item", name = "ei-crushed-coal", amount = 1},
@@ -194,7 +194,7 @@ data:extend({
     {
         name = "ei-carbon-nanotube",
         type = "recipe",
-        category = "ei-nano-factory",
+        categories = {"ei-nano-factory"},
         energy_required = 60,
         ingredients = {
             {type = "item", name = "ei-carbon", amount = 5},
@@ -211,7 +211,7 @@ data:extend({
     {
         name = "ei-carbon-structure",
         type = "recipe",
-        category = "ei-nano-factory",
+        categories = {"ei-nano-factory"},
         energy_required = 120,
         ingredients = {
             {type = "item", name = "ei-carbon-nanotube", amount = 3},

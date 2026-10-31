@@ -16,6 +16,7 @@
 
 local ei_balance = require("lib/balance")
 local balance = ei_balance.data_center
+local science_pack_prototypes = require("lib/science_packs").get_prototypes()
 
 local technology = data.raw.technology["ei-data-center"]
 local big_lab = data.raw.lab["ei-big-lab"]
@@ -38,18 +39,39 @@ local ALIEN_PACKS = {
 ---@param name string
 ---@param recipe table
 local function is_production_recipe(name, recipe)
-    return recipe.category ~= "recycling"
+    return not ei_lib.table_contains_value(recipe.categories or {}, "recycling")
         and not recipe.hidden
         and not recipe.parameter
         and string.sub(name, 1, 15) ~= "ei-data-center-"
         and not string.find(name, "barrel", 1, true)
 end
 
----Amount of `product` among the results of a recipe (nil if it is not produced).
+---Calculates the expected amount of a matching recipe product, or nil if it is not produced.
+---@param recipe table Recipe prototype to inspect.
+---@param product string Product name to find.
+---@return number? expected_amount Average amount produced per recipe execution.
 local function produced_amount(recipe, product)
     for _, result in pairs(recipe.results or {}) do
         if result.name == product then
-            return result.amount or result.amount_max or 1
+            local amount = result.amount
+
+            -- Use the midpoint for randomized output ranges, matching the expected-value estimate.
+            if not amount and result.amount_min and result.amount_max then
+                amount = (result.amount_min + result.amount_max) / 2
+            end
+
+            amount = (amount or 1) + (result.extra_count_fraction or 0)
+
+            -- Apply Factorio 2.1's independent and shared probability modifiers.
+            if result.independent_probability then
+                amount = amount * result.independent_probability
+            end
+
+            if result.shared_probability then
+                amount = amount * (result.shared_probability.max - result.shared_probability.min)
+            end
+
+            return amount
         end
     end
 end
@@ -154,7 +176,7 @@ local big_lab_recipe = data.raw.recipe["ei-big-lab"]
 data:extend({{
     name = "ei-data-center",
     type = "recipe",
-    category = "crafting",
+    categories = {"crafting"},
     energy_required = big_lab_recipe and big_lab_recipe.energy_required or 20,
     ingredients = table.deepcopy(big_lab_recipe and big_lab_recipe.ingredients or {{type = "item", name = "lab", amount = 10}}),
     results = {{type = "item", name = "ei-data-center", amount = 1}},
@@ -165,7 +187,7 @@ unlock("ei-data-center")
 
 -- 2) one recipe per science pack: always 1 pack, 1 computing power per unique component
 for _, pack_name in pairs(big_lab.inputs) do
-    local pack = data.raw.tool[pack_name]
+    local pack = science_pack_prototypes[pack_name]
     local allowed = pack and not pack.hidden and (balance.include_alien_packs or not ALIEN_PACKS[pack_name])
 
     if allowed then
@@ -180,7 +202,7 @@ for _, pack_name in pairs(big_lab.inputs) do
             type = "recipe",
             localised_name = {"recipe-name.ei-data-center-pack", pack.localised_name or {"item-name."..pack_name}},
             localised_description = {"recipe-description.ei-data-center-pack", tostring(computing_power)},
-            category = "ei-data-center",
+            categories = {"ei-data-center"},
             energy_required = time_per_pack * balance.time_multiplier,
             ingredients = {
                 {type = "fluid", name = "ei-computing-power", amount = computing_power},

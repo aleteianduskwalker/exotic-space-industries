@@ -19,7 +19,7 @@ if mods["lignumis"] then
   data.raw.recipe['ei-dark-age-tech'].enabled = true
   data.raw.recipe['lignumis-dark-age'].enabled = true
   
-  data.raw.item.wood.fuel_category = "chemical"
+  data.raw.item.wood.fuel_categories = {"chemical"}
   
   data.raw.item.lumber.place_as_tile = table.deepcopy(data.raw.item.wood.place_as_tile)
   data.raw.item.wood.place_as_tile = nil

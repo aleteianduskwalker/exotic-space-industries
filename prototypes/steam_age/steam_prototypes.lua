@@ -30,7 +30,7 @@ data:extend({
         stack_size = 50,
         subgroup = "ei-refining-secondary",
         order = "a2",
-        fuel_category = "chemical",
+        fuel_categories = {"chemical"},
         fuel_value = "3MJ",
     },
     {
@@ -41,7 +41,7 @@ data:extend({
         stack_size = 50,
         subgroup = "ei-refining-secondary",
         order = "a3",
-        fuel_category = "chemical",
+        fuel_categories = {"chemical"},
         fuel_value = "18MJ",
     },
     {
@@ -52,7 +52,7 @@ data:extend({
         stack_size = 100,
         subgroup = "ei-refining-crushed",
         order = "c1",
-        fuel_category = "chemical",
+        fuel_categories = {"chemical"},
         fuel_value = "1.5MJ",
         pictures = {
             {
@@ -75,7 +75,7 @@ data:extend({
         stack_size = 50,
         subgroup = "ei-refining-secondary",
         order = "a1",
-        fuel_category = "chemical",
+        fuel_categories = {"chemical"},
         fuel_value = "2MJ",
     },
     {
@@ -154,11 +154,10 @@ data:extend({
     },
     {
         name = "ei-electricity-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."electric-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "science-pack",
         order = "a3",
         pictures = {
@@ -189,7 +188,7 @@ data:extend({
     {
         name = "ei-charcoal",
         type = "recipe",
-        category = "ei-coke-furnace",
+        categories = {"ei-coke-furnace"},
         energy_required = 3,
         ingredients = {
             {type="item", name="wood", amount=2}
@@ -204,7 +203,7 @@ data:extend({
     {
         name = "ei-coke",
         type = "recipe",
-        category = "ei-coke-furnace",
+        categories = {"ei-coke-furnace"},
         energy_required = 1.5,
         ingredients = {
             {type="item", name="coal", amount=1}
@@ -219,7 +218,7 @@ data:extend({
     {
         name = "ei-coke-charcoal",
         type = "recipe",
-        category = "ei-coke-furnace",
+        categories = {"ei-coke-furnace"},
         energy_required = 1.5,
         ingredients = {
             {type="item", name="ei-charcoal", amount=1}
@@ -234,7 +233,7 @@ data:extend({
     {
         name = "ei-coke-advanced_coal",
         type = "recipe",
-        category = "oil-processing",
+        categories = {"oil-processing"},
         energy_required = 3.5,
         ingredients = {
             {type="item", name="coal", amount=4}
@@ -250,7 +249,7 @@ data:extend({
     {
         name = "ei-coke-advanced_charcoal",
         type = "recipe",
-        category = "oil-processing",
+        categories = {"oil-processing"},
         energy_required = 3.5,
         ingredients = {
             {type="item", name="ei-charcoal", amount=4}
@@ -266,7 +265,7 @@ data:extend({
     {
         name = "ei-coke-pellets",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients = {
             {type="item", name="ei-coke", amount=5}
@@ -281,7 +280,7 @@ data:extend({
     {
         name = "ei-crushed-coke",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type="item", name="ei-coke", amount=1}
@@ -296,7 +295,7 @@ data:extend({
     {
         name = "ei-crushed-iron",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type="item", name="iron-plate", amount=1}
@@ -311,7 +310,7 @@ data:extend({
     {
         name = "ei-crushed-iron-mechanical-parts",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type="item", name="ei-iron-mechanical-parts", amount=1}
@@ -327,7 +326,7 @@ data:extend({
     {
         name = "ei-steel-blend",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients = {
             {type="item", name="ei-crushed-coke", amount=2},
@@ -343,7 +342,7 @@ data:extend({
     {
         name = "ei-steel-plate",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 20,
         ingredients = {
             {type="item", name = "ei-steel-blend", amount = 1}
@@ -358,7 +357,7 @@ data:extend({
     {
         name = "ei-steel-mechanical-parts",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients = {
             {type="item", name="steel-plate", amount=1}
@@ -374,7 +373,7 @@ data:extend({
     {
         name = "ei-tank",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients = {
             {type="item", name="ei-iron-mechanical-parts", amount=10},
@@ -391,7 +390,7 @@ data:extend({
     {
         name = "ei-solid-fuel-residual-oil",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type="fluid", name="ei-residual-oil", amount=30}
@@ -409,7 +408,7 @@ data:extend({
     {
         name = "ei-sand",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type="item", name="stone", amount=1},
@@ -424,7 +423,7 @@ data:extend({
     {
         name = "ei-glass",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type="item", name = modprefix.."sand", amount=1},
@@ -439,7 +438,7 @@ data:extend({
     {
         name = "ei-ceramic-steam-assembler",
         type = "recipe",
-        category = "ei-steam-assembler",
+        categories = {"ei-steam-assembler"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = modprefix.."sand", amount = 2},
@@ -455,7 +454,7 @@ data:extend({
     {
         name = "ei-ceramic",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = modprefix.."sand", amount = 2},
@@ -471,7 +470,7 @@ data:extend({
     {
         name = "ei-electricity-age-tech",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 18,
         ingredients = {
             {type = "item", name = "electronic-circuit", amount = 3},
@@ -488,7 +487,7 @@ data:extend({
     {
         name = "ei-landfill-sand",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients = {
             {type = "item", name = modprefix.."sand", amount = 50},

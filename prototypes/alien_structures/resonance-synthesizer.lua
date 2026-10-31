@@ -62,7 +62,7 @@ data:extend({
     {
         name = "ei-resonance-synthesizer",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "ei-small-simulator", amount = 1},
@@ -78,7 +78,7 @@ data:extend({
     {
         name = "ei-resonance-data",
         type = "recipe",
-        category = "ei-resonance-synthesizer",
+        categories = {"ei-resonance-synthesizer"},
         energy_required = recipe_data.time,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = recipe_data.morphium},

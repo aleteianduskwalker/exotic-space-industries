@@ -144,7 +144,7 @@ data:extend({
         icon_size = 64,
         subgroup = "ei-nuclear-fission-fuel",
         order = "a-a-1",
-        fuel_category = "ei-nuclear-fuel",
+        fuel_categories = {"ei-nuclear-fuel"},
         fuel_value = "25GJ",
         burnt_result = "ei-used-uranium-235-fuel",
         stack_size = 10,
@@ -178,7 +178,7 @@ data:extend({
     {
         name = "ei-fission-facility",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -261,7 +261,7 @@ data:extend({
     {
         name = "ei-uranium-ore",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "ei-uranium-chunk", amount = 1},
@@ -277,7 +277,7 @@ data:extend({
     {
         name = "ei-crushed-uranium",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "uranium-ore", amount = 1},
@@ -292,7 +292,7 @@ data:extend({
     {
         name = "ei-crushed-pure-uranium",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "ei-crushed-uranium", amount = 25},
@@ -309,7 +309,7 @@ data:extend({
     {
         name = "ei-uranium-solution",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-uranium-solution", amount = 10},
@@ -329,7 +329,7 @@ data:extend({
     {
         name = "ei-uranium-hexafluorite",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "ei-crushed-pure-uranium", amount = 25},
@@ -337,7 +337,7 @@ data:extend({
         },
         results = {
             {type = "fluid", name = "ei-uranium-hexafluorite", amount = 25},
-            {type = "item", name = "ei-nuclear-waste", amount = 1, probability = 0.1},
+            {type = "item", name = "ei-nuclear-waste", amount = 1, independent_probability = 0.1},
             {type = "item", name = modprefix.."sand", amount = 3},
         },
         always_show_made_in = true,
@@ -347,15 +347,15 @@ data:extend({
     {
         name = "ei-seperate-uranium",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 8,
         ingredients = {
             {type = "fluid", name = "ei-uranium-hexafluorite", amount = 100},
         },
         results = {
             {type = "fluid", name = "ei-uranium-hexafluorite", amount = 99},
-            {type = "item", name = "uranium-235", amount = 1, probability = 0.0072},
-            {type = "item", name = "uranium-238", amount = 1, probability = 0.9927},
+            {type = "item", name = "uranium-235", amount = 1, independent_probability = 0.0072},
+            {type = "item", name = "uranium-238", amount = 1, independent_probability = 0.9927},
         },
         always_show_made_in = true,
         enabled = false,
@@ -368,7 +368,7 @@ data:extend({
     {
         name = "ei-uranium-235-fuel",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-lead-ingot", amount = 2},
@@ -386,7 +386,7 @@ data:extend({
     {
         name = "ei-uranium-test-fuel",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-lead-ingot", amount = 4},
@@ -403,7 +403,7 @@ data:extend({
     {
         name = "ei-fission-tech",
         type = "recipe",
-        category = "ei-fission-facility",
+        categories = {"ei-fission-facility"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "stone", amount = 4},

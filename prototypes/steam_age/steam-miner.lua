@@ -19,7 +19,7 @@ data:extend({
     {
         name = "ei-steam-miner",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 3,
         ingredients =
         {

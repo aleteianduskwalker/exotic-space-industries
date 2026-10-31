@@ -27,7 +27,7 @@ data:extend({
         subgroup = "intermediate-product",
         order = "d[empty-barrel]-1",
         stack_size = 50,
-        fuel_category = "chemical",
+        fuel_categories = {"chemical"},
         fuel_value = "1GJ",
     },
     {
@@ -42,7 +42,7 @@ data:extend({
     {
         name = "ei-void-engine",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -59,7 +59,7 @@ data:extend({
     {
         name = "ei-void-inflator",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients =
         {
@@ -73,7 +73,7 @@ data:extend({
     {
         name = "ei-void-fuel",
         type = "recipe",
-        category = "ei-void-engine",
+        categories = {"ei-void-engine"},
         energy_required = 100,
         ingredients =
         {
@@ -81,8 +81,8 @@ data:extend({
             {type="item", name="ei-empty-cryo-container", amount=1},
         },
         results = {
-            {type="item", name="ei-void-fuel", amount=1, probability=0.1},
-            {type="item", name="ei-empty-cryo-container", amount=1, probability=0.9}
+            {type="item", name="ei-void-fuel", amount=1, independent_probability=0.1},
+            {type="item", name="ei-empty-cryo-container", amount=1, independent_probability=0.9}
         },
         enabled = false,
         always_show_made_in = true,

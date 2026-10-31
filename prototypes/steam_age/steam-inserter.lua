@@ -19,7 +19,7 @@ data:extend({
     {
         name = "ei-steam-inserter",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -45,7 +45,7 @@ data:extend({
     {
         name = "ei-steam-long-inserter",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {

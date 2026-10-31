@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-steam-assembler",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -73,7 +73,7 @@ data:extend({
         collision_box = data.raw["assembling-machine"]["assembling-machine-1"].collision_box,
         selection_box = data.raw["assembling-machine"]["assembling-machine-1"].selection_box,
         map_color = ei_data.colors.assembler,
-        crafting_categories = {"ei-steam-assembler", "crafting", "crafting-with-fluid", "electronics"},
+        crafting_categories = {"ei-steam-assembler", "crafting", "crafting-with-fluid"},
         crafting_speed = 0.5,
         energy_source = {
             type = "fluid",

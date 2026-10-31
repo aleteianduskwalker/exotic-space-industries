@@ -43,13 +43,13 @@ for _, tool in pairs(ei_data.repair_tools) do
             -- mining: random high tier resources instead of the ruin itself
             local minable_results, loot = {}, {}
             for _, result in ipairs(results) do
-                local item_name, min, max, probability = result[1], result[2], result[3], result[4]
+                local item_name, min, max, independent_probability = result[1], result[2], result[3], result[4]
                 if data.raw.item[item_name] then
                     table.insert(minable_results, {
                         type = "item", name = item_name,
-                        amount_min = min, amount_max = max, probability = probability,
+                        amount_min = min, amount_max = max, independent_probability = independent_probability,
                     })
-                    table.insert(loot, {item = item_name, count_min = min, count_max = max, probability = probability})
+                    table.insert(loot, {type = "item", name = item_name, amount_min = min, amount_max = max, independent_probability = independent_probability})
                 end
             end
             entity.minable = entity.minable or {mining_time = 1}

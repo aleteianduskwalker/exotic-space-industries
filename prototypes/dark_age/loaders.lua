@@ -136,7 +136,7 @@ data:extend({
     {
         name = "ei-loader",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {
@@ -152,7 +152,7 @@ data:extend({
     {
         name = "ei-fast-loader",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 3,
         ingredients =
         {
@@ -168,7 +168,7 @@ data:extend({
     {
         name = "ei-express-loader",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -209,7 +209,7 @@ data:extend({
     {
         name = "ei-neo-loader",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {

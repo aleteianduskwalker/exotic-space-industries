@@ -41,7 +41,7 @@ data:extend({
     {
         name = "ei-insulated-pipe",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -57,7 +57,7 @@ data:extend({
     {
         name = "ei-insulated-underground-pipe",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -72,7 +72,7 @@ data:extend({
     {
         name = "ei-insulated-tank",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {

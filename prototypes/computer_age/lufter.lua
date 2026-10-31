@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-lufter",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -130,7 +130,7 @@ data:extend({
     {
         name = "ei-nitrogen-gas",
         type = "recipe",
-        category = "ei-lufter",
+        categories = {"ei-lufter"},
         energy_required = 1,
         ingredients = {},
         results = {
@@ -143,7 +143,7 @@ data:extend({
     {
         name = "ei-nitrogen-gas-vent",
         type = "recipe",
-        category = "ei-lufter",
+        categories = {"ei-lufter"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-nitrogen-gas", amount = 20},
@@ -159,7 +159,7 @@ data:extend({
     {
         name = "ei-oxygen-gas",
         type = "recipe",
-        category = "ei-lufter",
+        categories = {"ei-lufter"},
         energy_required = 1,
         ingredients = {},
         results = {
@@ -172,7 +172,7 @@ data:extend({
     {
         name = "ei-oxygen-gas-vent",
         type = "recipe",
-        category = "ei-lufter",
+        categories = {"ei-lufter"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-oxygen-gas", amount = 20},
@@ -188,7 +188,7 @@ data:extend({
     {
         name = "ei-extract-water",
         type = "recipe",
-        category = "ei-lufter",
+        categories = {"ei-lufter"},
         energy_required = 1,
         ingredients = {},
         results = {
@@ -203,7 +203,7 @@ data:extend({
     {
         name = "ei-steam-vent",
         type = "recipe",
-        category = "ei-lufter",
+        categories = {"ei-lufter"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "steam", amount = 50},

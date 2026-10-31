@@ -43,11 +43,10 @@ data:extend({
     },
     {
         name = "ei-dark-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."dark-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "science-pack",
         order = "a1",
         pictures = {
@@ -70,11 +69,10 @@ data:extend({
     },
     {
         name = "ei-steam-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."steam-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "science-pack",
         order = "a2",
         pictures = {
@@ -104,7 +102,7 @@ data:extend({
     {
         name = "ei-iron-mechanical-parts",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients = {
             {type="item", name="iron-plate", amount=1},
@@ -119,7 +117,7 @@ data:extend({
     {
         name = "ei-copper-mechanical-parts",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients = {
             {type="item", name="copper-plate", amount=1},
@@ -134,7 +132,7 @@ data:extend({
     {
         name = "ei-dark-age-tech",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients = {
             {type="item", name="iron-plate", amount=1},
@@ -150,7 +148,7 @@ data:extend({
     {
         name = "ei-steam-engine",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1.5,
         ingredients = {
             {type="item", name="ei-copper-mechanical-parts", amount=1},
@@ -166,7 +164,7 @@ data:extend({
     {
         name = "ei-steam-age-tech",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
             {type="item", name="ei-copper-mechanical-parts", amount=4},

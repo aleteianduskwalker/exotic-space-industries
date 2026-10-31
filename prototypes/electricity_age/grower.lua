@@ -31,7 +31,7 @@ data:extend({
     {
         name = "ei-grower",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -48,7 +48,7 @@ data:extend({
     {
         name = "ei-energy-crystal-washing",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 15,
         ingredients = {
             {type = "fluid", name = "sulfuric-acid", amount = 100},
@@ -57,7 +57,7 @@ data:extend({
         },
         results = {
             {type = "item", name = modprefix.."sand", amount = 9},
-            {type = "item", name = "ei-energy-crystal", amount = 1, probability = 0.1},
+            {type = "item", name = "ei-energy-crystal", amount = 1, independent_probability = 0.1},
         },
         always_show_made_in = true,
         enabled = false,
@@ -66,7 +66,7 @@ data:extend({
     {
         name = "ei-energy-crystal-growing",
         type = "recipe",
-        category = "ei-growing",
+        categories = {"ei-growing"},
         energy_required = 15,
         ingredients = {
             {type = "fluid", name = "ei-acidic-water", amount = 15},

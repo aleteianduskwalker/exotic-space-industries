@@ -166,7 +166,7 @@ data:extend({
     {
         name = "ei-purifier",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -346,7 +346,7 @@ data:extend({
     {
         name = "ei-gold-chunk-purifier",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "water", amount = 10},
@@ -366,7 +366,7 @@ data:extend({
     {
         name = "ei-lead-chunk-purifier",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "water", amount = 10},
@@ -386,7 +386,7 @@ data:extend({
     {
         name = "ei-iron-chunk-purifier",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "water", amount = 5},
@@ -406,7 +406,7 @@ data:extend({
     {
         name = "ei-copper-chunk-purifier",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "water", amount = 5},
@@ -426,7 +426,7 @@ data:extend({
     {
         name = "ei-copper-ingot-pure-smelting",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-pure-copper", amount = 1},
@@ -442,7 +442,7 @@ data:extend({
     {
         name = "ei-iron-ingot-pure-smelting",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-pure-iron", amount = 1},
@@ -458,7 +458,7 @@ data:extend({
     {
         name = "ei-lead-ingot-pure-smelting",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-pure-lead", amount = 2},
@@ -474,7 +474,7 @@ data:extend({
     {
         name = "ei-gold-ingot-pure-smelting",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-pure-gold", amount = 2},
@@ -490,7 +490,7 @@ data:extend({
     {
         name = "ei-morphium-fluorite",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 50},
@@ -505,7 +505,7 @@ data:extend({
     {
         name = "ei-dirty-water-vent",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-dirty-water", amount = 100},
@@ -523,7 +523,7 @@ data:extend({
     {
         name = "ei-water-vent",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "water", amount = 100},
@@ -542,7 +542,7 @@ data:extend({
     {
         name = "ei-dirty-water-landfill",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-dirty-water", amount = 1000},
@@ -558,13 +558,13 @@ data:extend({
     {
         name = "ei-dirty-water-fluorite",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-dirty-water", amount = 10},
         },
         results = {
-            {type = "item", name = "ei-fluorite", amount = 1, probability = 0.1}
+            {type = "item", name = "ei-fluorite", amount = 1, independent_probability = 0.1}
         },
         always_show_made_in = true,
         enabled = false,

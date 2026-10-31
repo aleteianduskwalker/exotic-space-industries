@@ -300,7 +300,7 @@ data:extend({
     {
         name = "ei-crystal-accumulator-repair",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients = {
             {type = "item", name = "ei-alien-resin", amount = 10},
@@ -317,7 +317,7 @@ data:extend({
     {
         name = "ei-crystal-accumulator",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients = {
             {type = "item", name = "ei-alien-resin", amount = 10},
@@ -334,7 +334,7 @@ data:extend({
     {
         name = "ei-crystal-accumulator-gaia",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 9999,
         ingredients = {
 

@@ -18,7 +18,7 @@ data:extend({
     {
         name = "ei-cannon-turret",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {

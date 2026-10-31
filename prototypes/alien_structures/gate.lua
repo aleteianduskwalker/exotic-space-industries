@@ -30,7 +30,7 @@ data:extend({
     {
         name = "ei-gate",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 30,
         ingredients =
         {

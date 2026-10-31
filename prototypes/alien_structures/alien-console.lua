@@ -82,7 +82,7 @@ data:extend({
     {
         name = "ei-alien-console",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-electronic-parts", amount = 10},
@@ -147,7 +147,7 @@ data:extend({
     {
         name = "ei-alien-console-repair",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients = {
             {type = "item", name = "ei-electronic-parts", amount = 6},

@@ -192,7 +192,7 @@ data:extend({
     {
         name = "ei-em-locomotive",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
           {type="item", name="locomotive", amount=1},
@@ -209,7 +209,7 @@ data:extend({
 	{
         name = "ei-em-fluid-wagon",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
     {type="item", name="fluid-wagon", amount=1},
@@ -225,7 +225,7 @@ data:extend({
 	{
         name = "ei-em-cargo-wagon",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
    {type="item", name="cargo-wagon", amount=1},
@@ -241,7 +241,7 @@ data:extend({
 	{
         name = "ei-em-fielder",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients =
         {
@@ -917,7 +917,7 @@ local foo = {
 	icon = ei_trains_item_path.."dummy.png",
 	icon_size = 64,
 	stack_size = 1,
-	fuel_category = "ei-emt-fuel",
+	fuel_categories = {"ei-emt-fuel"},
 	hidden = true,
 	fuel_value = "1GJ",
 	fuel_acceleration_multiplier = 1,

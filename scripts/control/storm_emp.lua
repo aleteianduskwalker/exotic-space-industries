@@ -4,7 +4,7 @@
 -- "The storm jams the automation": a lightning strike on Gaia that does NOT hit a lightning
 -- attractor temporarily disables machines, inserters and combinators around the impact.
 -- The circuit network values are NOT changed (the API can not write into a wire network) - the
--- affected devices simply stop reacting for a while (entity.active = false).
+-- affected devices are temporarily disabled with `disabled_by_script`.
 --
 -- Flow:
 --   data-final-fixes.lua adds {type = "script", effect_id = "ei-storm-emp"} to every lightning
@@ -60,7 +60,7 @@ local function disable(entity, until_tick)
         return
     end
 
-    entity.active = false
+    entity.disabled_by_script = true
     emp[entity.unit_number] = {
         entity = entity,
         until_tick = until_tick,
@@ -123,7 +123,7 @@ function model.update()
             emp[unit] = nil
         elseif tick >= record.until_tick then
             if not is_overloaded(unit) then
-                record.entity.active = true
+                record.entity.disabled_by_script = false
             end
             util.destroy_render(record.icon)
             emp[unit] = nil

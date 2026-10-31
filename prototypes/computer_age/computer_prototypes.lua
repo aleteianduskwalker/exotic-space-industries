@@ -94,11 +94,10 @@ data:extend({
     },
     {
         name = "ei-advanced-computer-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."advanced-computer-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "science-pack",
         order = "a4-1",
         pictures = {
@@ -121,11 +120,10 @@ data:extend({
     },
     {
         name = "ei-alien-computer-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."alien-computer-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "science-pack",
         order = "a4-2",
         pictures = {
@@ -148,11 +146,10 @@ data:extend({
     },
     {
         name = "ei-quantum-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."quantum-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "science-pack",
         order = "a5",
         pictures = {
@@ -708,7 +705,7 @@ data:extend({
     {
         name = "ei-sus-plating",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "iron-plate", amount = 1},
@@ -718,7 +715,7 @@ data:extend({
         },
         results = {
             {type = "item", name = "ei-sus-plating", amount = 1},
-            {type = "item", name = "ei-bio-matter", amount = 1, probability = 0.8},
+            {type = "item", name = "ei-bio-matter", amount = 1, independent_probability = 0.8},
         },
         always_show_made_in = true,
         enabled = false,
@@ -727,7 +724,7 @@ data:extend({
     {
         name = "ei-bio-insulated-wire",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "plastic-bar", amount = 2},
@@ -747,7 +744,7 @@ data:extend({
     {
         name = "ei-bio-energy-crystal",
         type = "recipe",
-        category = "ei-growing",
+        categories = {"ei-growing"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-energy-crystal", amount = 1},
@@ -767,7 +764,7 @@ data:extend({
     {
         name = "ei-bio-high-energy-crystal",
         type = "recipe",
-        category = "ei-growing",
+        categories = {"ei-growing"},
         energy_required = 60,
         ingredients = {
             {type = "item", name = "ei-high-energy-crystal", amount = 1},
@@ -787,7 +784,7 @@ data:extend({
     {
         name = "ei-bio-hydrofluoric-acid",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-fluorite", amount = 1},
@@ -808,7 +805,7 @@ data:extend({
     {
         name = "ei-bio-nitric-acid",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 3,
         ingredients = {
             {type = "item", name = "ei-crushed-gold", amount = 1},
@@ -829,7 +826,7 @@ data:extend({
     {
         name = "ei-bio-electronic-parts",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 6,
         ingredients = {
             {type = "item", name = "battery", amount = 2},
@@ -852,7 +849,7 @@ data:extend({
     {
         name = "ei-concentrated-morphium",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 25},
@@ -869,7 +866,7 @@ data:extend({
     {
         name = "ei-concentrated-morphium-light-oil",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-concentrated-morphium", amount = 1},
@@ -886,7 +883,7 @@ data:extend({
     {
         name = "ei-concentrated-morphium-kerosene",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-concentrated-morphium", amount = 1},
@@ -903,7 +900,7 @@ data:extend({
     {
         name = "ei-concentrated-morphium-heavy-oil",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-concentrated-morphium", amount = 1},
@@ -920,7 +917,7 @@ data:extend({
     {
         name = "ei-concentrated-morphium-lubricant",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-concentrated-morphium", amount = 1},
@@ -938,7 +935,7 @@ data:extend({
     {
         name = "ei-water",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 6,
         ingredients = {
             {type = "fluid", name = "ei-concentrated-morphium", amount = 100},
@@ -958,7 +955,7 @@ data:extend({
     {
         name = "ei-evolved-alien-seed",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "ei-ammonia-gas", amount = 25},
@@ -967,7 +964,7 @@ data:extend({
         },
         results = {
             {type = "item", name = "ei-evolved-alien-seed", amount = 1},
-            {type = "item", name = "ei-alien-seed", amount = 1, probability = 0.5},
+            {type = "item", name = "ei-alien-seed", amount = 1, independent_probability = 0.5},
         },
         always_show_made_in = true,
         enabled = false,
@@ -976,7 +973,7 @@ data:extend({
     {
         name = "ei-blooming-evolved-alien-seed",
         type = "recipe",
-        category = "ei-bio-chamber",
+        categories = {"ei-bio-chamber"},
         energy_required = 20,
         ingredients = {
             {type = "fluid", name = "ei-concentrated-morphium", amount = 5},
@@ -993,7 +990,7 @@ data:extend({
     {
         name = "ei-bio-sludge",
         type = "recipe",
-        category = "ei-bio-reactor",
+        categories = {"ei-bio-reactor"},
         energy_required = 16,
         ingredients = {
             {type = "item", name = "ei-blooming-evolved-alien-seed", amount = 1},
@@ -1001,9 +998,9 @@ data:extend({
             {type = "fluid", name = "ei-oxygen-gas", amount = 25},
         },
         results = {
-            {type = "item", name = "ei-evolved-alien-seed", amount = 1, probability = 0.5},
-            {type = "item", name = "ei-blooming-evolved-alien-seed", amount = 1, probability = 0.25},
-            {type = "item", name = "ei-bio-matter", amount = 1, probability = 0.5},
+            {type = "item", name = "ei-evolved-alien-seed", amount = 1, independent_probability = 0.5},
+            {type = "item", name = "ei-blooming-evolved-alien-seed", amount = 1, independent_probability = 0.25},
+            {type = "item", name = "ei-bio-matter", amount = 1, independent_probability = 0.5},
             {type = "fluid", name = "ei-bio-sludge", amount = 20},
         },
         always_show_made_in = true,
@@ -1013,7 +1010,7 @@ data:extend({
     {
         name = "ei-bio-matter",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "ei-bio-matter", amount = 1},
@@ -1031,7 +1028,7 @@ data:extend({
     {
         name = "ei-cryodust",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 5},
@@ -1048,7 +1045,7 @@ data:extend({
     {
         name = "ei-cryocondensate",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 8,
         ingredients = {
             {type = "item", name = "ei-cryodust", amount = 10},
@@ -1066,7 +1063,7 @@ data:extend({
     {
         name = "ei-condensed-cryodust",
         type = "recipe",
-        category = "ei-destill-tower",
+        categories = {"ei-destill-tower"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-cryocondensate", amount = 10},
@@ -1084,7 +1081,7 @@ data:extend({
     {
         name = "ei-compound-ammo",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients =
         {
@@ -1100,7 +1097,7 @@ data:extend({
     {
         name = "ei-personal-laser",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients =
         {
@@ -1116,7 +1113,7 @@ data:extend({
     {
         name = "ei-personal-leg",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients =
         {
@@ -1132,7 +1129,7 @@ data:extend({
     {
         name = "ei-advanced-semiconductor",
         type = "recipe",
-        category = "ei-waver-factory",
+        categories = {"ei-waver-factory"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "ei-crushed-gold", amount = 6},
@@ -1141,8 +1138,8 @@ data:extend({
         },
         results = {
             {type = "fluid", name = "ei-acidic-water", amount = 10},
-            {type = "item", name = "ei-advanced-semiconductor", amount = 1, probability = 0.75},
-            {type = "item", name = "ei-faulty-semiconductor", amount = 1, probability = 0.25},
+            {type = "item", name = "ei-advanced-semiconductor", amount = 1, independent_probability = 0.75},
+            {type = "item", name = "ei-faulty-semiconductor", amount = 1, independent_probability = 0.25},
         },
         always_show_made_in = true,
         enabled = false,
@@ -1151,7 +1148,7 @@ data:extend({
     {
         name = "ei-computing-unit",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 15,
         ingredients = {
             {type = "item", name = "ei-rocket-control-unit", amount = 1},
@@ -1169,7 +1166,7 @@ data:extend({
     {
         name = "ei-molten-steel-mix",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-molten-iron", amount = 10},
@@ -1187,7 +1184,7 @@ data:extend({
     {
         name = "ei-molten-steel-oxygen",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-molten-iron", amount = 20},
@@ -1206,7 +1203,7 @@ data:extend({
     {
         name = "ei-module-part",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -1222,7 +1219,7 @@ data:extend({
     {
         name = "ei-rocket-parts",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients =
         {
@@ -1239,7 +1236,7 @@ data:extend({
     {
         name = "ei-module-base",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -1255,7 +1252,7 @@ data:extend({
     {
         name = "ei-emtpy-cryo-container",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 6,
         ingredients =
         {
@@ -1272,7 +1269,7 @@ data:extend({
     {
         name = "ei-fill-cryo-container-nitrogen",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-liquid-nitrogen", amount = ei_lib.config("barrel-capacity")},
@@ -1291,7 +1288,7 @@ data:extend({
     {
         name = "ei-empty-cryo-container-nitrogen",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-cryo-container-nitrogen", amount = 1},
@@ -1310,7 +1307,7 @@ data:extend({
     {
         name = "ei-fill-cryo-container-oxygen",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-liquid-oxygen", amount = ei_lib.config("barrel-capacity")},
@@ -1329,7 +1326,7 @@ data:extend({
     {
         name = "ei-empty-cryo-container-oxygen",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-cryo-container-oxygen", amount = 1},
@@ -1348,7 +1345,7 @@ data:extend({
     {
         name = "ei-crystal-solution",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "ei-hydrofluoric-acid", amount = 25},
@@ -1364,13 +1361,13 @@ data:extend({
     {
         name = "ei-high-energy-crystal",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-crystal-solution", amount = 100},
         },
         results = {
-            {type = "item", name = "ei-high-energy-crystal", amount = 1, probability = 0.001},
+            {type = "item", name = "ei-high-energy-crystal", amount = 1, independent_probability = 0.001},
             {type = "fluid", name = "ei-crystal-solution", amount = 99},
         },
         always_show_made_in = true,
@@ -1380,7 +1377,7 @@ data:extend({
     {
         name = "ei-high-energy-crystal-growing",
         type = "recipe",
-        category = "ei-growing",
+        categories = {"ei-growing"},
         energy_required = 60,
         ingredients = {
             {type = "fluid", name = "ei-crystal-solution", amount = 5},
@@ -1396,7 +1393,7 @@ data:extend({
     {
         name = "ei-quantum-age-tech",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 24,
         ingredients =
         {
@@ -1413,7 +1410,7 @@ data:extend({
     {
         name = "ei-hydrogen",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "water", amount = 20},
@@ -1429,7 +1426,7 @@ data:extend({
     {
         name = "ei-ammonia",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 3,
         ingredients = {
             {type = "fluid", name = "ei-hydrogen-gas", amount = 30},
@@ -1445,7 +1442,7 @@ data:extend({
     {
         name = "ei-dinitrogen-tetroxide",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 3,
         ingredients = {
             {type = "fluid", name = "ei-ammonia-gas", amount = 40},
@@ -1462,7 +1459,7 @@ data:extend({
     {
         name = "ei-dinitrogen-tetroxide-water-solution",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-dinitrogen-tetroxide-gas", amount = 10},
@@ -1478,7 +1475,7 @@ data:extend({
     {
         name = "ei-nitric-acid",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 3,
         ingredients = {
             {type = "fluid", name = "ei-dinitrogen-tetroxide-water-solution", amount = 20},
@@ -1495,7 +1492,7 @@ data:extend({
     {
         name = "ei-advanced-computer-age-tech",
         type = "recipe",
-        category = "advanced-crafting",
+        categories = {"advanced-crafting"},
         energy_required = 28,
         ingredients = {
             {type = "item", name = "ei-simulation-data", amount = 12},
@@ -1512,7 +1509,7 @@ data:extend({
     {
         name = "ei-alien-computer-age-tech",
         type = "recipe",
-        category = "advanced-crafting",
+        categories = {"advanced-crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-alien-resin", amount = 10},
@@ -1529,7 +1526,7 @@ data:extend({
     {
         name = "ei-advanced-motor",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "electric-engine-unit", amount = 1},
@@ -1548,7 +1545,7 @@ data:extend({
     {
         name = "ei-battery-lithium",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "lithium", amount = 2},
@@ -1567,7 +1564,7 @@ data:extend({
     {
         name = "ei-copper-extraction",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 40},
@@ -1586,7 +1583,7 @@ data:extend({
     {
         name = "ei-iron-extraction",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 40},
@@ -1605,7 +1602,7 @@ data:extend({
     {
         name = "ei-gold-extraction",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 1.5,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 60},
@@ -1624,7 +1621,7 @@ data:extend({
     {
         name = "ei-lead-extraction",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 1.5,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 60},
@@ -1643,7 +1640,7 @@ data:extend({
     {
         name = "ei-uranium-extraction",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 2.5,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 100},
@@ -1662,7 +1659,7 @@ data:extend({
     {
         name = "ei-stone-extraction",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 2.5,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 10},
@@ -1681,7 +1678,7 @@ data:extend({
     {
         name = "ei-sulfur-extraction",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 2.5,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 80},
@@ -1701,7 +1698,7 @@ data:extend({
     {
         name = "ei-petroleum-reforming",
         type = "recipe",
-        category = "ei-advanced-chem-plant",
+        categories = {"ei-advanced-chem-plant"},
         energy_required = 4,
         ingredients = {
             {type = "fluid", name = "petroleum-gas", amount = 40},
@@ -1722,7 +1719,7 @@ data:extend({
     {
         name = "ei-silicon",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-hydrogen-gas", amount = 5},
@@ -1738,15 +1735,15 @@ data:extend({
     {
         name = "ei-monosilicon",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "ei-silicon", amount = 5},
             {type = "fluid", name = "ei-oxygen-gas", amount = 5},
         },
         results = {
-            {type = "item", name = "ei-silicon", amount = 5, probability = 0.75},
-            {type = "item", name = "ei-monosilicon", amount = 1, probability = 0.25},
+            {type = "item", name = "ei-silicon", amount = 5, independent_probability = 0.75},
+            {type = "item", name = "ei-monosilicon", amount = 1, independent_probability = 0.25},
         },
         always_show_made_in = true,
         enabled = false,
@@ -1755,7 +1752,7 @@ data:extend({
     {
         name = "ei-semiconductor-monosilicon",
         type = "recipe",
-        category = "ei-waver-factory",
+        categories = {"ei-waver-factory"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-hydrofluoric-acid", amount = 10},
@@ -1774,7 +1771,7 @@ data:extend({
     {
         name = "ei-advanced-semiconductor-monosilicon",
         type = "recipe",
-        category = "ei-waver-factory",
+        categories = {"ei-waver-factory"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "ei-monosilicon", amount = 2},
@@ -1798,7 +1795,7 @@ data:extend({
         name = "ei-rocket-control-unit",
         energy_required = 30,
         enabled = false,
-        category = "crafting",
+        categories = {"crafting"},
         ingredients =
         {
             {type="item", name="advanced-circuit", amount=10},
@@ -1813,7 +1810,7 @@ data:extend({
         name = "ei-rocket-processing-unit",
         energy_required = 30,
         enabled = false,
-        category = "crafting",
+        categories = {"crafting"},
         ingredients =
         {
             {type="item", name="processing-unit", amount=1},

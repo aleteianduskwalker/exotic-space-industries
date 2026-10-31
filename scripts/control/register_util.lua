@@ -203,7 +203,7 @@ function model.init_beacon(key, master)
     local masters = registry(key, "master")
     local master_data = masters and masters[get_unit(master)]
     if master_data and master_data.entity and master_data.entity.valid then
-        master_data.entity.active = false
+        master_data.entity.disabled_by_script = true
     end
 end
 

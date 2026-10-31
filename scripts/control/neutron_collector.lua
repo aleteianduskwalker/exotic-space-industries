@@ -305,7 +305,7 @@ function model.update_all_collector_states(source)
 
     for unit, collector in pairs(collectors) do
         if model.entity_check(collector) then
-            collector.active = state
+            collector.disabled_by_script = not state
         else
             collectors[unit] = nil
         end

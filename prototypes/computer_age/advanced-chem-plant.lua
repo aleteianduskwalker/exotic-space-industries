@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-advanced-chem-plant",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {
@@ -66,7 +66,7 @@ data:extend({
     {
         name = "ei-ceramic-water",
         type = "recipe",
-        category = "ei-advanced-chem-plant",
+        categories = {"ei-advanced-chem-plant"},
         energy_required = 3,
         ingredients = {
             {type = "item", name = modprefix.."sand", amount = 6},
@@ -82,7 +82,7 @@ data:extend({
     {
         name = "ei-plastic-crushed-coke",
         type = "recipe",
-        category = "ei-advanced-chem-plant",
+        categories = {"ei-advanced-chem-plant"},
         energy_required = 24,
         ingredients = {
             {type = "item", name = "ei-crushed-coke", amount = 8},

@@ -33,7 +33,7 @@ data:extend({
     {
         name = "ei-void-rift-generator",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients = {
             {type = "item", name = "ei-void-engine", amount = 1},

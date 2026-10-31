@@ -546,7 +546,7 @@ data:extend({
 					name = "ei-cryoflux",
 					amount_min = 20,
 					amount_max = 20,
-					probability = 1,
+					independent_probability = 1,
 				}
 			},
       fluid_amount = 1,
@@ -606,7 +606,7 @@ data:extend({
 					name = "ei-phythogas",
 					amount_min = 20,
 					amount_max = 20,
-					probability = 1,
+					independent_probability = 1,
 				}
 			},
       fluid_amount = 1,
@@ -667,7 +667,7 @@ data:extend({
 					name = "ei-ammonia-gas",
 					amount_min = 20,
 					amount_max = 20,
-					probability = 1,
+					independent_probability = 1,
 				}
 			},
       fluid_amount = 1,
@@ -727,7 +727,7 @@ data:extend({
 					name = "ei-coal-gas",
 					amount_min = 20,
 					amount_max = 20,
-					probability = 1,
+					independent_probability = 1,
 				}
 			},
       fluid_amount = 1,

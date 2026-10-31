@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-excavator",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {
@@ -146,7 +146,7 @@ data:extend({
     {
         name = "ei-excavator-running",
         type = "recipe",
-        category = "ei-excavator",
+        categories = {"ei-excavator"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "water", amount = 2*5},

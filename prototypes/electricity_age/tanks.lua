@@ -119,7 +119,7 @@ data:extend({
     {
         name = "ei-tank-1",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {
@@ -135,7 +135,7 @@ data:extend({
     {
         name = "ei-tank-2",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {
@@ -151,7 +151,7 @@ data:extend({
     {
         name = "ei-tank-3",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {

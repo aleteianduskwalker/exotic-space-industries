@@ -105,17 +105,32 @@ function model.update_overload(entity, ignored)
     local was_overloaded = storage.ei.overload_icons[entity.unit_number] ~= nil
 
     if overloaded and not was_overloaded then
-        entity.active = false
+        local unit_number = entity.unit_number
+        local emp = storage.ei.storm_emp
+        local was_disabled_by_script = entity.disabled_by_script
+
+        -- An active EMP already owns the script-disabled flag; it started from an enabled script flag.
+        if emp and emp[unit_number] then
+            was_disabled_by_script = false
+        end
+
+        -- Preserve a script-disable state owned by another system before applying this overload.
+        storage.ei.overload_disabled_states[unit_number] = was_disabled_by_script
+        entity.disabled_by_script = true
         model.add_overload_effect(entity)
         model.add_overload_icon(entity)
         ei_victory.count_value("machines_overloaded", 1)
     elseif not overloaded and was_overloaded then
-        -- only re-activate machines that WE deactivated, other scripts may control `active` too;
-        -- a machine still disabled by a storm EMP is re-activated by storm_emp.lua when it expires
+        -- Preserve the pre-overload script flag unless a still-running EMP will restore it itself.
+        local unit_number = entity.unit_number
         local emp = storage.ei.storm_emp
-        if not (emp and emp[entity.unit_number]) then
-            entity.active = true
+        local disabled_states = storage.ei.overload_disabled_states
+
+        if not (emp and emp[unit_number]) then
+            entity.disabled_by_script = disabled_states[unit_number] == true
         end
+
+        disabled_states[unit_number] = nil
         model.remove_overload_icon(entity)
     end
 end
@@ -210,6 +225,7 @@ function model.on_destroyed_entity(entity)
         model.update_all_machines_in_range(entity, true)
     elseif entity.unit_number then
         model.remove_overload_icon(entity)
+        storage.ei.overload_disabled_states[entity.unit_number] = nil
     end
 end
 

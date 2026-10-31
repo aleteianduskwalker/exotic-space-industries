@@ -16,7 +16,7 @@ data:extend({
     {
         name = "ei-fueler",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients = {
             {type="item", name="iron-plate", amount=10},

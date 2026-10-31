@@ -33,7 +33,7 @@ data:extend({
     {
         name = "ei-caster",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -158,7 +158,7 @@ data:extend({
     {
         name = "ei-cast-iron-ingot",
         type = "recipe",
-        category = "ei-casting",
+        categories = {"ei-casting"},
         energy_required = 0.5,
         ingredients = {
             {type = "fluid", name = "ei-molten-iron", amount = 10},
@@ -174,7 +174,7 @@ data:extend({
     {
         name = "ei-cast-copper-ingot",
         type = "recipe",
-        category = "ei-casting",
+        categories = {"ei-casting"},
         energy_required = 0.5,
         ingredients = {
             {type = "fluid", name = "ei-molten-copper", amount = 10},
@@ -190,7 +190,7 @@ data:extend({
     {
         name = "ei-cast-lead-ingot",
         type = "recipe",
-        category = "ei-casting",
+        categories = {"ei-casting"},
         energy_required = 0.5,
         ingredients = {
             {type = "fluid", name = "ei-molten-lead", amount = 10},
@@ -206,7 +206,7 @@ data:extend({
     {
         name = "ei-cast-gold-ingot",
         type = "recipe",
-        category = "ei-casting",
+        categories = {"ei-casting"},
         energy_required = 0.5,
         ingredients = {
             {type = "fluid", name = "ei-molten-gold", amount = 10},
@@ -222,7 +222,7 @@ data:extend({
     {
         name = "ei-cast-steel-ingot",
         type = "recipe",
-        category = "ei-casting",
+        categories = {"ei-casting"},
         energy_required = 0.5,
         ingredients = {
             {type = "fluid", name = "ei-molten-steel", amount = 10},

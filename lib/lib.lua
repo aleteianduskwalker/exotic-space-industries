@@ -187,7 +187,7 @@ function ei_lib.recipe_output_add(args)
         result.amount = args.amountmin or 1
     end
     if probability < 1 then
-        result.probability = probability
+        result.independent_probability = probability
     end
     if args.allowproductivity == false then
         result.ignored_by_productivity = 1e9
@@ -741,7 +741,7 @@ function ei_lib.debug_crafting_categories()
             local info = {category = name, recipes = {}, machines = {}}
 
             for _, recipe in pairs(data.raw.recipe) do
-                if recipe.category == name
+                if ei_lib.table_contains_value(recipe.categories or {}, name)
                     and not (ei_lib.starts_with(recipe.name, "fill-") or ei_lib.starts_with(recipe.name, "empty-")) then
                     table.insert(info.recipes, recipe.name)
                 end

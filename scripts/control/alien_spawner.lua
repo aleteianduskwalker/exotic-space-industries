@@ -190,7 +190,7 @@ local function spawn_entities(preset, surface, pos)
             if spawned and spawned.valid then
                 -- all recorded presets use destructible = true; keep the flag explicit
                 spawned.destructible = entity_data.destructible ~= false
-                spawned.active = true
+                spawned.disabled_by_script = false
             end
         end
 

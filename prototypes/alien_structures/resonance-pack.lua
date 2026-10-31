@@ -19,21 +19,20 @@ local pack = ei_balance.resonance_pack_recipe
 data:extend({
     {
         name = "ei-alien-resonance-pack",
-        type = "tool",
+        type = "item",
         -- icon by request: ei-simulation-data; the small alien pack overlay tells both items apart
         icons = {
             {icon = ei_graphics_item_path.."simulation-data.png", icon_size = 128},
             {icon = ei_graphics_item_path.."alien-computer-age-tech.png", icon_size = 64, scale = 0.25, shift = {8, 8}},
         },
         stack_size = 200,
-        durability = 1,
         subgroup = "science-pack",
         order = "a4-3",
     },
     {
         name = "ei-alien-resonance-pack",
         type = "recipe",
-        category = "ei-resonance-synthesizer",
+        categories = {"ei-resonance-synthesizer"},
         energy_required = pack.time,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = pack.morphium},

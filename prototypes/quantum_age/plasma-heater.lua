@@ -34,7 +34,7 @@ data:extend({
     {
         name = "ei-plasma-heater",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -253,15 +253,15 @@ data:extend({
     {
         name = "ei-protium",
         type = "recipe",
-        category = "oil-processing",
+        categories = {"oil-processing"},
         energy_required = 0.5,
         ingredients = {
             {type = "fluid", name = "ei-hydrogen-gas", amount = 5},
         },
         results = {
-            {type = "fluid", name = "ei-protium", amount = 10, probability = 0.9998},
-            {type = "fluid", name = "ei-deuterium", amount = 10, probability = 0.001},
-            {type = "fluid", name = "ei-tritium", amount = 10, probability = 0.0001},
+            {type = "fluid", name = "ei-protium", amount = 10, independent_probability = 0.9998},
+            {type = "fluid", name = "ei-deuterium", amount = 10, independent_probability = 0.001},
+            {type = "fluid", name = "ei-tritium", amount = 10, independent_probability = 0.0001},
         },
         always_show_made_in = true,
         enabled = false,
@@ -270,7 +270,7 @@ data:extend({
     {
         name = "ei-heated-protium",
         type = "recipe",
-        category = "ei-plasma-heater",
+        categories = {"ei-plasma-heater"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-protium", amount = 1},
@@ -285,7 +285,7 @@ data:extend({
     {
         name = "ei-heated-deuterium",
         type = "recipe",
-        category = "ei-plasma-heater",
+        categories = {"ei-plasma-heater"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-deuterium", amount = 1},
@@ -300,7 +300,7 @@ data:extend({
     {
         name = "ei-heated-tritium",
         type = "recipe",
-        category = "ei-plasma-heater",
+        categories = {"ei-plasma-heater"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-tritium", amount = 1},
@@ -315,7 +315,7 @@ data:extend({
     {
         name = "ei-heated-helium-3",
         type = "recipe",
-        category = "ei-plasma-heater",
+        categories = {"ei-plasma-heater"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-helium-3", amount = 1},
@@ -356,7 +356,7 @@ data:extend({
     {
         name = "ei-plasma-data-protium",
         type = "recipe",
-        category = "ei-quantum-computer",
+        categories = {"ei-quantum-computer"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-computing-power", amount = 100},
@@ -374,7 +374,7 @@ data:extend({
     {
         name = "ei-plasma-data-deuterium",
         type = "recipe",
-        category = "ei-quantum-computer",
+        categories = {"ei-quantum-computer"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-computing-power", amount = 100},
@@ -392,7 +392,7 @@ data:extend({
     {
         name = "ei-plasma-data-tritium",
         type = "recipe",
-        category = "ei-quantum-computer",
+        categories = {"ei-quantum-computer"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-computing-power", amount = 100},

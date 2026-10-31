@@ -65,7 +65,7 @@ function ei_make_planet_sample(planet_name, options)
         {
             name = name,
             type = "recipe",
-            category = "ei-crushing",
+            categories = {"ei-crushing"},
             icon = options.recipe_icon or options.icon,
             icon_size = options.icon_size or 64,
             energy_required = options.energy_required or 10,

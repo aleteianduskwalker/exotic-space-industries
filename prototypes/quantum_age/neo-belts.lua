@@ -35,7 +35,7 @@ data:extend({
     {
         name = "ei-neo-belt",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-liquid-nitrogen", amount = 20},
@@ -53,7 +53,7 @@ data:extend({
     {
         name = "ei-neo-splitter",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-liquid-nitrogen", amount = 20},
@@ -71,7 +71,7 @@ data:extend({
     {
         name = "ei-neo-underground-belt",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 6,
         ingredients = {
             {type = "fluid", name = "ei-liquid-nitrogen", amount = 100},

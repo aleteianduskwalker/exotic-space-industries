@@ -1628,7 +1628,7 @@ data:extend({
     {
         name = "ei-advanced-electric-mining-drill",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {

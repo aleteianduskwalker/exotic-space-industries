@@ -65,6 +65,7 @@ function ei_global.check_init()
     ei.tech_scaling.techCount = ei.tech_scaling.techCount or 0
 
     ei.overload_icons = ei.overload_icons or {}
+    ei.overload_disabled_states = ei.overload_disabled_states or {}
     ei.neutron_collector_animation = ei.neutron_collector_animation or {}
     ei.neutron_sources = ei.neutron_sources or {}
     ei.spawner_queue = ei.spawner_queue or {}

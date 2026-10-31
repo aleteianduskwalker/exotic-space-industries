@@ -30,8 +30,8 @@ require("scripts/data-final-updates/data_center_recipes")
 --====================================================================================================
 
 data.raw.reactor["ei-burner-heater"].energy_source.fuel_categories = {"chemical"}
-data.raw.item.wood.fuel_category = "chemical"
-data.raw.item.coal.fuel_category = "chemical"
+data.raw.item.wood.fuel_categories = {"chemical"}
+data.raw.item.coal.fuel_categories = {"chemical"}
 
 --====================================================================================================
 --SPACE PLATFORMS
@@ -71,7 +71,7 @@ data.raw["assembling-machine"]["foundry"].fluid_boxes[4].volume = 5000
 -- the steam assembler can craft everything the assembling machine 1 can
 local steam_assembler = data.raw["assembling-machine"]["ei-steam-assembler"]
 steam_assembler.crafting_categories = table.deepcopy(data.raw["assembling-machine"]["assembling-machine-1"].crafting_categories)
-for _, crafting_category in pairs({"ei-steam-assembler", "crafting", "crafting-with-fluid", "electronics"}) do
+for _, crafting_category in pairs({"ei-steam-assembler", "crafting", "crafting-with-fluid"}) do
     if not ei_lib.table_contains_value(steam_assembler.crafting_categories, crafting_category) then
         table.insert(steam_assembler.crafting_categories, crafting_category)
     end
@@ -209,6 +209,7 @@ end
 
 for _, lightning in pairs(data.raw["lightning"]) do
     lightning.strike_effect = add_storm_emp(lightning.strike_effect)
+    lightning.sound.volume = 0.5
 end
 
 --====================================================================================================
@@ -285,7 +286,7 @@ for _, result in ipairs(SCRAP_RESULTS) do
             type = "item",
             name = result[1],
             amount = 1,
-            probability = result[2],
+            independent_probability = result[2],
             show_details_in_recipe_tooltip = false,
         })
     end

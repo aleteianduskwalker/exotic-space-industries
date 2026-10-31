@@ -61,7 +61,7 @@ for index, family in ipairs(FAMILIES) do
         local name, min, max, probability = result[1], result[2], result[3], result[4]
         if data.raw.item[name] then
             table.insert(boulder.minable.results, {
-                type = "item", name = name, amount_min = min, amount_max = max, probability = probability,
+                type = "item", name = name, amount_min = min, amount_max = max, independent_probability = probability,
             })
         end
     end

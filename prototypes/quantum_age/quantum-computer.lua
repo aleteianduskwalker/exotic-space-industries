@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-quantum-computer",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients =
         {
@@ -170,7 +170,7 @@ data:extend({
     {
         name = "ei-superior-data",
         type = "recipe",
-        category = "ei-quantum-computer",
+        categories = {"ei-quantum-computer"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-computing-power", amount = 100},

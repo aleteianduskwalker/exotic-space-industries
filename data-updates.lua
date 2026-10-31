@@ -59,13 +59,27 @@ if settings.startup["ei-rocket-lift-capacity-buff"].value == 0 then
   return
 end
 
--- Применяем множитель грузоподъемности ракет и стартовых пакетов космических платформ
+-- Применяем множитель к грузоподъемности ракет и вместимости посадочной площадки.
 local size_multiplier = settings.startup["ei-rocket-lift-capacity-buff"].value
-data.raw["utility-constants"]["default"].rocket_lift_weight = data.raw["utility-constants"]["default"].rocket_lift_weight * size_multiplier
-data.raw["space-platform-starter-pack"]["space-platform-starter-pack"].weight = data.raw["utility-constants"]["default"].rocket_lift_weight
-data.raw["rocket-silo"]["rocket-silo"].weight = data.raw["utility-constants"]["default"].rocket_lift_weight * size_multiplier * 10
-data.raw["cargo-landing-pad"]["cargo-landing-pad"].weight = data.raw["utility-constants"]["default"].rocket_lift_weight * size_multiplier * 10
+local utility_constants = data.raw["utility-constants"]["default"]
+local default_rocket_lift_weight = utility_constants.default_rocket_lift_weight
+local increased_rocket_lift_weight = default_rocket_lift_weight * size_multiplier
 
-data.raw["rocket-silo"]["rocket-silo"].cargo_station_parameters.prefer_packed_cargo_units = false
+-- Обновляем общее значение, используемое подсказками и интерфейсом игры.
+utility_constants.default_rocket_lift_weight = increased_rocket_lift_weight
 
-data.raw["rocket-silo"]["rocket-silo"].to_be_inserted_to_rocket_inventory_size = 90
+-- Вес стартового пакета должен соответствовать увеличенной грузоподъемности ракеты.
+local space_platform_starter_pack = data.raw["space-platform-starter-pack"]["space-platform-starter-pack"]
+space_platform_starter_pack.weight = increased_rocket_lift_weight
+
+-- В Factorio 2.1 грузоподъемность задается через lift_weight, а не через weight.
+local rocket_silo = data.raw["rocket-silo"]["rocket-silo"]
+rocket_silo.lift_weight = increased_rocket_lift_weight
+rocket_silo.cargo_station_parameters.prefer_packed_cargo_units = false
+
+-- Вместимость посадочной площадки определяется размером ее инвентаря.
+local cargo_landing_pad = data.raw["cargo-landing-pad"]["cargo-landing-pad"]
+cargo_landing_pad.inventory_size = cargo_landing_pad.inventory_size * size_multiplier
+
+-- В режиме запуска на космические платформы это поле игнорируется игрой.
+rocket_silo.to_be_inserted_to_rocket_inventory_size = 90

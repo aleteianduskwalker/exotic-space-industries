@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-fusion-reactor",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 40,
         ingredients =
         {
@@ -188,7 +188,7 @@ data:extend({
     {
         name = "ei-cold-coolant",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-nitric-acid", amount = 5},
@@ -210,7 +210,7 @@ data:extend({
 local base_recipe = {
     name = "ei-dt-fusion",
     type = "recipe",
-    category = "ei-fusion-reactor",
+    categories = {"ei-fusion-reactor"},
     energy_required = 1,
     ingredients = {
         {type = "fluid", name = "ei-heated-deuterium", amount = 15}, -- fuel 1

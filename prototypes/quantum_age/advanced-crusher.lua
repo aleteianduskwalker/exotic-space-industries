@@ -18,7 +18,7 @@ data:extend({
     {
         name = "ei-advanced-crusher",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {

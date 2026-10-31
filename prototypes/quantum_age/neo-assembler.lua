@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-neo-assembler",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 4,
         ingredients =
         {
@@ -111,7 +111,8 @@ table.insert(neo_assembler.graphics_set.animation.layers,
     width = 214,
     height = 218,
     frame_count = 1,
-    repeat_count = 32,
+    -- Repeat the static overlay for the full 64-frame base animation cycle.
+    repeat_count = 64,
     shift = util.by_pixel(0, 4),
     animation_speed = 1,
     scale = 0.5
@@ -124,6 +125,8 @@ table.insert(neo_assembler.graphics_set.animation.layers,
     width = 156,
     height = 192,
     frame_count = 32,
+    -- Repeat the 32-frame mask twice to match the 64-frame base animation cycle.
+    repeat_count = 2,
     line_length = 8,
     shift = util.by_pixel(-0.5, -11),
     tint = ei_data.colors.neo,

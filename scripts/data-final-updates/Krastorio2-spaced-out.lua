@@ -193,7 +193,7 @@ if data.raw.item["kr-sand"] and data.raw.item["ei-sand"] then
         {
             type = "recipe",
             name = "ei-sand-from-kr-sand",
-            category = "crafting",
+            categories = {"crafting"},
             energy_required = 0.5,
             ingredients = {{type = "item", name = "kr-sand", amount = 1}},
             results = {{type = "item", name = "ei-sand", amount = 1}},
@@ -259,11 +259,10 @@ ei_lib.add_item_level("kr-atmospheric-condenser", "2")
 data:extend({
     {
         name = "ei-matter-quantum-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."matter-quantum-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "ei-science-science",
         order = "a5-4",
         pictures = {
@@ -286,11 +285,10 @@ data:extend({
     },
     {
         name = "ei-imersite-quantum-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."imersite-quantum-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "ei-science-science",
         order = "a5-3",
         pictures = {
@@ -332,7 +330,7 @@ data:extend({
     {
         name = "ei-enriched-iron",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-pure-iron", amount = 9},
@@ -351,7 +349,7 @@ data:extend({
     {
         name = "ei-enriched-copper",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-pure-copper", amount = 9},
@@ -370,7 +368,7 @@ data:extend({
     {
         name = "ei-enriched-rare-metals",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "kr-rare-metal-ore", amount = 9},
@@ -389,7 +387,7 @@ data:extend({
     {
         name = "ei-enriched-iron-plate",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 16,
         ingredients = {
             {type = "item", name = "kr-enriched-iron", amount = 10},
@@ -404,7 +402,7 @@ data:extend({
     {
         name = "ei-enriched-copper-plate",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 16,
         ingredients = {
             {type = "item", name = "kr-enriched-copper", amount = 10},
@@ -419,7 +417,7 @@ data:extend({
     {
         name = "ei-quartz",
         type = "recipe",
-        category = "ei-purifier",
+        categories = {"ei-purifier"},
         energy_required = 3,
         ingredients = {
             {type = "item", name = "ei-sand", amount = 10},
@@ -437,7 +435,7 @@ data:extend({
     {
         name = "ei-bio-matter-biomass",
         type = "recipe",
-        category = "kr-bioprocessing",
+        categories = {"kr-bioprocessing"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-bio-matter", amount = 1},
@@ -448,7 +446,7 @@ data:extend({
         },
         results = {
             {type = "item", name = "ei-bio-matter", amount = 2},
-            {type = "item", name = "ei-cryodust", amount = 1, probability = 0.5},
+            {type = "item", name = "ei-cryodust", amount = 1, independent_probability = 0.5},
         },
         main_product = "ei-bio-matter",
         enabled = false,
@@ -457,7 +455,7 @@ data:extend({
     {
         name = "ei-imersium-beam-metalworks",
         type = "recipe",
-        category = "ei-metalworks",
+        categories = {"ei-metalworks"},
         energy_required = 3,
         ingredients = {
             {type = "item", name = "kr-imersium-plate", amount = 2},
@@ -474,7 +472,7 @@ data:extend({
     {
         name = "ei-imersium-gear-wheel-metalworks",
         type = "recipe",
-        category = "ei-metalworks",
+        categories = {"ei-metalworks"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "kr-imersium-plate", amount = 4},
@@ -491,7 +489,7 @@ data:extend({
     {
         name = "ei-water-from-atmosphere",
         type = "recipe",
-        category = "ei-atmosphere-condensation",
+        categories = {"ei-atmosphere-condensation"},
         energy_required = 120,
         ingredients = {},
         results = {
@@ -515,7 +513,7 @@ data:extend({
     {
         name = "ei-antimatter-cube",
         type = "recipe",
-        category = "ei-accelerator",
+        categories = {"ei-accelerator"},
         energy_required = 100, -- 100s at 100MW = 10GJ
         ingredients = {
             {type = "item", name = "kr-matter-cube", amount = 1},
@@ -524,10 +522,10 @@ data:extend({
             {type = "item", name = "ei-eu-magnet", amount = 1},
         },
         results = {
-            {type = "item", name = "ei-antimatter-cube", amount = 1, probability = 0.5},
-            {type = "item", name = "kr-matter-cube", amount = 1, probability = 0.5},
-            {type = "item", name = "kr-ai-core", amount = 1, probability = 0.5},
-            {type = "item", name = "ei-eu-magnet", amount = 1, probability = 0.5},
+            {type = "item", name = "ei-antimatter-cube", amount = 1, independent_probability = 0.5},
+            {type = "item", name = "kr-matter-cube", amount = 1, independent_probability = 0.5},
+            {type = "item", name = "kr-ai-core", amount = 1, independent_probability = 0.5},
+            {type = "item", name = "ei-eu-magnet", amount = 1, independent_probability = 0.5},
         },
         main_product = "ei-antimatter-cube",
         enabled = false,
@@ -575,7 +573,7 @@ data:extend({
     {
         name = "ei-blank-tech-card",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
           {type = "item", name = "ei-ceramic", amount = 3},
@@ -589,7 +587,7 @@ data:extend({
     {
         name = "ei-blank-tech-card-electronic-parts",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 8,
         ingredients = {
             {type = "item", name = "ei-ceramic", amount = 6},
@@ -603,7 +601,7 @@ data:extend({
     {
         name = "ei-matter-quantum-age-tech",
         type = "recipe",
-        category = "ei-nano-factory",
+        categories = {"ei-nano-factory"},
         energy_required = 60,
         ingredients = {
             {type = "item", name = "ei-clean-plating", amount = 2},
@@ -617,7 +615,7 @@ data:extend({
     {
         name = "ei-imersite-quantum-age-tech",
         type = "recipe",
-        category = "ei-nano-factory",
+        categories = {"ei-nano-factory"},
         energy_required = 60,
         ingredients = {
             {type = "item", name = "kr-imersium-plate", amount = 10},
@@ -631,7 +629,7 @@ data:extend({
     {
         type = "recipe",
         name = "kr-wind-turbine",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "electric-engine-unit", amount = 1},
@@ -644,7 +642,7 @@ data:extend({
     {
         type = "recipe",
         name = "ei-imersite-powder",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "kr-imersite", amount = 6},

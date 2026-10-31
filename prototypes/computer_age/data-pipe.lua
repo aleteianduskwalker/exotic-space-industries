@@ -19,7 +19,7 @@ data:extend({
     {
         name = "ei-data-pipe",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -106,7 +106,7 @@ data:extend({
     {
         name = "ei-data-pipe-to-ground",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-data-pipe", amount = 10},

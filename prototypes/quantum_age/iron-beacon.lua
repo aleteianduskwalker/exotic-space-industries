@@ -26,7 +26,7 @@ data:extend({
     {
         name = "ei-iron-beacon",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 6,
         ingredients =
         {
@@ -44,7 +44,7 @@ data:extend({
     {
         name = "ei-iron-beacon_slave",
         type = "recipe",
-        category = "ei-iron-beacon_slave",
+        categories = {"ei-iron-beacon_slave"},
         energy_required = 1,
         ingredients = {},
         results = {},

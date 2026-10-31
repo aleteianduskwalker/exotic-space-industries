@@ -372,13 +372,40 @@ end
 
 -- MINE ---------------------------------------------------------------------------------------------
 
----Mines one unit of a resource into the cargo (like a player: products of the resource).
+---Mines one unit of a resource and adds its item products to the drone cargo.
+---Uses Factorio 2.1 shared and independent probability rules for resource products.
+---@param task table Drone task whose cargo and target progress are updated.
+---@param resource LuaEntity Valid resource entity with mineable properties.
+---@return nil No return value; mutates the task cargo and resource amount, and may deplete the resource.
 local function mine_unit(task, resource)
     local properties = resource.prototype.mineable_properties
+    local shared_probability_roll = math.random()
+
     for _, product in pairs(properties.products or {}) do
-        if product.type == "item" and (not product.probability or math.random() < product.probability) then
-            local count = product.amount or math.random(product.amount_min or 1, product.amount_max or 1)
-            add_cargo(task, product.name, "normal", count)
+        if product.type == "item" then
+            local has_product = true
+
+            -- Shared probability ranges use one roll across products; independent probability adds a separate test.
+            if product.shared_probability then
+                has_product = shared_probability_roll >= product.shared_probability.min
+                    and shared_probability_roll < product.shared_probability.max
+            end
+
+            if has_product and product.independent_probability then
+                has_product = math.random() < product.independent_probability
+            end
+
+            if has_product then
+                local count = product.amount
+                    or math.random(product.amount_min or 1, product.amount_max or 1)
+
+                -- Resource products can grant one extra item with the configured fractional chance.
+                if product.extra_count_fraction and math.random() < product.extra_count_fraction then
+                    count = count + 1
+                end
+
+                add_cargo(task, product.name, "normal", count)
+            end
         end
     end
 

@@ -26,7 +26,7 @@ data:extend({
     {
         name = "ei-copper-beacon",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -43,7 +43,7 @@ data:extend({
     {
         name = "ei-copper-beacon_slave",
         type = "recipe",
-        category = "ei-copper-beacon_slave",
+        categories = {"ei-copper-beacon_slave"},
         energy_required = 1,
         ingredients = {},
         results = {},

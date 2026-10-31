@@ -40,7 +40,7 @@ data:extend({
     {
         name = "ei-waver-factory",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -175,7 +175,7 @@ data:extend({
     {
         name = "ei-semiconductor",
         type = "recipe",
-        category = "ei-waver-factory",
+        categories = {"ei-waver-factory"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-hydrofluoric-acid", amount = 10},
@@ -183,8 +183,8 @@ data:extend({
             {type = "item", name = modprefix.."sand", amount = 6},
         },
         results = {
-            {type = "item", name = "ei-semiconductor", amount = 1, probability = 0.95},
-            {type = "item", name = "ei-faulty-semiconductor", amount = 1, probability = 0.05},
+            {type = "item", name = "ei-semiconductor", amount = 1, independent_probability = 0.95},
+            {type = "item", name = "ei-faulty-semiconductor", amount = 1, independent_probability = 0.05},
         },
         always_show_made_in = true,
         enabled = false,
@@ -193,7 +193,7 @@ data:extend({
     {
         name = "ei-sand-faulty-semiconductor",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-faulty-semiconductor", amount = 1},
@@ -209,7 +209,7 @@ data:extend({
     {
         name = "ei-hydrofluoric-acid",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type="fluid", name="water", amount=100},

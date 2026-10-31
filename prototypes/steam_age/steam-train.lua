@@ -39,7 +39,7 @@ data:extend({
     {
         name = "ei-steam-basic-locomotive",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -57,7 +57,7 @@ data:extend({
     {
         name = "ei-steam-basic-wagon",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -73,7 +73,7 @@ data:extend({
     {
         name = "ei-iron-rail",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -425,7 +425,7 @@ data:extend({
     {
         name = "ei-steam-advanced-locomotive",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -441,7 +441,7 @@ data:extend({
     {
         name = "ei-steam-advanced-wagon",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -457,7 +457,7 @@ data:extend({
 	{
         name = "ei-steam-advanced-fluid-wagon",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {

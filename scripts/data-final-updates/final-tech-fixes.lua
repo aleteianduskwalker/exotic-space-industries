@@ -521,7 +521,8 @@ for tech_id,_ in pairs(data.raw.technology) do
   
   for index = #tech.unit.ingredients, 1, -1 do
     local pack = tech.unit.ingredients[index][1]
-    if data.raw.tool[pack] and (data.raw.tool[pack].hidden or ei_data.science_dict[pack]) then
+    local pack_prototype = (data.raw.item and data.raw.item[pack]) or (data.raw.tool and data.raw.tool[pack])
+    if pack_prototype and (pack_prototype.hidden or ei_data.science_dict[pack]) then
       table.remove(tech.unit.ingredients, index)
     end
   end

@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-cooler",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -39,7 +39,7 @@ data:extend({
     {
         name = "ei-liquid-nitrogen",
         type = "recipe",
-        category = "ei-cooler",
+        categories = {"ei-cooler"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-nitrogen-gas", amount = 50},
@@ -55,7 +55,7 @@ data:extend({
     {
         name = "ei-liquid-oxygen",
         type = "recipe",
-        category = "ei-cooler",
+        categories = {"ei-cooler"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-oxygen-gas", amount = 50},
@@ -71,7 +71,7 @@ data:extend({
     {
         name = "ei-liquid-ammonia",
         type = "recipe",
-        category = "ei-cooler",
+        categories = {"ei-cooler"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-ammonia-gas", amount = 100},

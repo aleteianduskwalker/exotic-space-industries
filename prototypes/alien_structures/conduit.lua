@@ -64,7 +64,7 @@ data:extend({
     {
         name = "ei-conduit",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "steel-plate", amount = 20},

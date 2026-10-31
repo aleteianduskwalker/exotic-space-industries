@@ -20,7 +20,7 @@ data:extend({
     {
         name = "ei-metalworks-1",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients =
         {
@@ -46,7 +46,7 @@ data:extend({
     {
         name = "ei-metalworks-2",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients =
         {
@@ -72,7 +72,7 @@ data:extend({
     {
         name = "ei-metalworks-3",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients =
         {
@@ -98,7 +98,7 @@ data:extend({
     {
         name = "ei-metalworks-4",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients =
         {
@@ -139,75 +139,84 @@ local entity_base = {
     crafting_categories = {"ei-metalworks"},
     crafting_speed = 1,
     energy_source = {
-        type = 'electric',
-        usage_priority = 'secondary-input',
+        type = "electric",
+        usage_priority = "secondary-input",
     },
     energy_usage = "150kW",
-    graphics_set = {
-        animation = {
-            layers = {
-                {
-                    filename = "__base__/graphics/entity/assembling-machine-1/assembling-machine-1.png",
-                    priority = "high",
-                    width = 214,
-                    height = 226,
-                    frame_count = 32,
-                    line_length = 8,
-                    shift = util.by_pixel(0, 2 * 2 / 3),
-                    scale = 1/3,
-                },
-                {
-                    filename = "__base__/graphics/entity/assembling-machine-1/assembling-machine-1-shadow.png",
-                    priority = "high",
-                    width = 190,
-                    height = 165,
-                    frame_count = 1,
-                    line_length = 1,
-                    repeat_count = 32,
-                    draw_as_shadow = true,
-                    shift = util.by_pixel(8.5 * 2 / 3, 5 * 2 / 3),
-                    scale = 1/3
-                }
-            }
-        },
-    },
     fast_replaceable_group = "ei-metalworks",
     next_upgrade = "ei-metalworks-2",
-    working_sound =
-    {
+    working_sound = {
         sound = {filename = "__base__/sound/electric-mining-drill.ogg", volume = 0.8},
         apparent_volume = 0.3,
     },
 }
 
-local function make_metalworks(base, foo, level, max_level, animation, result)
 
-    local entity = util.table.deepcopy(base)
+--- Scales sprite sizes and offsets in a copied graphics tree.
+--- This keeps the metalworks compact while using the split animation layers introduced in Factorio 2.1.
+---@param graphics_node table Sprite, animation, visualisation, or nested graphics table to scale.
+---@param scale_factor number Multiplier applied to numeric sprite scales and position offsets.
+---@return nil Nothing. The supplied graphics table is modified in place.
+local function scale_graphics_tree(graphics_node, scale_factor)
+    -- Ignore non-table values so nested animation metadata can be traversed safely.
+    if type(graphics_node) ~= "table" then
+        return
+    end
+
+    -- Apply the same scale multiplier to each sprite, including high-resolution variants.
+    if type(graphics_node.scale) == "number" then
+        graphics_node.scale = graphics_node.scale * scale_factor
+    end
+
+    -- Scale sprite offsets along with the art to keep the shadow and status lights aligned.
+    local sprite_shift = graphics_node.shift
+    if type(sprite_shift) == "table" then
+        if type(sprite_shift[1]) == "number" and type(sprite_shift[2]) == "number" then
+            sprite_shift[1] = sprite_shift[1] * scale_factor
+            sprite_shift[2] = sprite_shift[2] * scale_factor
+        elseif type(sprite_shift.x) == "number" and type(sprite_shift.y) == "number" then
+            sprite_shift.x = sprite_shift.x * scale_factor
+            sprite_shift.y = sprite_shift.y * scale_factor
+        end
+    end
+
+    -- Traverse all nested graphics tables, including HR sprite variants and working visualisations.
+    for _, nested_value in pairs(graphics_node) do
+        if type(nested_value) == "table" then
+            scale_graphics_tree(nested_value, scale_factor)
+        end
+    end
+end
+
+
+--- Creates a compact metalworks entity using a current vanilla or ESI graphics set.
+--- The graphics set is copied before scaling so the source prototype remains unchanged.
+---@param level number Metalworks tier, from 1 to 4.
+---@param max_level number Highest tier in the upgrade chain.
+---@param source_graphics_set table Graphics set copied from an existing assembling machine.
+---@param mining_result string|nil Item returned when the entity is mined; defaults to the matching metalworks item.
+---@return nil Registers the generated assembling-machine prototype in data.raw.
+local function make_metalworks(level, max_level, source_graphics_set, mining_result)
+    local entity = util.table.deepcopy(entity_base)
     entity.name = "ei-metalworks-"..level
     entity.icon = ei_graphics_item_path.."metalworks_"..level..".png"
-    if result then
-        entity.minable.result = result
+
+    -- Keep the tier-specific look and animation composition from the matching modern prototype.
+    entity.graphics_set = util.table.deepcopy(source_graphics_set)
+    scale_graphics_tree(entity.graphics_set, 2 / 3)
+
+    if mining_result then
+        entity.minable.result = mining_result
     else
         entity.minable.result = "ei-metalworks-"..level
     end
-    entity.crafting_speed = 0.75 + (level-1)*0.5
-    entity.energy_usage = tostring(150*level).."kW"
-    if animation then
-        entity.graphics_set = { animation = animation }
-    else
-        entity.graphics_set.animation.layers[1].filename = "__base__/graphics/entity/assembling-machine-"..level.."/assembling-machine-"..level..".png"
-        entity.graphics_set.animation.layers[1].width = foo[1].width
-        entity.graphics_set.animation.layers[1].height = foo[1].height
-        entity.graphics_set.animation.layers[1].shift = foo[1].shift
 
-        entity.graphics_set.animation.layers[2].filename = "__base__/graphics/entity/assembling-machine-"..level.."/assembling-machine-"..level.."-shadow.png"
-        entity.graphics_set.animation.layers[2].width = foo[2].width
-        entity.graphics_set.animation.layers[2].height = foo[2].height
-        entity.graphics_set.animation.layers[2].shift = foo[2].shift
-    end
+    entity.crafting_speed = 0.75 + (level - 1) * 0.5
+    entity.energy_usage = tostring(150 * level).."kW"
 
+    -- Link each tier to the next one, leaving the highest tier without an upgrade.
     if level < max_level then
-        entity.next_upgrade = "ei-metalworks-"..(level+1)
+        entity.next_upgrade = "ei-metalworks-"..(level + 1)
     else
         entity.next_upgrade = nil
     end
@@ -215,56 +224,11 @@ local function make_metalworks(base, foo, level, max_level, animation, result)
     data:extend({entity})
 end
 
-local metalworks_4_animation = util.table.deepcopy(data.raw["assembling-machine"]["ei-neo-assembler"])
--- has 4 entries in layer, and also hr versions, mutiply their scale with 2/3 and 1/3 respectively
-for _, layer in ipairs(metalworks_4_animation.graphics_set.animation.layers) do
-    if not layer.scale then
-        layer.scale = 1
-    end
-    layer.scale = layer.scale * 2/3
-end
 
-local foo_1 = {
-    {
-        width = 214,
-        height = 226,
-        shift = util.by_pixel(0, 2 * 2 / 3),
-    },
-    {
-        width = 190,
-        height = 165,
-        shift = util.by_pixel(8.5 * 2 / 3, 5 * 2 / 3),
-    }
-}
-local foo_2 = {
-    {
-        width = 214,
-        height = 218,
-        shift = util.by_pixel(0, 4 * 2 / 3),
-    },
-    {
-        width = 196,
-        height = 163,
-        shift = util.by_pixel(12 * 2 / 3, 4.75 * 2 / 3),
-    }
-}
-local foo_3 = {
-    {
-        width = 214,
-        height = 237,
-        shift = util.by_pixel(0 * 2 / 3, -0.75 * 2 / 3),
-    },
-    {
-        width = 260,
-        height = 162,
-        shift = util.by_pixel(28 * 2 / 3, 4 * 2 / 3),
-    }
-}
-
-make_metalworks(entity_base, foo_1, 1, 4)
-make_metalworks(entity_base, foo_2, 2, 4)
-make_metalworks(entity_base, foo_3, 3, 4)
-make_metalworks(entity_base, foo_1, 4, 4, metalworks_4_animation.graphics_set.animation, "ei-metalworks-4")
+make_metalworks(1, 4, data.raw["assembling-machine"]["assembling-machine-1"].graphics_set)
+make_metalworks(2, 4, data.raw["assembling-machine"]["assembling-machine-2"].graphics_set)
+make_metalworks(3, 4, data.raw["assembling-machine"]["assembling-machine-3"].graphics_set)
+make_metalworks(4, 4, data.raw["assembling-machine"]["ei-neo-assembler"].graphics_set, "ei-metalworks-4")
 
 -- add the metalworks to their respective techs
 table.insert(
@@ -311,7 +275,7 @@ for recipe_name, tech in pairs(recipes_to_add) do
     end
 
     new_recipe.name = new_recipe.name.."-metalworks"
-    new_recipe.category = "ei-metalworks"
+    new_recipe.categories = {"ei-metalworks"}
     new_recipe.hide_from_player_crafting = true
 
     if tech ~= "none" then

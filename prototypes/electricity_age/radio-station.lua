@@ -160,7 +160,7 @@ data:extend({
         -- never finishes: keeps the station "working" (and consuming power) all the time
         name = "ei-radio-station-running",
         type = "recipe",
-        category = "ei-radio-station",
+        categories = {"ei-radio-station"},
         energy_required = 1000,
         ingredients = {},
         results = {},
@@ -192,7 +192,7 @@ data:extend({
     {
         name = "ei-radio-station",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 5,
         ingredients = {
             {type = "item", name = "steel-plate", amount = 10},
@@ -207,7 +207,7 @@ data:extend({
     {
         name = "ei-crystal-radio-station",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-radio-station", amount = 1},

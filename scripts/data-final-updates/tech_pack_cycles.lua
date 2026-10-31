@@ -11,12 +11,21 @@
 -- Runs at the very end of data-final-fixes.
 --====================================================================================================
 
----Returns the science packs (tools) produced by a recipe.
+local science_pack_prototypes = require("lib/science_packs").get_prototypes()
+
+
+---Returns the science packs produced by a recipe.
+---
+---Args:
+---  recipe (table): Recipe prototype whose products will be checked.
+---
+---Returns:
+---  table: Names of products that are registered as science packs.
 local function produced_packs(recipe)
     local packs = {}
     for _, result in pairs(recipe.results or {}) do
         local name = result.name or result[1]
-        if name and data.raw.tool[name] then
+        if name and science_pack_prototypes[name] then
             table.insert(packs, name)
         end
     end

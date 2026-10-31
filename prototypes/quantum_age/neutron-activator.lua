@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-neutron-activator",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -134,14 +134,14 @@ data:extend({
     {
         name = "ei-deuterium-activator",
         type = "recipe",
-        category = "ei-neutron-activator",
+        categories = {"ei-neutron-activator"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-protium", amount = 10},
             {type = "item", name = "ei-charged-neutron-container", amount = 1},
         },
         results = {
-            {type = "item", name = "ei-neutron-container", amount = 1, probability = 0.97},
+            {type = "item", name = "ei-neutron-container", amount = 1, independent_probability = 0.97},
             {type = "fluid", name = "ei-protium", amount = 8},
             {type = "fluid", name = "ei-deuterium", amount = 2},
         },
@@ -152,14 +152,14 @@ data:extend({
     {
         name = "ei-tritium-activator",
         type = "recipe",
-        category = "ei-neutron-activator",
+        categories = {"ei-neutron-activator"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-deuterium", amount = 10},
             {type = "item", name = "ei-charged-neutron-container", amount = 1},
         },
         results = {
-            {type = "item", name = "ei-neutron-container", amount = 1, probability = 0.97},
+            {type = "item", name = "ei-neutron-container", amount = 1, independent_probability = 0.97},
             {type = "fluid", name = "ei-deuterium", amount = 8},
             {type = "fluid", name = "ei-tritium", amount = 2},
         },
@@ -170,14 +170,14 @@ data:extend({
     {
         name = "ei-lithium-6-activator",
         type = "recipe",
-        category = "ei-neutron-activator",
+        categories = {"ei-neutron-activator"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-lithium-7", amount = 10},
             {type = "item", name = "ei-charged-neutron-container", amount = 1},
         },
         results = {
-            {type = "item", name = "ei-neutron-container", amount = 1, probability = 0.97},
+            {type = "item", name = "ei-neutron-container", amount = 1, independent_probability = 0.97},
             {type = "fluid", name = "ei-lithium-7", amount = 8},
             {type = "fluid", name = "ei-lithium-6", amount = 2},
         },

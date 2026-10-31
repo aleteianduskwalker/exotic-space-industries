@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-high-temperature-reactor",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -202,7 +202,7 @@ data:extend({
     {
         name = "ei-htr-uranium-235",
         type = "recipe",
-        category = "ei-high-temperature-reactor",
+        categories = {"ei-high-temperature-reactor"},
         energy_required = 120,
         ingredients = {
             {type = "item", name = "ei-uranium-235-fuel", amount = 1},
@@ -222,7 +222,7 @@ data:extend({
     {
         name = "ei-htr-uranium-233",
         type = "recipe",
-        category = "ei-high-temperature-reactor",
+        categories = {"ei-high-temperature-reactor"},
         energy_required = 120,
         ingredients = {
             {type = "item", name = "ei-uranium-233-fuel", amount = 1},
@@ -242,7 +242,7 @@ data:extend({
     {
         name = "ei-htr-plutonium-239",
         type = "recipe",
-        category = "ei-high-temperature-reactor",
+        categories = {"ei-high-temperature-reactor"},
         energy_required = 120,
         ingredients = {
             {type = "item", name = "ei-plutonium-239-fuel", amount = 1},
@@ -262,7 +262,7 @@ data:extend({
     {
         name = "ei-htr-thorium-232",
         type = "recipe",
-        category = "ei-high-temperature-reactor",
+        categories = {"ei-high-temperature-reactor"},
         energy_required = 120,
         ingredients = {
             {type = "item", name = "ei-thorium-232-fuel", amount = 1},
@@ -289,7 +289,7 @@ data:extend({
         icon_size = 64,
         subgroup = "ei-nuclear-fission-fuel",
         order = "a-b-1",
-        fuel_category = "ei-nuclear-fuel",
+        fuel_categories = {"ei-nuclear-fuel"},
         fuel_value = "15GJ",
         burnt_result = "ei-used-uranium-233-fuel",
         stack_size = 10,
@@ -327,7 +327,7 @@ data:extend({
         icon_size = 64,
         subgroup = "ei-nuclear-fission-fuel",
         order = "a-c-1",
-        fuel_category = "ei-nuclear-fuel",
+        fuel_categories = {"ei-nuclear-fuel"},
         fuel_value = "30GJ",
         burnt_result = "ei-used-plutonium-239-fuel",
         stack_size = 10,
@@ -455,7 +455,7 @@ data:extend({
     {
         name = "ei-nitric-acid-uranium-235",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-used-uranium-235-fuel", amount = 1},
@@ -463,7 +463,7 @@ data:extend({
         },
         results = {
             {type = "fluid", name = "ei-nitric-acid-uranium-235", amount = 100},
-            {type = "item", name = "ei-nuclear-waste", amount = 1, probability = 0.25}
+            {type = "item", name = "ei-nuclear-waste", amount = 1, independent_probability = 0.25}
         },
         always_show_made_in = true,
         enabled = false,
@@ -472,15 +472,15 @@ data:extend({
     {
         name = "ei-nitric-acid-uranium-235-centrifuging",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "ei-nitric-acid-uranium-235", amount = 100}
         },
         results = {
             {type = "item", name = "uranium-238", amount = 3},
-            {type = "item", name = "uranium-235", amount = 1, probability = 0.65},
-            {type = "item", name = "ei-plutonium-239", amount = 1, probability = 0.45},
+            {type = "item", name = "uranium-235", amount = 1, independent_probability = 0.65},
+            {type = "item", name = "ei-plutonium-239", amount = 1, independent_probability = 0.45},
         },
         always_show_made_in = true,
         enabled = false,
@@ -491,7 +491,7 @@ data:extend({
     {
         name = "ei-plutonium-239-fuel",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-lead-ingot", amount = 2},
@@ -532,7 +532,7 @@ data:extend({
     {
         name = "ei-nitric-acid-plutonium-239",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-used-plutonium-239-fuel", amount = 1},
@@ -540,7 +540,7 @@ data:extend({
         },
         results = {
             {type = "fluid", name = "ei-nitric-acid-plutonium-239", amount = 100},
-            {type = "item", name = "ei-nuclear-waste", amount = 1, probability = 0.75}
+            {type = "item", name = "ei-nuclear-waste", amount = 1, independent_probability = 0.75}
         },
         always_show_made_in = true,
         enabled = false,
@@ -549,14 +549,14 @@ data:extend({
     {
         name = "ei-nitric-acid-plutonium-239-centrifuging",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "ei-nitric-acid-plutonium-239", amount = 100}
         },
         results = {
             {type = "item", name = "uranium-238", amount = 3},
-            {type = "item", name = "ei-plutonium-239", amount = 1, probability = 0.35},
+            {type = "item", name = "ei-plutonium-239", amount = 1, independent_probability = 0.35},
         },
         always_show_made_in = true,
         enabled = false,
@@ -567,7 +567,7 @@ data:extend({
     {
         name = "ei-thorium-232-washing",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "ei-hydrofluoric-acid", amount = 100},
@@ -575,7 +575,7 @@ data:extend({
         },
         results = {
             {type = "item", name = "stone", amount = 16},
-            {type = "item", name = "ei-thorium-232", amount = 1, probability = 0.0216},
+            {type = "item", name = "ei-thorium-232", amount = 1, independent_probability = 0.0216},
             {type = "fluid", name = "ei-hydrofluoric-acid", amount = 99},
         },
         always_show_made_in = true,
@@ -585,7 +585,7 @@ data:extend({
     {
         name = "ei-thorium-232-fuel",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-lead-ingot", amount = 2},
@@ -630,7 +630,7 @@ data:extend({
     {
         name = "ei-nitric-acid-thorium-232",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-used-thorium-232-fuel", amount = 1},
@@ -638,7 +638,7 @@ data:extend({
         },
         results = {
             {type = "fluid", name = "ei-nitric-acid-thorium-232", amount = 100},
-            {type = "item", name = "ei-nuclear-waste", amount = 1, probability = 0.75}
+            {type = "item", name = "ei-nuclear-waste", amount = 1, independent_probability = 0.75}
         },
         always_show_made_in = true,
         enabled = false,
@@ -647,15 +647,15 @@ data:extend({
     {
         name = "ei-nitric-acid-thorium-232-centrifuging",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "ei-nitric-acid-thorium-232", amount = 100}
         },
         results = {
             {type = "item", name = "uranium-238", amount = 3},
-            {type = "item", name = "ei-uranium-233", amount = 1, probability = 0.85},
-            {type = "item", name = "ei-thorium-232", amount = 1, probability = 0.95},
+            {type = "item", name = "ei-uranium-233", amount = 1, independent_probability = 0.85},
+            {type = "item", name = "ei-thorium-232", amount = 1, independent_probability = 0.95},
         },
         always_show_made_in = true,
         enabled = false,
@@ -666,7 +666,7 @@ data:extend({
     {
         name = "ei-uranium-233-fuel",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-lead-ingot", amount = 2},
@@ -707,7 +707,7 @@ data:extend({
     {
         name = "ei-nitric-acid-uranium-233",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "ei-used-uranium-233-fuel", amount = 1},
@@ -715,7 +715,7 @@ data:extend({
         },
         results = {
             {type = "fluid", name = "ei-nitric-acid-uranium-233", amount = 100},
-            {type = "item", name = "ei-nuclear-waste", amount = 1, probability = 0.75}
+            {type = "item", name = "ei-nuclear-waste", amount = 1, independent_probability = 0.75}
         },
         always_show_made_in = true,
         enabled = false,
@@ -724,14 +724,14 @@ data:extend({
     {
         name = "ei-nitric-acid-uranium-233-centrifuging",
         type = "recipe",
-        category = "centrifuging",
+        categories = {"centrifuging"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "ei-nitric-acid-uranium-233", amount = 100}
         },
         results = {
             {type = "item", name = "uranium-238", amount = 3},
-            {type = "item", name = "ei-uranium-233", amount = 1, probability = 0.45},
+            {type = "item", name = "ei-uranium-233", amount = 1, independent_probability = 0.45},
         },
         always_show_made_in = true,
         enabled = false,

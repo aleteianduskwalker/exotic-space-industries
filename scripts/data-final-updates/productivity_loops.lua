@@ -18,13 +18,29 @@
 
 local MAX_PRODUCTIVITY_FACTOR = 4 -- 1 + default maximum productivity (300%)
 
----Average produced amount of a result entry (amount / amount_min..max, probability).
+---Calculates the expected amount of a recipe product, including Factorio 2.1 probability modifiers.
+---@param result table Recipe product in named or short form.
+---@return number expected_amount Average amount produced per recipe execution.
 local function result_amount(result)
     local amount = result.amount or result[2]
+
+    -- Randomized amount ranges contribute their midpoint to the expected yield.
     if not amount and result.amount_min and result.amount_max then
         amount = (result.amount_min + result.amount_max) / 2
     end
-    return (amount or 1) * (result.probability or 1)
+    amount = (amount or 1) + (result.extra_count_fraction or 0)
+
+    -- Independent probability is an additional roll for this product.
+    if result.independent_probability then
+        amount = amount * result.independent_probability
+    end
+
+    -- Shared probability reduces the expected yield by the configured interval width.
+    if result.shared_probability then
+        amount = amount * (result.shared_probability.max - result.shared_probability.min)
+    end
+
+    return amount
 end
 
 ---Name and type of a recipe entry (full or short format).
@@ -33,7 +49,10 @@ local function entry(entry_table)
 end
 
 local function is_candidate(recipe)
-    return recipe.category ~= "recycling" and recipe.results and recipe.ingredients
+    local categories = recipe.categories or {}
+    local is_recycling_recipe = ei_lib.table_contains_value(categories, "recycling")
+
+    return not is_recycling_recipe and recipe.results and recipe.ingredients
 end
 
 -- MELT: exactly one item ingredient (no fluid ingredients) -> fluid results

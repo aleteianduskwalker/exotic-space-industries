@@ -34,7 +34,7 @@ data:extend({
     {
         name = "ei-arc-furnace",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -304,7 +304,7 @@ data:extend({
     {
         name = "ei-molten-iron-pure-ore",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-pure-iron", amount = 1},
@@ -319,7 +319,7 @@ data:extend({
     {
         name = "ei-molten-iron-plate",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "iron-plate", amount = 1},
@@ -335,7 +335,7 @@ data:extend({
     {
         name = "ei-molten-iron-mechanical-parts",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-iron-mechanical-parts", amount = 1},
@@ -353,7 +353,7 @@ data:extend({
     {
         name = "ei-molten-copper-pure-ore",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-pure-copper", amount = 1},
@@ -368,7 +368,7 @@ data:extend({
     {
         name = "ei-molten-copper-plate",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "copper-plate", amount = 1},
@@ -384,7 +384,7 @@ data:extend({
     {
         name = "ei-molten-copper-mechanical-parts",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-copper-mechanical-parts", amount = 1},
@@ -402,7 +402,7 @@ data:extend({
     {
         name = "ei-molten-steel-ingot",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "steel-plate", amount = 1},
@@ -417,7 +417,7 @@ data:extend({
     {
         name = "ei-molten-steel-mechanical-parts",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-steel-mechanical-parts", amount = 1},
@@ -435,7 +435,7 @@ data:extend({
     {
         name = "ei-molten-gold-pure-ore",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-pure-gold", amount = 1},
@@ -450,7 +450,7 @@ data:extend({
     {
         name = "ei-molten-gold-ingot",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-gold-ingot", amount = 1},
@@ -465,7 +465,7 @@ data:extend({
     {
         name = "ei-molten-gold-plate",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-gold-ingot", amount = 1},
@@ -483,7 +483,7 @@ data:extend({
     {
         name = "ei-molten-lead-pure-ore",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-pure-lead", amount = 1},
@@ -498,7 +498,7 @@ data:extend({
     {
         name = "ei-molten-lead-ingot",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-lead-ingot", amount = 1},
@@ -513,7 +513,7 @@ data:extend({
     {
         name = "ei-molten-lead-plate",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.25,
         ingredients = {
             {type = "item", name = "ei-lead-ingot", amount = 1},

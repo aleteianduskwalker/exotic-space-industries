@@ -72,7 +72,7 @@ data:extend({
     {
         name = "ei-advanced-logistic-bot",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "logistic-robot", amount = 2},
@@ -92,7 +92,7 @@ data:extend({
     {
         name = "ei-advanced-construction-bot",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "construction-robot", amount = 2},
@@ -112,7 +112,7 @@ data:extend({
     {
         name = "ei-cargo-bot",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "logistic-robot", amount = 1},
@@ -132,7 +132,7 @@ data:extend({
     {
         name = "ei-construction-bot",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "construction-robot", amount = 1},
@@ -152,7 +152,7 @@ data:extend({
     {
         name = "ei-advanced-bot-engine",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 20,
         ingredients = {
             {type = "item", name = "flying-robot-frame", amount = 2},
@@ -173,7 +173,7 @@ data:extend({
     {
         name = "ei-advanced-port",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "roboport", amount = 4},

@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-destill-tower",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 2,
         ingredients =
         {
@@ -193,7 +193,7 @@ data:extend({
     {
         name = "ei-destill-light",
         type = "recipe",
-        category = "ei-destill-tower",
+        categories = {"ei-destill-tower"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-residual-oil", amount = 55},
@@ -211,7 +211,7 @@ data:extend({
     {
         name = "ei-destill-kerosene",
         type = "recipe",
-        category = "ei-destill-tower",
+        categories = {"ei-destill-tower"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-medium-destilate", amount = 45},
@@ -229,7 +229,7 @@ data:extend({
     {
         name = "ei-destill-heavy",
         type = "recipe",
-        category = "ei-destill-tower",
+        categories = {"ei-destill-tower"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-heavy-destilate", amount = 35},
@@ -247,7 +247,7 @@ data:extend({
     {
         name = "ei-destill-lube",
         type = "recipe",
-        category = "ei-destill-tower",
+        categories = {"ei-destill-tower"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-lube-destilate", amount = 25},

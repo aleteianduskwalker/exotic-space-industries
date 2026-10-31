@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-computer-core",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -39,7 +39,7 @@ data:extend({
     {
         name = "ei-computing-power",
         type = "recipe",
-        category = "ei-computer-core",
+        categories = {"ei-computer-core"},
         energy_required = 100,
         ingredients = {
             {type = "item", name = "ei-electronic-parts", amount = 5},

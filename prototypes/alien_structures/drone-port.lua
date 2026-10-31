@@ -135,7 +135,7 @@ data:extend({
     {
         name = "ei-drone-port",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 10,
         ingredients = {
             {type = "item", name = "steel-plate", amount = 20},
@@ -150,7 +150,7 @@ data:extend({
     {
         name = "ei-drone",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 5,
         ingredients = {
             {type = "item", name = "ei-electronic-parts", amount = 4},

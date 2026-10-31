@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-exchanger",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -178,7 +178,7 @@ data:extend({
     {
         name = "ei-coolant-exchange",
         type = "recipe",
-        category = "ei-exchanger",
+        categories = {"ei-exchanger"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-hot-coolant", amount = 25},

@@ -19,7 +19,7 @@ data:extend({
     {
         name = "ei-steam-oil-pumpjack",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 3,
         ingredients =
         {
@@ -103,6 +103,31 @@ pump.energy_source = {
     scale_fluid_usage = true,
 }
 
+--- Находит в базовом прототипе pumpjack слой с тенью и возвращает его копию.
+---
+--- Тень берётся из base, поэтому размеры кадра, shift и scale
+--- всегда соответствуют текущей версии игры.
+---
+--- @return table Копия слоя тени (можно свободно менять, base не затрагивается).
+--- @error Бросает ошибку, если в base pumpjack не найден слой с draw_as_shadow.
+local function copy_base_pumpjack_shadow_layer()
+    local base_pumpjack = data.raw["mining-drill"]["pumpjack"]
+    local base_layer_list = base_pumpjack.graphics_set.animation.north.layers
+
+    -- Ищем слой, помеченный как тень (в base он один на каждую сторону)
+    for _, layer in pairs(base_layer_list) do
+        if layer.draw_as_shadow then
+            return table.deepcopy(layer)
+        end
+    end
+
+    error("В базовом pumpjack не найден слой тени (draw_as_shadow)")
+end
+
+
+
+local pumpjack_shadow_layer = copy_base_pumpjack_shadow_layer()
+
 pump.graphics_set = {
     animation = {
         north = {
@@ -115,27 +140,10 @@ pump.graphics_set = {
                     line_length = 8,
                     priority = "high",
                     scale = 0.5,
-                    shift = {
-                    -0.125,
-                    -0.75
-                    },
+                    shift = {-0.125, -0.75},
                     width = 206
                 },
-                {
-                    animation_speed = 0.5,
-                    draw_as_shadow = true,
-                    filename = "__base__/graphics/entity/pumpjack/pumpjack-horsehead-shadow.png",
-                    frame_count = 40,
-                    height = 82,
-                    line_length = 8,
-                    priority = "high",
-                    scale = 0.5,
-                    shift = {
-                    0.5546875,
-                    0.453125
-                    },
-                    width = 309
-                }
+                pumpjack_shadow_layer
             }
         }
     }

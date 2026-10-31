@@ -22,7 +22,7 @@ data:extend({
     {
         name = "ei-big-turbine",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients =
         {

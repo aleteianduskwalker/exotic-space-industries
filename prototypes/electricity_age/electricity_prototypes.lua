@@ -277,18 +277,17 @@ data:extend({
         stack_size = 10,
         subgroup = "raw-material",
         order = "c[solid-fuel]-a[diesel-fuel-unit]",
-        fuel_category = "ei-diesel-fuel",
+        fuel_categories = {"ei-diesel-fuel"},
         fuel_value = "20MJ",
         fuel_acceleration_multiplier = 1.0,
         fuel_top_speed_multiplier = 1.0,
     },
     {
         name = "ei-computer-age-tech",
-        type = "tool",
+        type = "item",
         icon = ei_graphics_item_path.."computer-age-tech.png",
         icon_size = 64,
         stack_size = 200,
-        durability = 1,
         subgroup = "science-pack",
         order = "a4",
         pictures = {
@@ -350,7 +349,7 @@ data:extend({
     {
         name = "ei-minigun",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "submachine-gun", amount = 4},
@@ -367,7 +366,7 @@ data:extend({
     {
         name = "ei-personal-solar-2",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients = {
             {type = "item", name = "ei-solar-panel-2", amount = 4},
@@ -384,7 +383,7 @@ data:extend({
     {
         name = "ei-diesel-fuel-unit",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-diesel", amount = 100},
@@ -400,7 +399,7 @@ data:extend({
     {
         name = "ei-benzol-coal-gas",
         type = "recipe",
-        category = "oil-processing",
+        categories = {"oil-processing"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-coal-gas", amount = 25},
@@ -417,7 +416,7 @@ data:extend({
     {
         name = "ei-plastic-benzol",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-benzol", amount = 10},
@@ -433,7 +432,7 @@ data:extend({
     {
         name = "ei-insulated-wire",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 0.5,
         ingredients = {
             {type = "item", name = "copper-cable", amount = 2},
@@ -449,7 +448,7 @@ data:extend({
     {
         name = "ei-desulfurize-kerosene",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-kerosene", amount = 20},
@@ -467,7 +466,7 @@ data:extend({
     {
         name = "ei-acidic-water-sulfur",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "fluid", name = "ei-acidic-water", amount = 10},
@@ -483,7 +482,7 @@ data:extend({
     {
         name = "ei-sulfur-acidic-water",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "sulfur", amount = 1},
@@ -501,7 +500,7 @@ data:extend({
     {
         name = "ei-kerosene-heavy-oil",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "heavy-oil", amount = 25},
@@ -521,7 +520,7 @@ data:extend({
     {
         name = "ei-coal-gas-reforming",
         type = "recipe",
-        category = "oil-processing",
+        categories = {"oil-processing"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-coal-gas", amount = 45},
@@ -540,7 +539,7 @@ data:extend({
     {
         name = "ei-benzol-petroleum",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-benzol", amount = 30},
@@ -557,7 +556,7 @@ data:extend({
     {
         name = "ei-electric-engine-lube",
         type = "recipe",
-        category = "advanced-crafting",
+        categories = {"advanced-crafting"},
         energy_required = 6,
         ingredients = {
             {type = "fluid", name = "lubricant", amount = 10},
@@ -583,7 +582,7 @@ data:extend({
     {
         name = "ei-crushed-brick",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type="item", name="stone-brick", amount=1},
@@ -598,7 +597,7 @@ data:extend({
     {
         name = "ei-crushed-copper",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type="item", name="copper-plate", amount=1},
@@ -613,7 +612,7 @@ data:extend({
     {
         name = "ei-kerosene-cracking",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 2,
         ingredients = {
             {type = "fluid", name = "ei-kerosene", amount = 40},
@@ -632,7 +631,7 @@ data:extend({
     {
         name = "ei-cpu",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 8,
         ingredients = {
             {type = "item", name = "ei-semiconductor", amount = 1},
@@ -649,7 +648,7 @@ data:extend({
     {
         name = "ei-electronic-parts",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 6,
         ingredients = {
             {type = "item", name = "ei-cpu", amount = 1},
@@ -667,7 +666,7 @@ data:extend({
     {
         name = "ei-computer-age-tech",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 18,
         ingredients = {
             {type = "item", name = "advanced-circuit", amount = 1},
@@ -684,7 +683,7 @@ data:extend({
     {
         name = "ei-gold-ingot",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-gold-chunk", amount = 3},
@@ -699,7 +698,7 @@ data:extend({
     {
         name = "ei-crushed-gold",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-gold-ingot", amount = 1},
@@ -714,7 +713,7 @@ data:extend({
     {
         name = "ei-crushed-gold-plate",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-gold-ingot", amount = 1},
@@ -730,7 +729,7 @@ data:extend({
     {
         name = "ei-lead-ingot",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-lead-chunk", amount = 3},
@@ -745,7 +744,7 @@ data:extend({
     {
         name = "ei-neodym-ingot",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-neodym-chunk", amount = 3},
@@ -760,7 +759,7 @@ data:extend({
     {
         name = "ei-iron-ingot-chunk-smelting",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-iron-chunk", amount = 3},
@@ -775,7 +774,7 @@ data:extend({
     {
         name = "ei-copper-ingot-chunk-smelting",
         type = "recipe",
-        category = "smelting",
+        categories = {"smelting"},
         energy_required = 3.2,
         ingredients = {
             {type = "item", name = "ei-copper-chunk", amount = 3},
@@ -790,7 +789,7 @@ data:extend({
     {
         name = "ei-coal-chunk-crushing",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 2,
         ingredients = {
             {type = "item", name = "ei-coal-chunk", amount = 1},
@@ -805,7 +804,7 @@ data:extend({
     {
         name = "ei-sulfur-chunk-crushing",
         type = "recipe",
-        category = "ei-crushing",
+        categories = {"ei-crushing"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-sulfur-chunk", amount = 1},
@@ -820,7 +819,7 @@ data:extend({
     {
         name = "ei-acidic-water-crushed-sulfur",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 1,
         ingredients = {
             {type = "item", name = "ei-crushed-sulfur", amount = 4},
@@ -838,7 +837,7 @@ data:extend({
     {
         name = "ei-drill-fluid",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 8,
         ingredients = {
             {type = "item", name = "solid-fuel", amount = 5},
@@ -855,7 +854,7 @@ data:extend({
     {
         name = "ei-lube-destilation",
         type = "recipe",
-        category = "chemistry",
+        categories = {"chemistry"},
         energy_required = 4,
         ingredients = {
             {type = "fluid", name = "steam", amount = 5},
@@ -876,7 +875,7 @@ data:extend({
     {
         name = "ei-green-circuit-waver",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "sulfuric-acid", amount = 10},
@@ -898,7 +897,7 @@ data:extend({
     {
         name = "ei-red-circuit-waver",
         type = "recipe",
-        category = "crafting-with-fluid",
+        categories = {"crafting-with-fluid"},
         energy_required = 18,
         ingredients = {
             {type = "fluid", name = "sulfuric-acid", amount = 10},
@@ -920,7 +919,7 @@ data:extend({
     {
         name = "ei-molten-glass",
         type = "recipe",
-        category = "ei-arc-furnace",
+        categories = {"ei-arc-furnace"},
         energy_required = 0.5,
         ingredients = {
             {type = "item", name = modprefix.."sand", amount = 1},
@@ -935,7 +934,7 @@ data:extend({
     {
         name = "ei-cast-glass",
         type = "recipe",
-        category = "ei-casting",
+        categories = {"ei-casting"},
         energy_required = 0.5,
         ingredients = {
             {type = "fluid", name = "ei-molten-glass", amount = 5},

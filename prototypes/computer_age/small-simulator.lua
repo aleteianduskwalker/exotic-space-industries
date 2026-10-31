@@ -77,7 +77,7 @@ data:extend({
     {
         name = "ei-small-simulator",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 1,
         ingredients =
         {
@@ -172,7 +172,7 @@ data:extend({
     {
         name = "ei-simulation-data",
         type = "recipe",
-        category = "ei-small-simulator",
+        categories = {"ei-small-simulator"},
         energy_required = 5,
         ingredients = {
             {type = "fluid", name = "ei-computing-power", amount = 2},

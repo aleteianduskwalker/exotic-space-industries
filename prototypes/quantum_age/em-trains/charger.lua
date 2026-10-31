@@ -19,7 +19,7 @@ data:extend({
     {
         name = "ei-charger",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients =
         {

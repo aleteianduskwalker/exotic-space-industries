@@ -53,7 +53,7 @@ data:extend({
     {
         name = "ei-bio-chamber",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 4,
         ingredients =
         {
@@ -178,7 +178,7 @@ data:extend({
     {
         name = "ei-alien-seed-growing",
         type = "recipe",
-        category = "ei-bio-chamber",
+        categories = {"ei-bio-chamber"},
         energy_required = 20,
         ingredients = {
             {type = "fluid", name = "ei-oxygen-gas", amount = 50},
@@ -196,7 +196,7 @@ data:extend({
     {
         name = "ei-alien-seed-harvesting",
         type = "recipe",
-        category = "ei-bio-chamber",
+        categories = {"ei-bio-chamber"},
         energy_required = 10,
         ingredients = {
             {type = "fluid", name = "ei-morphium", amount = 100},
@@ -212,7 +212,7 @@ data:extend({
     {
         name = "ei-alien-resin-growing",
         type = "recipe",
-        category = "ei-bio-chamber",
+        categories = {"ei-bio-chamber"},
         energy_required = 20,
         ingredients = {
             {type = "fluid", name = "ei-phythogas", amount = 5},
@@ -221,7 +221,7 @@ data:extend({
         },
         results = {
             {type = "item", name = "ei-alien-resin", amount = 6},
-            {type = "item", name = "ei-alien-seed", amount = 1, probability = 0.9},
+            {type = "item", name = "ei-alien-seed", amount = 1, independent_probability = 0.9},
         },
         always_show_made_in = true,
         enabled = false,

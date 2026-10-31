@@ -253,7 +253,7 @@ data:extend({
     {
         name = "ei-alien-beacon-repair",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 20,
         ingredients = {
             {type = "item", name = "ei-odd-plating", amount = 100},
@@ -273,7 +273,7 @@ data:extend({
     {
         name = "ei-warp-beacon",
         type = "recipe",
-        category = "crafting",
+        categories = {"crafting"},
         energy_required = 300,
         ingredients = {
             {type = "item", name = "ei-odd-plating", amount = 1000},

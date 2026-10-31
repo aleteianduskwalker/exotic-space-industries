@@ -120,7 +120,7 @@ local function update_beacon(slave_entity, master_entity)
     if not (slave_entity and slave_entity.valid and master_entity and master_entity.valid) then
         return
     end
-    master_entity.active = slave_entity.energy > 0
+    master_entity.disabled_by_script = slave_entity.energy <= 0
 end
 
 ---Round-robin update of one registered copper/iron beacon.
